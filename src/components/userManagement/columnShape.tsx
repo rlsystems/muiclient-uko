@@ -1,6 +1,9 @@
+import { useState } from "react";
 import FlexBox from "../../components/FlexBox";
 import { H6, Small, Tiny } from "../../components/Typography";
 import UkoAvatar from "../../components/UkoAvatar";
+import EditIconButton from "../EditIconButton";
+import AddEmployeeModal from "./AddEmployeeModal";
 
 const UserListColumnShape = [
   {
@@ -8,29 +11,33 @@ const UserListColumnShape = [
     accessor: "name",
     minWidth: 200,
     Cell: ({ row }: any) => {
-      const { avatar, name, address } = row.original;
+      console.log(row.original);
+      const { avatar, firstName, lastName } = row.original;
       return (
         <FlexBox alignItems="center">
           <UkoAvatar src={avatar} />
           <FlexBox flexDirection="column" ml={1}>
-            <H6 color="text.primary">{name}</H6>
-            <Tiny color="text.disabled">{address}</Tiny>
+            <H6 color="text.primary">{firstName + " " + lastName}</H6>
+            <Tiny color="text.disabled">Lima, PE</Tiny>
           </FlexBox>
         </FlexBox>
       );
     },
   },
   {
-    Header: "Role",
-    accessor: "role",
+    Header: "RoleId",
+    accessor: "roleId",
     minWidth: 200,
     Cell: ({ value }: any) => (
+
+
       <Small
         sx={{
           borderRadius: 10,
           padding: ".2rem 1rem",
           color: "background.paper",
-          backgroundColor: "#A798FF",
+          backgroundColor: value.toLowerCase() === "root" ? "success.main" : "info.main",
+          textTransform: "capitalize"
         }}
       >
         {value}
@@ -38,20 +45,44 @@ const UserListColumnShape = [
     ),
   },
   {
-    Header: "Company",
-    accessor: "company",
+    Header: "Email",
+    accessor: "email",
     minWidth: 150,
   },
   {
-    Header: "Project",
-    accessor: "project",
+    Header: "Active",
+    accessor: "isActive",
     minWidth: 150,
+    Cell: ({ value }: any) => (
+      <Small
+        sx={{
+          color: value.toString().toLowerCase() === "true" ? "" : "error.main",
+          textTransform: "capitalize"
+        }}
+      >
+        {value.toString() =="true" ? "Yes" : "No"}
+      </Small>
+    ),
   },
   {
-    Header: "Verified",
-    accessor: "verified",
-    minWidth: 100,
-    maxWidth: 100,
+    Header: "Edit",
+    accessor: "action",
+    Cell: ({ row }: any) => {
+      const [openModal, setOpenModal] = useState(false);
+
+      return (
+        <>
+          <EditIconButton onClick={() => setOpenModal(true)} />
+
+          <AddEmployeeModal
+            edit
+            open={openModal}
+            data={row.original}
+            onClose={() => setOpenModal(false)}
+          />
+        </>
+      );
+    },
   },
 ];
 

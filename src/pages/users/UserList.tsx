@@ -5,9 +5,15 @@ import SearchInput from "../../components/SearchInput";
 import UserListColumnShape from "../../components/userManagement/columnShape";
 import { userListFakeData } from "../../components/userManagement/fakeData";
 //import useTitle from "hooks/useTitle";
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { observer } from "mobx-react-lite";
 //import { useTranslation } from "react-i18next";
 //import { useNavigate } from "react-router-dom";
+
+import { useStore } from '../../app/stores/store';
+import LoadingComponent from "../../app/layout/LoadingComponent";
+
+
 
 // styled component
 const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
@@ -34,6 +40,21 @@ const UserList: FC = () => {
   //const handleAddUser = () => navigate("/dashboard/add-user");
 
 
+
+
+  const { appUserStore } = useStore();
+  const { loadAppUsers, appUserRegistry, appUsersSorted } = appUserStore;
+
+
+  useEffect(() => {
+      if (appUserRegistry.size <= 1) loadAppUsers();
+      ;
+  }, [appUserRegistry.size, loadAppUsers])
+
+
+  if (appUserStore.loadingInitial) return <LoadingComponent content='Loading Users new...' />
+
+  
   return (
     <Box pt={2} pb={4}>
       <StyledFlexBox>
@@ -43,9 +64,9 @@ const UserList: FC = () => {
         </Button>
       </StyledFlexBox>
 
-      <CustomTable columnShape={UserListColumnShape} data={userListFakeData} />
+      <CustomTable columnShape={UserListColumnShape} data={appUsersSorted} />
     </Box>
   );
 };
 
-export default UserList;
+export default observer(UserList);

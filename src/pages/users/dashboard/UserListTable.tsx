@@ -9,7 +9,8 @@ export default observer(function UserListTable() {
     const { appUserStore } = useStore();
     const { appUsersSorted } = appUserStore;
 
-
+    console.log(appUsersSorted);
+    console.log('ss')
 
     return (
         <>
