@@ -43,11 +43,11 @@ const StyledModalCard = styled(Card)(({ theme }) => ({
 
 const AddEmployeeModal: FC<ModalProps> = ({ open, onClose, edit, data }) => {
   const initialValues = {
-    name: data?.name || "",
-    username: data?.username || "",
+    firstName: data?.firstName || "",
+    lastName: data?.lastName || "",
     email: data?.email || "",
     avatar: data?.avatar || "",
-    role: data?.role || "",
+    roleId: data?.roleId || "",
   };
 
   const fieldValidationSchema = Yup.object().shape({
@@ -89,24 +89,24 @@ const AddEmployeeModal: FC<ModalProps> = ({ open, onClose, edit, data }) => {
             <Grid item xs={12}>
               <H6 mb={1}>Name</H6>
               <DarkTextField
-                name="name"
-                placeholder="Name"
+                name="firstName"
+                placeholder="First Name"
                 onChange={handleChange}
-                value={values.name}
-                error={Boolean(errors.name && touched.name)}
-                helperText={touched.name && errors.name}
+                value={values.firstName}
+                error={Boolean(errors.firstName && touched.firstName)}
+                helperText={touched.firstName && errors.firstName}
               />
             </Grid>
 
             <Grid item xs={12}>
-              <H6 mb={1}>Username</H6>
+              <H6 mb={1}>Last Name</H6>
               <DarkTextField
-                name="username"
-                placeholder="Username"
+                name="lastName"
+                placeholder="lastName"
                 onChange={handleChange}
-                value={values.username}
-                error={Boolean(errors.username && touched.username)}
-                helperText={touched.username && errors.username}
+                value={values.lastName}
+                error={Boolean(errors.lastName && touched.lastName)}
+                helperText={touched.lastName && errors.lastName}
               />
             </Grid>
 
@@ -124,12 +124,12 @@ const AddEmployeeModal: FC<ModalProps> = ({ open, onClose, edit, data }) => {
             <Grid item xs={12}>
               <H6 mb={1}>Role</H6>
               <DarkTextField
-                name="role"
-                placeholder="developer"
+                name="roleId"
+                placeholder="admin"
                 onChange={handleChange}
-                value={values.role}
-                error={Boolean(errors.role && touched.role)}
-                helperText={touched.role && errors.role}
+                value={values.roleId}
+                error={Boolean(errors.roleId && touched.roleId)}
+                helperText={touched.roleId && errors.roleId}
               />
             </Grid>
 

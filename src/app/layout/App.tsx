@@ -1,4 +1,4 @@
-import { Box, StyledEngineProvider } from '@mui/material';
+import { Box, styled, StyledEngineProvider } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -20,12 +20,14 @@ import UserProfile from '../../pages/users/form/UserProfile';
 import UserRegistration from '../../pages/users/form/UserRegistration';
 import { useStore } from '../stores/store';
 import LoadingComponent from './LoadingComponent';
-import NavBar from './NavBar';
+import NavBar from './NavBarOld';
 import NotFound from './NotFound';
 import { ukoTheme } from "../../theme/";
 import UserList from '../../pages/users/UserList';
 //Started from Create React App, Typescript
 //https://mui.com/getting-started/example-projects/
+import DashboardSidebar from "./navigation/DashboardSideBar";
+import DashboardNavbar from './navigation/DashboardNavbar';
 
 function App() {
 
@@ -45,12 +47,29 @@ function App() {
   }, [commonStore, userStore])
 
 
-    // App theme
-    const appTheme = ukoTheme({
-      direction: "ltr",
-      theme: commonStore.darkMode ? 'dark' : 'light',
-      responsiveFontSizes: true,
-    });
+  // App theme
+  const appTheme = ukoTheme({
+    direction: "ltr",
+    theme: commonStore.darkMode ? 'dark' : 'light',
+    responsiveFontSizes: true,
+  });
+
+
+  // styled components 
+  //show true is for subnav to open
+  const Wrapper = styled(Box)<{ show: boolean }>(({ theme, show }) => ({
+    width: `calc(100% - ${show ? "320px" : "80px"})`,
+    paddingLeft: "3rem",
+    paddingRight: "3rem",
+    transition: "all 0.3s",
+    marginLeft: show ? 320 : 80,
+    // [theme.breakpoints.down(1200)]: {
+    //   width: "100%",
+    //   marginLeft: 0,
+    //   paddingLeft: "2rem",
+    //   paddingRight: "2rem",
+    // },
+  }));
 
 
   if (!commonStore.appLoaded) return <LoadingComponent />
@@ -74,25 +93,31 @@ function App() {
               path={'/(.+)'}
               render={() => (
 
-                <Box sx={{ display: 'flex' }}>
-                  <NavBar />
+                <>
+                  <DashboardSidebar />
 
-                  <Switch>
 
-                    <Route exact path='/dashboard' component={UserList} />
+                  <Wrapper show={false}>
+                    <DashboardNavbar />
+                    <Switch>
+                      <Route exact path='/dashboard' component={UserList} />
 
-                    <Route exact path='/venues' component={VenueDashboard} />
-                    <Route exact key={location.key} path={['/createVenue', '/editVenue/:id']} component={VenueForm} />
+                      <Route exact path='/venues' component={VenueDashboard} />
+                      <Route exact key={location.key} path={['/createVenue', '/editVenue/:id']} component={VenueForm} />
 
-                    <Route exact path='/users' component={UserDashboard} />
-                    <Route exact path='/createUser' component={UserRegistration} />
-                    <Route exact key={location.key} path={['/editUser', '/editUser/:id']} component={UserProfile} />
+                      <Route exact path='/users' component={UserDashboard} />
+                      <Route exact path='/createUser' component={UserRegistration} />
+                      <Route exact key={location.key} path={['/editUser', '/editUser/:id']} component={UserProfile} />
 
-                    <Route exact path='/tenants' component={TenantDashboard} />
-                    <Route exact key={location.key} path={['/createTenant', '/editTenant/:id']} component={TenantForm} />
-                    <Route component={NotFound} />
-                  </Switch>
-                </Box>
+                      <Route exact path='/tenants' component={TenantDashboard} />
+                      <Route exact key={location.key} path={['/createTenant', '/editTenant/:id']} component={TenantForm} />
+                      <Route component={NotFound} />
+                    </Switch>
+
+
+                  </Wrapper>
+
+                </>
 
 
 

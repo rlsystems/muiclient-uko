@@ -14,7 +14,6 @@ import SessionsIcon from "./Sessions";
 import UserManagementIcon from "./UserManagement";
 import UserProfileIcon from "./UserProfile";
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   ChatIcon,
   PagesIcon,
@@ -32,3 +31,4 @@ export default {
   UserManagementIcon,
   AccountSettingsIcon,
 };
+
