@@ -1,0 +1,52 @@
+{
+  "name": "muiclient",
+  "version": "5.0.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/lab": "^5.0.0-alpha.61",
+    "@mui/material": "^5.0.0-rc.1",
+    "@types/lodash": "^4.14.180",
+    "@types/lodash.merge": "^4.6.6",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/react-router-dom": "^5.3.2",
+    "@types/react-table": "^7.7.10",
+    "axios": "^0.24.0",
+    "formik": "^2.2.9",
+    "lodash": "^4.17.21",
+    "material-react-toastify": "^1.0.1",
+    "mobx": "^6.3.10",
+    "mobx-react-lite": "^3.2.2",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "latest",
+    "react-table": "^7.7.0",
+    "react-toastify": "^8.1.0",
+    "recharts": "^2.1.8",
+    "simplebar-react": "^2.3.6",
+    "typescript": "latest",
+    "yup": "^0.32.11"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
