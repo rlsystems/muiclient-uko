@@ -3,7 +3,7 @@ import FlexBox from "../../components/FlexBox";
 import { H6, Small, Tiny } from "../../components/Typography";
 import UkoAvatar from "../../components/UkoAvatar";
 import EditIconButton from "../EditIconButton";
-import AddEmployeeModal from "./AddEmployeeModal";
+import RegisterNewUserModal from "./RegisterNewUserModal";
 
 const UserListColumnShape = [
   {
@@ -74,7 +74,7 @@ const UserListColumnShape = [
         <>
           <EditIconButton onClick={() => setOpenModal(true)} />
 
-          <AddEmployeeModal
+          <RegisterNewUserModal
             edit
             open={openModal}
             data={row.original}

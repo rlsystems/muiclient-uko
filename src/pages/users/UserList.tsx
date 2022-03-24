@@ -5,13 +5,15 @@ import SearchInput from "../../components/SearchInput";
 import UserListColumnShape from "../../components/userManagement/columnShape";
 import { userListFakeData } from "../../components/userManagement/fakeData";
 //import useTitle from "hooks/useTitle";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 //import { useTranslation } from "react-i18next";
 //import { useNavigate } from "react-router-dom";
 
 import { useStore } from '../../app/stores/store';
 import LoadingComponent from "../../app/layout/LoadingComponent";
+import RegisterNewUserModal from "../../components/userManagement/RegisterNewUserModal";
+import { RegisterUserFormValues } from "../../app/models/user";
 
 
 
@@ -39,7 +41,7 @@ const UserList: FC = () => {
   //const navigate = useNavigate();
   //const handleAddUser = () => navigate("/dashboard/add-user");
 
-
+  const [openModal, setOpenModal] = useState(false);
 
 
   const { appUserStore } = useStore();
@@ -59,12 +61,18 @@ const UserList: FC = () => {
     <Box pt={2} pb={4}>
       <StyledFlexBox>
         <SearchInput placeholder="Search user..." />
-        <Button variant="contained">
+        <Button variant="contained" onClick={() => setOpenModal(true)}>
           {("Add New User")}
         </Button>
       </StyledFlexBox>
 
       <CustomTable columnShape={UserListColumnShape} data={appUsersSorted} />
+      <RegisterNewUserModal
+            edit
+            open={openModal}
+            data={null}
+            onClose={() => setOpenModal(false)}
+          />
     </Box>
   );
 };
