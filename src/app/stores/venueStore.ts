@@ -130,7 +130,6 @@ export default class VenueStore {
     deleteVenue = async (id: string) => {
         this.loading = true;
 
-
         try {
             await agent.Venues.delete(id); //delete from DB
             runInAction(() => {

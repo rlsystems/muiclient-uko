@@ -1,4 +1,4 @@
-import Icons from "../../../icons/sidebar";
+import Icons from "../icons/sidebar";
 
 const index = [
   {

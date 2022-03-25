@@ -11,7 +11,7 @@ import { Venue } from '../../../app/models/venue';
 import { Box, Button, Container, Divider, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
-import LoadingComponent from '../../../app/layout/LoadingComponent';
+import LoadingComponent from '../../../components/LoadingComponent';
 
 
 

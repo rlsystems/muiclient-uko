@@ -2,21 +2,25 @@ import {
   Box,
   Button,
   Card,
+  Divider,
+  FormControlLabel,
   Grid,
   IconButton,
   Modal,
+  Radio,
+  RadioGroup,
   styled,
 } from "@mui/material";
-import DarkTextField from "../DarkTextField";
-import FlexBox from "../FlexBox";
-import { H2, H6, Small } from "../Typography";
+import DarkTextField from "../../components/DarkTextField";
+import FlexBox from "../../components/FlexBox";
+import { H2, H6 } from "../../components/Typography";
 import { useFormik } from "formik";
-import ImageUploadIcon from "../../icons/ImageUploadIcon";
 import { FC, useState } from "react";
-//import toast from "react-hot-toast";
-//import axiosInstance from "utils/axios";
+
+
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
+
 import { useStore } from "../../app/stores/store";
 import { RegisterUserFormValues } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
@@ -25,7 +29,6 @@ import { LoadingButton } from "@mui/lab";
 interface ModalProps {
   data?: any;
   open: boolean;
-  edit?: boolean;
   onClose: () => void;
 }
 
@@ -43,7 +46,7 @@ const StyledModalCard = styled(Card)(({ theme }) => ({
   outline: "none",
 }));
 
-const RegisterNewUserModal: FC<ModalProps> = ({ open, onClose, edit, data }) => {
+const RegisterUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
   const { appUserStore } = useStore();
   const { createAppUser } = appUserStore;
 
@@ -87,9 +90,9 @@ const RegisterNewUserModal: FC<ModalProps> = ({ open, onClose, edit, data }) => 
     <Modal open={open} onClose={onClose}>
       <StyledModalCard>
         <H2 mb={2}>Add New User</H2>
-
+        <Divider />
         <form onSubmit={handleSubmit}>
-          <Grid container spacing={2} className="main-form">
+          <Grid mt={1} container spacing={3} columnSpacing={5} className="main-form">
             <Grid item xs={6}>
               <H6 mb={1}>First Name</H6>
               <DarkTextField
@@ -184,17 +187,25 @@ const RegisterNewUserModal: FC<ModalProps> = ({ open, onClose, edit, data }) => 
 
             <Grid item xs={12}>
               <H6 mb={1}>Role</H6>
-              <DarkTextField
-                name="roleId"
-                id="roleId"
-                placeholder="Role Id"
-                value={values.roleId}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.roleId && Boolean(errors.roleId)}
-                helperText={touched.roleId && errors.roleId}
-                autoComplete="new-password"
-              />
+              <RadioGroup
+                    row
+                    name="roleId"
+                    defaultValue={values.roleId}
+                    onChange={handleChange}
+                  >
+                    {["admin", "editor", "basic"].map((item) => (
+                      <FormControlLabel
+                      sx={{
+                        textTransform: 'capitalize',
+                        marginRight: '40px'
+                      }}
+                        key={item}
+                        value={item}
+                        label={(item)}
+                        control={<Radio />}
+                      />
+                    ))}
+                  </RadioGroup>
             </Grid>
 
       
@@ -234,4 +245,4 @@ const RegisterNewUserModal: FC<ModalProps> = ({ open, onClose, edit, data }) => 
   );
 };
 
-export default observer(RegisterNewUserModal);
+export default observer(RegisterUserModal);

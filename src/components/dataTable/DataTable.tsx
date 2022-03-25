@@ -10,7 +10,7 @@ import {
   TableRow,
   useTheme,
 } from "@mui/material";
-import { StyledPagination } from "../dataTable/styledComponents";
+import { StyledPagination } from "./styledComponents";
 import FlexBox from "../FlexBox";
 import { H5 } from "../Typography";
 import { ChangeEvent, FC, useMemo } from "react";
@@ -24,7 +24,7 @@ import {
 import ScrollBar from "simplebar-react";
 
 // component props interface
-interface CustomTableProps {
+interface DataTableProps {
   columnShape: object[];
   data: object[];
   rowClick?: (rowData: object) => void;
@@ -32,11 +32,11 @@ interface CustomTableProps {
   showFooter?: boolean;
 }
 
-const CustomTable: FC<CustomTableProps> = (props) => {
+const DataTable: FC<DataTableProps> = (props) => {
   const { data, rowClick, showFooter, columnShape, hidePagination } = props;
   // hooks
   const theme = useTheme();
-  const tableData: any = useMemo(() => data, [data]);
+  const tableData: any = useMemo(() => data, [data]); //data and column shape always provided
   const columns: any = useMemo(() => columnShape, [columnShape]);
 
   const {
@@ -183,4 +183,4 @@ const CustomTable: FC<CustomTableProps> = (props) => {
   );
 };
 
-export default CustomTable;
+export default DataTable;

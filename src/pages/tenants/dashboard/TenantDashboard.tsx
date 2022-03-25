@@ -1,7 +1,7 @@
 import { Box, Container } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import LoadingComponent from '../../../app/layout/LoadingComponent';
+import LoadingComponent from '../../../components/LoadingComponent';
 import AppUserStore from '../../../app/stores/appUserStore';
 import { useStore } from '../../../app/stores/store';
 import TenantHeader from './TenantHeader';

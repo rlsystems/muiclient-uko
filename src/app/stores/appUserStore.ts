@@ -65,7 +65,7 @@ export default class AppUserStore {
     }
 
     //helper methods -----------------
-    private getAppUser = (id: string) => {
+    public getAppUser = (id: string) => {
         return this.appUserRegistry.get(id);
     }
 
@@ -91,7 +91,6 @@ export default class AppUserStore {
                     id: appUser.id,
                     firstName: appUser.firstName,
                     lastName: appUser.lastName,
-                    userName: appUser.email, //username same as email
                     email: appUser.email,
                     phoneNumber: appUser.phoneNumber,
                     roleId: appUser.roleId,
@@ -131,6 +130,24 @@ export default class AppUserStore {
             })
         }
     }
+
+    deleteAppUser = async (id: string) => {
+        this.loading = true;
+
+        try {
+            await agent.Users.delete(id); //delete from DB
+            runInAction(() => {
+                this.appUserRegistry.delete(id); //delete from local memory
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
 
 
 

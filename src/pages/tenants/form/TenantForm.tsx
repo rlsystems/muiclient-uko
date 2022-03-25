@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import LoadingComponent from '../../../app/layout/LoadingComponent';
+import LoadingComponent from '../../../components/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';

@@ -6,6 +6,8 @@ export default class CommonStore {
     token: string | null = window.localStorage.getItem('jwt');
     tenant: string | null = '';
 
+    title: string | null = '';
+
     darkMode = true;
 
     appLoaded = false;
@@ -38,6 +40,10 @@ export default class CommonStore {
 
     setTenant = (tenant: string | null) => {
         this.tenant = tenant;
+    }
+
+    setTitle = (title: string | null) => {
+        this.title = title;
     }
 
     setAppLoaded = () => {

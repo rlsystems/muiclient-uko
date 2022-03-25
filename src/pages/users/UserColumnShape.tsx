@@ -2,16 +2,21 @@ import { useState } from "react";
 import FlexBox from "../../components/FlexBox";
 import { H6, Small, Tiny } from "../../components/Typography";
 import UkoAvatar from "../../components/UkoAvatar";
-import EditIconButton from "../EditIconButton";
-import RegisterNewUserModal from "./RegisterNewUserModal";
+import EditIconButton from "../../components/EditIconButton";
+import EditUserModal from "./EditUserModal";
+import CheckBoxIcon from "../../icons/CheckBoxIcon";
+import CheckDoneIcon from "../../icons/CheckDoneIcon";
+import { useStore } from "../../app/stores/store";
 
-const UserListColumnShape = [
+
+
+const UserColumnShape = [
   {
     Header: "Name",
     accessor: "name",
     minWidth: 200,
     Cell: ({ row }: any) => {
-      console.log(row.original);
+      
       const { avatar, firstName, lastName } = row.original;
       return (
         <FlexBox alignItems="center">
@@ -60,6 +65,7 @@ const UserListColumnShape = [
           textTransform: "capitalize"
         }}
       >
+        {/* <CheckDoneIcon color="success" /> */}
         {value.toString() =="true" ? "Yes" : "No"}
       </Small>
     ),
@@ -68,14 +74,16 @@ const UserListColumnShape = [
     Header: "Edit",
     accessor: "action",
     Cell: ({ row }: any) => {
+      // const { appUserStore } = useStore();
+      // const { appUserRegistry } = appUserStore;
       const [openModal, setOpenModal] = useState(false);
-
+      //const selectedUser = appUserStore.getAppUser(row.original['id']);
       return (
         <>
           <EditIconButton onClick={() => setOpenModal(true)} />
-
-          <RegisterNewUserModal
-            edit
+        
+          <EditUserModal
+            //
             open={openModal}
             data={row.original}
             onClose={() => setOpenModal(false)}
@@ -86,4 +94,4 @@ const UserListColumnShape = [
   },
 ];
 
-export default UserListColumnShape;
+export default UserColumnShape;

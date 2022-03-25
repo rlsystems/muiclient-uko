@@ -8,8 +8,8 @@ import {
   Toolbar,
   useMediaQuery,
 } from "@mui/material";
-import FlexBox from "../../../components/FlexBox";
-import { H2 } from "../../../components/Typography";
+import FlexBox from "../components/FlexBox";
+import { H2 } from "../components/Typography";
 //import { SettingsContext } from "contexts/SettingsContext";
 //import { TitleContext } from "contexts/TitleContext";
 // import LTR from "icons/LTR";
@@ -23,15 +23,12 @@ import { FC, useContext } from "react";
 // import LanguagePopover from "./popovers/LanguagePopover";
 // import NotificationsPopover from "./popovers/NotificationsPopover";
 import ProfilePopover from "./ProfilePopover";
-import { useStore } from "../../stores/store";
+import { useStore } from "../app/stores/store";
 import { observer } from "mobx-react-lite";
-import ThemeIcon from "../../../icons/ThemeIcon";
+import ThemeIcon from "../icons/ThemeIcon";
 // import ServicePopover from "./popovers/ServicePopover";
 
-// root component interface
-interface DashboardNavBarProps {
 
-}
 
 // custom styled components
 const DashboardNavbarRoot = styled(AppBar)(() => ({
@@ -55,20 +52,10 @@ const StyledIconButton = styled(IconButton)(() => ({
   "&:hover": { backgroundColor: "transparent" },
 }));
 
-const ToggleIcon = styled(Box)(({ theme }) => ({
-  width: 25,
-  height: 3,
-  margin: "5px",
-  borderRadius: "10px",
-  transition: "width 0.3s",
-  backgroundColor: theme.palette.primary.main,
-}));
-
-
 
 
 // root component
-const DashboardNavbar: FC<DashboardNavBarProps> = () => {
+const DashboardNavbar: FC = () => {
   const { commonStore } = useStore();
 
   let mode = 'dark';
@@ -79,26 +66,10 @@ const DashboardNavbar: FC<DashboardNavBarProps> = () => {
     mode = 'light';
   }
 
-  // const { t } = useTranslation();
-  // const { title } = useContext(TitleContext);
-  // const { settings, saveSettings } = useContext(SettingsContext);
-  // const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down(1200));
-  // const upSm = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
-  // const downSm = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
-
-  // const handleChangeTheme = (theme: string) => {
-  //   //saveSettings({ ...settings, theme } as themeSettingsProps);
-  // };
-
-
-
-
-
 
   return (
     <DashboardNavbarRoot position="sticky">
-      <StyledToolBar>
-       
+      <StyledToolBar>     
 
         <H2
           fontSize={21}
@@ -107,7 +78,7 @@ const DashboardNavbar: FC<DashboardNavBarProps> = () => {
           fontWeight="700"
           color="text.primary"
         >
-          User Management
+          {commonStore.title}
         </H2>
 
         <Box flexGrow={1} ml={1} />

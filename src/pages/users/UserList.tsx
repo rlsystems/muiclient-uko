@@ -1,9 +1,8 @@
 import { Box, Button, styled } from "@mui/material";
-import CustomTable from "../../components/adminEcommerce/CustomTable";
+import DataTable from "../../components/dataTable/DataTable";
 import FlexBox from "../../components/FlexBox";
 import SearchInput from "../../components/SearchInput";
-import UserListColumnShape from "../../components/userManagement/columnShape";
-import { userListFakeData } from "../../components/userManagement/fakeData";
+import UserColumnShape from "./UserColumnShape";
 //import useTitle from "hooks/useTitle";
 import { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
@@ -11,9 +10,8 @@ import { observer } from "mobx-react-lite";
 //import { useNavigate } from "react-router-dom";
 
 import { useStore } from '../../app/stores/store';
-import LoadingComponent from "../../app/layout/LoadingComponent";
-import RegisterNewUserModal from "../../components/userManagement/RegisterNewUserModal";
-import { RegisterUserFormValues } from "../../app/models/user";
+import LoadingComponent from "../../components/LoadingComponent";
+import RegisterUserModal from "./RegisterUserModal";
 
 
 
@@ -23,14 +21,7 @@ const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
   alignItems: "center",
   flexWrap: "wrap",
   marginBottom: 20,
-  [theme.breakpoints.down(500)]: {
-    width: "100%",
-    "& .MuiInputBase-root": { maxWidth: "100%" },
-    "& .MuiButton-root": {
-      width: "100%",
-      marginTop: 15,
-    },
-  },
+
 }));
 
 const UserList: FC = () => {
@@ -44,9 +35,11 @@ const UserList: FC = () => {
   const [openModal, setOpenModal] = useState(false);
 
 
-  const { appUserStore } = useStore();
+  const { appUserStore, commonStore } = useStore();
   const { loadAppUsers, appUserRegistry, appUsersSorted } = appUserStore;
+  const { setTitle } = commonStore;
 
+  setTitle("User List");
 
   useEffect(() => {
       if (appUserRegistry.size <= 1) loadAppUsers();
@@ -66,13 +59,14 @@ const UserList: FC = () => {
         </Button>
       </StyledFlexBox>
 
-      <CustomTable columnShape={UserListColumnShape} data={appUsersSorted} />
-      <RegisterNewUserModal
-            edit
+
+      <RegisterUserModal         
             open={openModal}
             data={null}
             onClose={() => setOpenModal(false)}
           />
+      <DataTable columnShape={UserColumnShape} data={appUsersSorted} />
+     
     </Box>
   );
 };

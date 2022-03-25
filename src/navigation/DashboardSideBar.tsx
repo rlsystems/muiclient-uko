@@ -9,8 +9,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 //import UIAccordion from "components/accordion/UIAccordion";
-import FlexBox from "../../../components/FlexBox";
-import { H3, Small } from "../../../components/Typography";
+import FlexBox from "../components/FlexBox";
+import { H3, Small } from "../components/Typography";
 import {
   Dispatch,
   FC,
@@ -56,9 +56,7 @@ const StyledListItemButton = styled(ListItemButton)(() => ({
 
 
 // root component
-const DashboardSideBar: FC<SideNavBarProps> = ({
-
-}) => {
+const DashboardSideBar: FC<SideNavBarProps> = () => {
   //const navigate = useNavigate();
 
   const [active, setActive] = useState("Dashboard");

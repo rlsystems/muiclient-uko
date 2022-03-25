@@ -81,19 +81,21 @@ const requests = {
 }
 
 
-//Identity
+//Identity (Yourself)
 const Account = {
     current: () => requests.get<Result<User>>('/identity/profile'),
     login: (user: UserLogin) => requests.post<Result<TokenData>>(`/tokens`, user), 
-    update: (user: User) => requests.put<void>(`/identity/profile`, user), //without id is for the current user
+    update: (user: User) => requests.put<void>(`/identity/profile`, user), 
 }
 
-//user
+//App Users (Admin User Management)
 const Users = {
     list: () => requests.get<Result<User[]>>('/identity/userlist'),
     create: (appUser: RegisterUserFormValues) => requests.post<Result<String>>(`/identity/register`, appUser),
-    details: (id: string) => requests.get<Result<User>>(`/identity/profile/${id}`),
-    update: (user: User) => requests.put<void>(`/identity/profile/${user.id}`, user), //with id is admin editing a user
+    details: (id: string) => requests.get<Result<User>>(`/identity/user/${id}`),
+    update: (user: User) => requests.put<void>(`/identity/user/${user.id}`, user), //with id is admin editing a user
+    delete: (id: string) => requests.del<void>(`/identity/user/${id}`), //with id is admin editing a user
+
 }
 
 //Tenants

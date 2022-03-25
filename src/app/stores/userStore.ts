@@ -7,8 +7,9 @@ import { Venue } from "../models/venue";
 
 export default class UserStore {
 
-    currentUser: User | null = null; //like current
+    //User store is for profile management and current user
 
+    currentUser: User | null = null; 
     loadingInitial: boolean = false;
 
     constructor() {
@@ -91,8 +92,7 @@ export default class UserStore {
         }
     }
 
-
-
+   
 
 
 }

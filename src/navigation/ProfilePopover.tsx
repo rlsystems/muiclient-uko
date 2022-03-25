@@ -1,10 +1,10 @@
 import { Badge, Box, ButtonBase, Divider, styled } from "@mui/material";
-import FlexBox from "../../../components/FlexBox";
-import { H6, Small, Tiny } from "../../../components/Typography";
-import UkoAvatar from "../../../components/UkoAvatar";
+import FlexBox from "../components/FlexBox";
+import { H6, Small, Tiny } from "../components/Typography";
+import UkoAvatar from "../components/UkoAvatar";
 import { FC, Fragment, useRef, useState } from "react";
 import PopoverLayout from "./PopoverLayout";
-import { useStore } from "../../stores/store";
+import { useStore } from "../app/stores/store";
 
 // styled components
 const StyledSmall = styled(Small)(({ theme }) => ({
