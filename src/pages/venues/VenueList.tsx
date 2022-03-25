@@ -32,7 +32,7 @@ const VenueList: FC = () => {
   const { loadVenues, venueRegistry, venuesSorted, loadingInitial } = venueStore;
   const { setTitle } = commonStore;
 
-  setTitle("Venue List");
+  setTitle("Venues");
 
   useEffect(() => {
     if (venueRegistry.size <= 1) loadVenues();

@@ -33,7 +33,7 @@ const TenantList: FC = () => {
   const { loadTenants, tenantRegistry, tenantsSorted, loadingInitial } = tenantStore;
   const { setTitle } = commonStore;
 
-  setTitle("Tenant List");
+  setTitle("Tenants");
 
   useEffect(() => {
     if (tenantRegistry.size <= 1) loadTenants();

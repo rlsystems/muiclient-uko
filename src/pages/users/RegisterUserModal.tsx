@@ -128,7 +128,7 @@ const RegisterUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
               <DarkTextField
                 id="email"
                 name="email"
-                placeholder="newuser@gmail.com"
+                placeholder="user@email.com"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.email}

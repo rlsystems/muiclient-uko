@@ -23,12 +23,14 @@ import HomePage from './pages/home/HomePage';
 import LoginPage from './pages/login/LoginPage';
 
 
+import TenantList from './pages/tenants/TenantList';
 import UserList from './pages/users/UserList';
 import VenueList from './pages/venues/VenueList';
+
 import VenueForm from './pages/venues/form/VenueForm'; //to be updated
-import TenantDashboard from './pages/tenants/dashboard/TenantDashboard';
-import TenantForm from './pages/tenants/form/TenantForm';
-import TenantList from './pages/tenants/TenantList';
+import AccountSettings from './pages/profile/AccountSettings';
+
+
 
 
 function App() {
@@ -97,9 +99,10 @@ function App() {
                       <Route exact path='/venues' component={VenueList} />
                       <Route exact key={location.key} path={['/createVenue', '/editVenue/:id']} component={VenueForm} />
 
+                      <Route exact path='/profile' component={AccountSettings} />
                       <Route exact path='/users' component={UserList} />
-
                       <Route exact path='/tenants' component={TenantList} />
+
                       <Route component={NotFound} />
                     </Switch>
 

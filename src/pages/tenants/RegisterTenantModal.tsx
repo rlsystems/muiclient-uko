@@ -106,7 +106,7 @@ import { CreateTenantRequest } from "../../app/models/tenant";
                 <DarkTextField
                  id="adminEmail"
                  name="adminEmail"
-                 placeholder="Admin Email"
+                 placeholder="admin@email.com"
                  value={values.adminEmail}
                  onChange={handleChange}
                  onBlur={handleBlur}

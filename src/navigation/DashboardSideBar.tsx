@@ -23,6 +23,8 @@ import {
 import ScrollBar from "simplebar-react";
 import topMenuList from "./topMenuList";
 import { useHistory } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../app/stores/store";
 
 // root component interface
 interface SideNavBarProps {
@@ -39,11 +41,11 @@ const MainMenu = styled(Box)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 11,
   transition: "left 0.3s ease",
   backgroundColor: theme.palette.background.paper,
-  [theme.breakpoints.down("md")]: { left: -80 },
-  "& .simplebar-track.simplebar-vertical": { width: 7 },
-  "& .simplebar-scrollbar:before": {
-    background: theme.palette.text.primary,
-  },
+  // [theme.breakpoints.down("md")]: { left: -80 },
+  // "& .simplebar-track.simplebar-vertical": { width: 7 },
+  // "& .simplebar-scrollbar:before": {
+  //   background: theme.palette.text.primary,
+  // },
 }));
 
 
@@ -58,7 +60,7 @@ const StyledListItemButton = styled(ListItemButton)(() => ({
 // root component
 const DashboardSideBar: FC<SideNavBarProps> = () => {
   //const navigate = useNavigate();
-
+  const { userStore: { currentUser } } = useStore();
   const [active, setActive] = useState("Dashboard");
   const history = useHistory();
 
@@ -68,9 +70,6 @@ const DashboardSideBar: FC<SideNavBarProps> = () => {
     history.push(menuItem.path)
 
   };
-
-
- 
 
 
 
@@ -83,6 +82,8 @@ const DashboardSideBar: FC<SideNavBarProps> = () => {
 
       <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>
         {topMenuList.map((nav, index) => (
+          
+         
           <Tooltip title={nav.title} placement="right" key={index}>
             <StyledListItemButton
               disableRipple
@@ -109,4 +110,4 @@ const DashboardSideBar: FC<SideNavBarProps> = () => {
 };
 
 
-export default DashboardSideBar;
+export default observer(DashboardSideBar);

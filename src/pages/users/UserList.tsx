@@ -39,19 +39,19 @@ const UserList: FC = () => {
 
 
   //Set title in Navigation
-  setTitle("User List");
+  setTitle("Users");
 
   //Add Tenant - Modal open/close
   const [openModal, setOpenModal] = useState(false);
 
 
-  if (appUserStore.loadingInitial) return <LoadingComponent content='Loading Users new...' />
+  if (appUserStore.loadingInitial) return <LoadingComponent content='Loading Users...' />
 
 
   return (
     <Box pt={2} pb={4}>
       <StyledFlexBox>
-        <SearchInput placeholder="Search user..." />
+        <SearchInput placeholder="Search users..." />
         <Button
           endIcon={<Add />}
           variant="contained"

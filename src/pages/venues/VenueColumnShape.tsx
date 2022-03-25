@@ -9,6 +9,15 @@ const VenueColumnShape = [
     Header: "Name",
     accessor: "name",
     minWidth: 200,
+    Cell: ({ row }: any) => {
+
+      const { name } = row.original;
+      return (
+        <H6 color="text.primary"
+          sx={{textTransform: "capitalize"}}
+        >{name}</H6>
+      );
+    },
   },
   {
     Header: "Description",

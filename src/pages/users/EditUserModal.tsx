@@ -54,7 +54,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     const { loadAppUser, updateAppUser, loading, loadingInitial } = appUserStore;
     const { currentUser, getCurrentUser, updateCurrentUser } = userStore; //check loading
 
-    const { id } = useParams<{ id: string }>(); //in case this is admin edit
+    const { id } = useParams<{ id: string }>(); 
 
     const [userFormValues, setUserFormValues] = useState<User>({ //Local State
         id: data.id,
@@ -76,19 +76,19 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     })
 
 
-    useEffect(() => {
-        if (id) {
-            loadAppUser(id).then(appUser => setUserFormValues(appUser!))
-        } else {
+    // useEffect(() => {
+    //     if (id) {
+    //         loadAppUser(id).then(appUser => setUserFormValues(appUser!))
+    //     } else {
 
-            if (!currentUser) {
-                getCurrentUser().then(userFormValues => setUserFormValues(userFormValues!))
-            } else {
-                setUserFormValues(currentUser)
-            }
+    //         if (!currentUser) {
+    //             getCurrentUser().then(userFormValues => setUserFormValues(userFormValues!))
+    //         } else {
+    //             setUserFormValues(currentUser)
+    //         }
 
-        }
-    }, [id, getCurrentUser])
+    //     }
+    // }, [id, getCurrentUser])
 
 
 

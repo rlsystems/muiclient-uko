@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'material-react-toastify';
-//import { history } from '../..';
 
 import { store } from '../stores/store';
 import { TokenData, User, UserLogin, RegisterUserFormValues } from '../models/user';

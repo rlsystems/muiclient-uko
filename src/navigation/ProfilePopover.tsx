@@ -5,7 +5,7 @@ import UkoAvatar from "../components/UkoAvatar";
 import { FC, Fragment, useRef, useState } from "react";
 import PopoverLayout from "./PopoverLayout";
 import { useStore } from "../app/stores/store";
-
+import { useHistory } from "react-router-dom";
 // styled components
 const StyledSmall = styled(Small)(({ theme }) => ({
   display: "block",
@@ -25,8 +25,9 @@ const ProfilePopover: FC = () => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const { userStore: { currentUser, logout } } = useStore();
-
+  const history = useHistory();
   const handleMenuItem = (path: string) => {
+    history.push(path);
     setOpen(false);
   };
 
@@ -79,27 +80,19 @@ const ProfilePopover: FC = () => {
         }
       >
         <Box pt={1}>
-          <StyledSmall
-            onClick={() => handleMenuItem("/dashboard/user-profile")}
-          >
-            Set Status
-          </StyledSmall>
+ 
 
           <StyledSmall
-            onClick={() => handleMenuItem("/dashboard/user-profile")}
+            onClick={() => handleMenuItem("/profile")}
           >
-            Profile & Account
+            Profile
           </StyledSmall>
-
           <StyledSmall
-            onClick={() => handleMenuItem("/dashboard/account-settings")}
+            onClick={() => handleMenuItem("/profile")}
           >
             Settings
           </StyledSmall>
 
-          <StyledSmall onClick={() => handleMenuItem("/dashboard/team-member")}>
-            Manage Team
-          </StyledSmall>
 
           <Divider sx={{ my: 1 }} />
 
