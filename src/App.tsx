@@ -28,6 +28,7 @@ import VenueList from './pages/venues/VenueList';
 import VenueForm from './pages/venues/form/VenueForm'; //to be updated
 import TenantDashboard from './pages/tenants/dashboard/TenantDashboard';
 import TenantForm from './pages/tenants/form/TenantForm';
+import TenantList from './pages/tenants/TenantList';
 
 
 function App() {
@@ -98,8 +99,7 @@ function App() {
 
                       <Route exact path='/users' component={UserList} />
 
-                      <Route exact path='/tenants' component={TenantDashboard} />
-                      <Route exact key={location.key} path={['/createTenant', '/editTenant/:id']} component={TenantForm} />
+                      <Route exact path='/tenants' component={TenantList} />
                       <Route component={NotFound} />
                     </Switch>
 

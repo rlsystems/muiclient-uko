@@ -87,11 +87,21 @@ export default class TenantStore {
             let response = await agent.Tenants.create(createTenantRequest);
             runInAction(() => {
                 //tenant.id = String(response.data.id); //The GUID
-                let newTenant: Tenant = response.data;
-                
-                this.tenantRegistry.set(newTenant.id, newTenant); //add an brand to the Map Object
 
-                this.selectedTenant = newTenant;
+                if(response.succeeded){
+
+                    var newtenant: Tenant = {
+                        id: createTenantRequest.key,
+                        key: createTenantRequest.key,
+                        isActive: true
+                    }
+
+                    this.tenantRegistry.set(newtenant.key, newtenant); //add an brand to the Map Object
+                    this.selectedTenant = newtenant;
+
+                }
+                //let newTenant: Tenant = response.data;
+                          
                 this.editMode = false;
                 this.loading = false;
             })

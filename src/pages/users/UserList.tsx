@@ -12,6 +12,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from '../../app/stores/store';
 import LoadingComponent from "../../components/LoadingComponent";
 import RegisterUserModal from "./RegisterUserModal";
+import { Add } from "@mui/icons-material";
 
 
 
@@ -25,48 +26,48 @@ const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
 }));
 
 const UserList: FC = () => {
-  // change navbar title
-  //useTitle("User List");
-  //const { t } = useTranslation();
-
-  //const navigate = useNavigate();
-  //const handleAddUser = () => navigate("/dashboard/add-user");
-
-  const [openModal, setOpenModal] = useState(false);
 
 
   const { appUserStore, commonStore } = useStore();
   const { loadAppUsers, appUserRegistry, appUsersSorted } = appUserStore;
   const { setTitle } = commonStore;
 
+  useEffect(() => {
+    if (appUserRegistry.size <= 1) loadAppUsers();
+    ;
+  }, [appUserRegistry.size, loadAppUsers])
+
+
+  //Set title in Navigation
   setTitle("User List");
 
-  useEffect(() => {
-      if (appUserRegistry.size <= 1) loadAppUsers();
-      ;
-  }, [appUserRegistry.size, loadAppUsers])
+  //Add Tenant - Modal open/close
+  const [openModal, setOpenModal] = useState(false);
 
 
   if (appUserStore.loadingInitial) return <LoadingComponent content='Loading Users new...' />
 
-  
+
   return (
     <Box pt={2} pb={4}>
       <StyledFlexBox>
         <SearchInput placeholder="Search user..." />
-        <Button variant="contained" onClick={() => setOpenModal(true)}>
-          {("Add New User")}
+        <Button
+          endIcon={<Add />}
+          variant="contained"
+          onClick={() => setOpenModal(true)}>
+          {("Add User")}
         </Button>
       </StyledFlexBox>
 
 
-      <RegisterUserModal         
-            open={openModal}
-            data={null}
-            onClose={() => setOpenModal(false)}
-          />
+      <RegisterUserModal
+        open={openModal}
+        data={null}
+        onClose={() => setOpenModal(false)}
+      />
       <DataTable columnShape={UserColumnShape} data={appUsersSorted} />
-     
+
     </Box>
   );
 };

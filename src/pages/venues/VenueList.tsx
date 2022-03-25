@@ -10,6 +10,8 @@ import { observer } from "mobx-react-lite";
 
 import { useStore } from '../../app/stores/store';
 import VenueColumnShape from "./VenueColumnShape";
+import { Add } from "@mui/icons-material";
+import LoadingComponent from "../../components/LoadingComponent";
 
 
 
@@ -26,33 +28,36 @@ const VenueList: FC = () => {
 
 
 
-    const { venueStore, commonStore } = useStore();
-    const { loadVenues, venueRegistry, venuesSorted } = venueStore;
-    const { setTitle } = commonStore;
+  const { venueStore, commonStore } = useStore();
+  const { loadVenues, venueRegistry, venuesSorted, loadingInitial } = venueStore;
+  const { setTitle } = commonStore;
 
-    setTitle("Venue List");
+  setTitle("Venue List");
 
-    useEffect(() => {
-        if (venueRegistry.size <= 1) loadVenues();
-    }, [venueRegistry.size, loadVenues])
+  useEffect(() => {
+    if (venueRegistry.size <= 1) loadVenues();
+  }, [venueRegistry.size, loadVenues])
 
 
-  // if (appUserStore.loadingInitial) return <LoadingComponent content='Loading Users new...' />
+   if (loadingInitial) return <LoadingComponent content='Loading Venues...' />
 
-  
+
   return (
     <Box pt={2} pb={4}>
       <StyledFlexBox>
         <SearchInput placeholder="Search venues..." />
-        <Button variant="contained" onClick={() => console.log('new venue')}>
-          {("Add New Venue")}
+        <Button
+          endIcon={<Add />}
+          variant="contained"
+          onClick={() => console.log('new venue')}>
+          {("Add Venue")}
         </Button>
       </StyledFlexBox>
 
 
-      
+
       <DataTable columnShape={VenueColumnShape} data={venuesSorted} />
-     
+
     </Box>
   );
 };
