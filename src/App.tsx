@@ -29,6 +29,7 @@ import VenueList from './pages/venues/VenueList';
 
 import VenueForm from './pages/venues/form/VenueForm'; //to be updated
 import AccountSettings from './pages/profile/AccountSettings';
+import Login from './pages/authentication/Login';
 
 
 
@@ -80,7 +81,7 @@ function App() {
 
           {/* Full Pages */}
           <Switch>
-            <Route exact path='/login' component={LoginPage} />
+            <Route exact path='/login' component={Login} />
             <Route exact path='/' component={HomePage} />
 
             {/* Pages with Side Navigation Bar */}
