@@ -61,7 +61,7 @@ const UserColumnShape = [
     Cell: ({ value }: any) => (
       <Small
         sx={{
-          color: value.toString().toLowerCase() === "true" ? "" : "error.main",
+          color: value.toString().toLowerCase() === "true" ? "success.main" : "error.main",
           textTransform: "capitalize"
         }}
       >

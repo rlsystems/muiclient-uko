@@ -26,10 +26,11 @@ import { RegisterUserFormValues } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
 
 // component props interface
-interface ModalProps {
+interface Props {
   data?: any;
   open: boolean;
   onClose: () => void;
+
 }
 
 // styled components
@@ -46,7 +47,13 @@ const StyledModalCard = styled(Card)(({ theme }) => ({
   outline: "none",
 }));
 
-const RegisterUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
+
+//----------- Question about other format:
+//export default function ActivityListItem({ activity }: Props) {}
+//export default observer(function ActivityDetailedSidebar({ activity: { attendees, host } }: Props) {}
+
+
+const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   const { appUserStore } = useStore();
   const { createAppUser } = appUserStore;
 
@@ -73,21 +80,33 @@ const RegisterUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
 
 
 
-  const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid } = useFormik({
+  const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid, resetForm } = useFormik({
     initialValues: newUserFormValues,
     validationSchema: validationSchema,
-    onSubmit: (appUser: RegisterUserFormValues, {resetForm}) => {    
+    onSubmit: (appUser: RegisterUserFormValues) => {
       createAppUser(appUser)
-      .then(() => onClose())
-      .then(() => resetForm())
+        .then(() => handleClose())
     }
 
-    
   });
 
 
+  const handleClose = () => {
+    resetForm(); //method from Formik
+    onClose(); //method from Mui Modal
+  }
+
+  //To prevent closing when you click backdrop 
+  //--underscore is shorthand for unused parameters
+  const handleBackdropClose = (_: any, reason: any) => {
+    if (reason && reason == "backdropClick")
+    return;
+    handleClose(); 
+  }
+
+
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={handleClose}>
       <StyledModalCard>
         <H2 mb={2}>Add New User</H2>
         <Divider />
@@ -97,7 +116,7 @@ const RegisterUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
               <H6 mb={1}>First Name</H6>
               <DarkTextField
                 id="firstName"
-                name="firstName"
+                name="firstName" //id for formik
                 placeholder="First Name"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -152,7 +171,7 @@ const RegisterUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                 autoComplete="new-password"
               />
             </Grid>
-            
+
             <Grid item xs={6}>
               <H6 mb={1}>Password</H6>
               <DarkTextField
@@ -168,7 +187,7 @@ const RegisterUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                 autoComplete="new-password"
               />
             </Grid>
-            
+
             <Grid item xs={6}>
               <H6 mb={1}>Confirm Password</H6>
               <DarkTextField
@@ -188,27 +207,27 @@ const RegisterUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
             <Grid item xs={12}>
               <H6 mb={1}>Role</H6>
               <RadioGroup
-                    row
-                    name="roleId"
-                    defaultValue={values.roleId}
-                    onChange={handleChange}
-                  >
-                    {["admin", "editor", "basic"].map((item) => (
-                      <FormControlLabel
-                      sx={{
-                        textTransform: 'capitalize',
-                        marginRight: '40px'
-                      }}
-                        key={item}
-                        value={item}
-                        label={(item)}
-                        control={<Radio />}
-                      />
-                    ))}
-                  </RadioGroup>
+                row
+                name="roleId"
+                defaultValue={values.roleId}
+                onChange={handleChange}
+              >
+                {["admin", "editor", "basic"].map((item) => (
+                  <FormControlLabel
+                    sx={{
+                      textTransform: 'capitalize',
+                      marginRight: '40px'
+                    }}
+                    key={item}
+                    value={item}
+                    label={(item)}
+                    control={<Radio />}
+                  />
+                ))}
+              </RadioGroup>
             </Grid>
 
-      
+
           </Grid>
 
           <FlexBox justifyContent="flex-end" marginTop={4}>
@@ -216,7 +235,7 @@ const RegisterUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
               fullWidth
               size="small"
               variant="outlined"
-              onClick={onClose}
+              onClick={() => handleClose()}
               sx={{
                 width: 124,
                 fontSize: 12,

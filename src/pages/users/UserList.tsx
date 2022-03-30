@@ -41,8 +41,9 @@ const UserList: FC = () => {
   //Set title in Navigation
   setTitle("Users");
 
-  //Add Tenant - Modal open/close
+  //Modal State
   const [openModal, setOpenModal] = useState(false);
+
 
 
   if (appUserStore.loadingInitial) return <LoadingComponent content='Loading Users...' />
