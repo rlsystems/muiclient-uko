@@ -48,14 +48,12 @@ const StyledModalCard = styled(Card)(({ theme }) => ({
 }));
 
 
-//----------- Question about other format:
-//export default function ActivityListItem({ activity }: Props) {}
-//export default observer(function ActivityDetailedSidebar({ activity: { attendees, host } }: Props) {}
 
+//const RegisterUserModal = ({ open, onClose, data } : Props) => {
 
 const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   const { appUserStore } = useStore();
-  const { createAppUser } = appUserStore;
+  const { createAppUser, createAppUserLoading } = appUserStore;
 
   const [newUserFormValues, setNewUserFormValues] = useState<RegisterUserFormValues>({
     id: '',
@@ -95,6 +93,9 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
     resetForm(); //method from Formik
     onClose(); //method from Mui Modal
   }
+
+
+
 
   //To prevent closing when you click backdrop 
   //--underscore is shorthand for unused parameters
@@ -209,7 +210,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
               <RadioGroup
                 row
                 name="roleId"
-                defaultValue={values.roleId}
+                value={values.roleId}
                 onChange={handleChange}
               >
                 {["admin", "editor", "basic"].map((item) => (
@@ -252,7 +253,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}
-              loading={isSubmitting}
+              loading={createAppUserLoading}
               sx={{ width: 124, fontSize: 12 }}
             >
               Save

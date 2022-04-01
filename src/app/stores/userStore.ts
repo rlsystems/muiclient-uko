@@ -76,24 +76,21 @@ export default class UserStore {
 
 
     updateCurrentUser = async (user: User) => {
-        store.appUserStore.loading = true;
+        store.appUserStore.updateAppUserLoading = true;
         try {
             await agent.Account.update(user);
             runInAction(() => {
                 store.appUserStore.appUserRegistry.set(user.id, user); //update in listing
                 this.currentUser = user;       
-                store.appUserStore.loading = false;
+                store.appUserStore.updateAppUserLoading = false;
             })
         } catch (error) {
             console.log(error);
             runInAction(() => {
-                store.appUserStore.loading = false;
+                store.appUserStore.updateAppUserLoading = false;
             })
         }
     }
-
-   
-
 
 }
 

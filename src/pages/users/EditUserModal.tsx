@@ -27,6 +27,7 @@ import { useStore } from "../../app/stores/store";
 import { RegisterUserFormValues, User } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
 import { useParams } from "react-router-dom";
+import { render } from "react-dom";
 
 // component props interface
 interface ModalProps {
@@ -49,12 +50,14 @@ const StyledModalCard = styled(Card)(({ theme }) => ({
     outline: "none",
 }));
 
+
+
 const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     const { appUserStore, userStore } = useStore();
-    const { loadAppUser, updateAppUser, loading, loadingInitial } = appUserStore;
-    const { currentUser, getCurrentUser, updateCurrentUser } = userStore; //check loading
+    const { loadAppUser, updateAppUser, deleteAppUserLoading, updateAppUserLoading, loadingInitial, deleteAppUser } = appUserStore;
+    const { currentUser, getCurrentUser, updateCurrentUser } = userStore;
 
-    const { id } = useParams<{ id: string }>(); 
+    const { id } = useParams<{ id: string }>();
 
     const [userFormValues, setUserFormValues] = useState<User>({ //Local State
         id: data.id,
@@ -76,37 +79,31 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     })
 
 
-    // useEffect(() => {
-    //     if (id) {
-    //         loadAppUser(id).then(appUser => setUserFormValues(appUser!))
-    //     } else {
-
-    //         if (!currentUser) {
-    //             getCurrentUser().then(userFormValues => setUserFormValues(userFormValues!))
-    //         } else {
-    //             setUserFormValues(currentUser)
-    //         }
-
-    //     }
-    // }, [id, getCurrentUser])
-
-
 
 
     const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid } = useFormik({
         initialValues: userFormValues,
         validationSchema: validationSchema,
-
         onSubmit: (user: User, { resetForm }) => {
             updateAppUser(user)
                 .then(() => onClose())
                 .then(() => resetForm())
         }
-
-      
-
     });
 
+
+    const handleDelete = (id: string) => {
+        deleteAppUser(id).then(() => onClose());
+    }
+
+    ////--Alternative syntax
+    // const handleDelete = async (id: string) => {
+    //     await deleteAppUser(id);
+    //     onClose();
+    // }
+
+    //to conditionally render form
+    const isRootUser: boolean = values.roleId === 'root';
 
     return (
         <Modal open={open} onClose={onClose}>
@@ -196,56 +193,63 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                         </Grid>
 
 
+                        {!isRootUser &&
+                            <Grid item xs={12}>
+                                <H6 mb={1}>Role</H6>
+                                <RadioGroup
+                                    row
+                                    name="roleId"
+                                    value={values.roleId}
+                                    onChange={handleChange}
+                                >
+                                    {["admin", "editor", "basic"].map((item) => (
+                                        <FormControlLabel
+                                            sx={{
+                                                textTransform: 'capitalize',
+                                                marginRight: '40px'
+                                            }}
+                                            key={item}
+                                            value={item}
+                                            label={(item)}
+                                            control={<Radio />}
+                                        />
+                                    ))}
+                                </RadioGroup>
+                            </Grid>
+                        }
 
-                        <Grid item xs={12}>
-                            <H6 mb={1}>Role</H6>
-                            <RadioGroup
-                                row
-                                name="roleId"
-                                defaultValue={values.roleId}
-                                onChange={handleChange}
-                            >
-                                {["admin", "editor", "basic"].map((item) => (
-                                    <FormControlLabel
-                                        sx={{
-                                            textTransform: 'capitalize',
-                                            marginRight: '40px'
-                                        }}
-                                        key={item}
-                                        value={item}
-                                        label={(item)}
-                                        control={<Radio />}
-                                    />
-                                ))}
-                            </RadioGroup>
-                        </Grid>
 
 
                     </Grid>
 
-                    <FlexBox justifyContent="space-between" marginTop={4}>
-                        <Button
-                            size="small"
-                            variant="outlined"
-                            //onClick={handleDelete}
-                            sx={{
-                                width: 124,
-                                fontSize: 12,
-                                marginRight: 2,
-                                color: (theme) =>
-                                    theme.palette.primary.red,
-                                borderColor: (theme) =>
-                                    theme.palette.primary.red,
-                                "&:hover": {
+                    <FlexBox justifyContent={!isRootUser ? "space-between" : "flex-end"} marginTop={4}>
+
+                        {!isRootUser &&
+                            <LoadingButton
+                                size="small"
+                                variant="outlined"
+                                loading={deleteAppUserLoading}
+                                onClick={() => handleDelete(values.id)}
+                                sx={{
+                                    width: 124,
+                                    fontSize: 12,
+                                    marginRight: 2,
                                     color: (theme) =>
-                                    theme.palette.primary.red,
-                                borderColor: (theme) =>
-                                    theme.palette.primary.red,
-                                      },
-                            }}
-                        >
-                            Delete
-                        </Button>
+                                        theme.palette.primary.red,
+                                    borderColor: (theme) =>
+                                        theme.palette.primary.red,
+                                    "&:hover": {
+                                        color: (theme) =>
+                                            theme.palette.primary.red,
+                                        borderColor: (theme) =>
+                                            theme.palette.primary.red,
+                                    },
+                                }}
+                            >
+                                Delete
+                            </LoadingButton>
+                        }
+
                         <FlexBox>
                             <Button
                                 fullWidth
@@ -268,7 +272,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                                 type="submit"
                                 variant="contained"
                                 disabled={!dirty || !isValid || isSubmitting}
-                                loading={isSubmitting}
+                                loading={updateAppUserLoading}
                                 sx={{ width: 124, fontSize: 12 }}
                             >
                                 Save

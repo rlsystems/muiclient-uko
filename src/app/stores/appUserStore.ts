@@ -9,7 +9,10 @@ export default class AppUserStore {
     selectedAppUser: User | undefined = undefined;
 
     editMode: boolean = false;
-    loading: boolean = false; //for user submit
+    createAppUserLoading: boolean = false; 
+    updateAppUserLoading: boolean = false; 
+    deleteAppUserLoading: boolean = false; 
+
     loadingInitial: boolean = false; //for page loads
 
 
@@ -80,7 +83,7 @@ export default class AppUserStore {
 
     //register a new user
     createAppUser = async (appUser: RegisterUserFormValues) => {
-        this.loading = true;
+        this.createAppUserLoading = true;
 
         try {
             let response = await agent.Users.create(appUser);
@@ -101,12 +104,12 @@ export default class AppUserStore {
 
                 this.selectedAppUser = newuser;
                 this.editMode = false;
-                this.loading = false;
+                this.createAppUserLoading = false;
             })
         } catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+                this.createAppUserLoading = false;
             })
         }
     }
@@ -114,36 +117,36 @@ export default class AppUserStore {
 
 
     updateAppUser = async (user: User) => {
-        this.loading = true;
+        this.updateAppUserLoading = true;
 
         try {
             await agent.Users.update(user);
             runInAction(() => {
                 this.appUserRegistry.set(user.id, user); //Map Object set will update if ID same
                 this.editMode = false;
-                this.loading = false;
+                this.updateAppUserLoading = false;
             })
         } catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+                this.updateAppUserLoading = false;
             })
         }
     }
 
     deleteAppUser = async (id: string) => {
-        this.loading = true;
+        this.deleteAppUserLoading = true;
 
         try {
             await agent.Users.delete(id); //delete from DB
             runInAction(() => {
                 this.appUserRegistry.delete(id); //delete from local memory
-                this.loading = false;
+                this.deleteAppUserLoading = false;
             })
         } catch (error) {
             console.log(error);
             runInAction(() => {
-                this.loading = false;
+                this.deleteAppUserLoading = false;
             })
         }
     }

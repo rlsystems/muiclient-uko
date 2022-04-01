@@ -30,7 +30,7 @@ const UserColumnShape = [
     },
   },
   {
-    Header: "RoleId",
+    Header: "Role",
     accessor: "roleId",
     minWidth: 200,
     Cell: ({ value }: any) => (
@@ -78,16 +78,16 @@ const UserColumnShape = [
       // const { appUserRegistry } = appUserStore;
       const [openModal, setOpenModal] = useState(false);
       //const selectedUser = appUserStore.getAppUser(row.original['id']);
+      
       return (
         <>
           <EditIconButton onClick={() => setOpenModal(true)} />
-        
-          <EditUserModal
-            //
+          {openModal && <EditUserModal
             open={openModal}
             data={row.original}
             onClose={() => setOpenModal(false)}
-          />
+          />}
+          
         </>
       );
     },

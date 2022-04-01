@@ -61,12 +61,13 @@ const UserList: FC = () => {
         </Button>
       </StyledFlexBox>
 
-
-      <RegisterUserModal
+      {openModal && <RegisterUserModal
         open={openModal}
         data={null}
         onClose={() => setOpenModal(false)}
       />
+      }
+    
       <DataTable columnShape={UserColumnShape} data={appUsersSorted} />
 
     </Box>
