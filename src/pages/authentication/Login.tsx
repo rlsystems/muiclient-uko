@@ -31,9 +31,9 @@ const Login: FC = () => {
 
 
   const initialValues = {
-    email: "admin@root.com",
-    password: "Password123!",
-    tenant: "root",
+    email: "",
+    password: "",
+    tenant: "",
   };
   // form field value validation schema
   const validationSchema = Yup.object().shape({
@@ -48,7 +48,7 @@ const Login: FC = () => {
       .required("Password is required"),
   });
 
-  const { errors, values, touched, handleBlur, handleChange, handleSubmit, dirty, isSubmitting, isValid } =
+  const { errors, values, touched, handleBlur, handleChange, handleSubmit, dirty, isSubmitting, isValid, setFieldValue, validateForm, setFieldTouched } =
     useFormik({
       initialValues,
       validationSchema,
@@ -57,6 +57,21 @@ const Login: FC = () => {
         //toast.success("You Logged In Successfully test");
       },
     });
+
+
+  //Admin Credentials button
+  const handleAdminCredentials = () => {
+    populateField("email", "admin@root.com");
+    populateField("password", "Password123!");
+    populateField("tenant", "root");
+  }
+
+  //To prepopulate a field it must be touched 
+  const populateField = (name: string, value: string) => {
+    setFieldValue(name, value);
+    setTimeout(() => setFieldTouched(name, true));
+  };
+  
 
   return (
     <FlexBox
@@ -93,6 +108,7 @@ const Login: FC = () => {
                   fullWidth
                   name="email"
                   type="email"
+                  placeholder="user@email.com"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.email || ""}
@@ -109,6 +125,7 @@ const Login: FC = () => {
                   fullWidth
                   name="password"
                   type="password"
+                  placeholder="Password"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.password || ""}
@@ -124,6 +141,7 @@ const Login: FC = () => {
                   fullWidth
                   name="tenant"
                   type="text"
+                  placeholder="tenant"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.tenant || ""}
@@ -161,9 +179,19 @@ const Login: FC = () => {
                 Submit
               </LoadingButton>
             </Box>
+            <Box sx={{ mt: 2 }}>
+              <Button
+                onClick={() => handleAdminCredentials()}
+                color="primary"
+                variant="outlined"
+
+              >
+                Admin Credentials
+              </Button>
+            </Box>
           </form>
 
-          
+
         </FlexBox>
       </Card>
     </FlexBox>

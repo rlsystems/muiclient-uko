@@ -1,11 +1,9 @@
 import {
-  Box,
   Button,
   Card,
   Divider,
   FormControlLabel,
   Grid,
-  IconButton,
   Modal,
   Radio,
   RadioGroup,
@@ -47,9 +45,6 @@ const StyledModalCard = styled(Card)(({ theme }) => ({
   outline: "none",
 }));
 
-
-
-//const RegisterUserModal = ({ open, onClose, data } : Props) => {
 
 const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   const { appUserStore } = useStore();
@@ -93,8 +88,6 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
     resetForm(); //method from Formik
     onClose(); //method from Mui Modal
   }
-
-
 
 
   //To prevent closing when you click backdrop 

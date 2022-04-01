@@ -14,22 +14,22 @@ import { ToastContainer } from 'react-toastify';
 
 import { useStore } from './app/stores/store'; //main mobx store
 
+
 import DashboardSidebar from "./navigation/DashboardSideBar";
 import DashboardNavbar from './navigation/DashboardNavbar';
 import LoadingComponent from './components/LoadingComponent';
+
+
+//Pages
 import NotFound from './pages/NotFound';
-
 import HomePage from './pages/home/HomePage';
-import LoginPage from './pages/login/LoginPage';
-
+import Login from './pages/authentication/Login';
 
 import TenantList from './pages/tenants/TenantList';
 import UserList from './pages/users/UserList';
 import VenueList from './pages/venues/VenueList';
 
-import VenueForm from './pages/venues/form/VenueForm'; //to be updated
 import AccountSettings from './pages/profile/AccountSettings';
-import Login from './pages/authentication/Login';
 
 
 
@@ -98,7 +98,7 @@ function App() {
                     <Switch>
 
                       <Route exact path='/venues' component={VenueList} />
-                      <Route exact key={location.key} path={['/createVenue', '/editVenue/:id']} component={VenueForm} />
+                      {/* <Route exact key={location.key} path={['/createVenue', '/editVenue/:id']} component={VenueForm} /> */}
 
                       <Route exact path='/profile' component={AccountSettings} />
                       <Route exact path='/users' component={UserList} />

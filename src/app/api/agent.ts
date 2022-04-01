@@ -10,13 +10,21 @@ import { CreateTenantRequest, Tenant } from '../models/tenant';
 import { Venue } from '../models/venue';
 
 
+
+
+//Local Dev / Azure Dev
+//axios.defaults.baseURL = 'https://localhost:7250/api';
+axios.defaults.baseURL = 'https://aspnano.azurewebsites.net/api';
+
+
+//Artifical delay, for development
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
         setTimeout(resolve, delay)
     })
 }
 
-axios.defaults.baseURL = 'https://localhost:7250/api';
+
 
 axios.interceptors.request.use(config => { //this will send up the token with every request, when there is a token
     const token = store.commonStore.token;
@@ -30,7 +38,7 @@ axios.interceptors.request.use(config => { //this will send up the token with ev
 })
 
 axios.interceptors.response.use(async response => {
-    await sleep(1000); //Artifical delay, for development
+    //await sleep(1000); //Artifical delay, for development
     return response;
 
 }, (error: AxiosError) => {
