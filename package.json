@@ -20,6 +20,7 @@
     "material-react-toastify": "^1.0.1",
     "mobx": "^6.3.10",
     "mobx-react-lite": "^3.2.2",
+    "nprogress": "^0.2.0",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "^5.3.0",
@@ -48,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/nprogress": "^0.2.0"
   }
 }

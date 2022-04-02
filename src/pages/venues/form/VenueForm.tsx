@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-//import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -11,7 +10,7 @@ import { Venue } from '../../../app/models/venue';
 import { Box, Button, Container, Divider, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
-import LoadingComponent from '../../../components/LoadingComponent';
+import LoadingScreen from '../../../components/LoadingScreen';
 
 
 
@@ -59,7 +58,7 @@ export default observer(function VenueForm() {
 
 
 
-    if (loadingInitial) return <LoadingComponent content='Loading venue...' />
+    if (loadingInitial) return <LoadingScreen content='Loading venue...' />
 
     return (
 
@@ -146,10 +145,10 @@ export default observer(function VenueForm() {
 
     </>
 
-            
 
 
-      
+
+
     )
 })
 

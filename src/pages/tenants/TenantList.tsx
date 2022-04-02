@@ -10,7 +10,7 @@ import { observer } from "mobx-react-lite";
 
 import { useStore } from '../../app/stores/store';
 import TenantColumnShape from "./TenantColumnShape";
-import LoadingComponent from "../../components/LoadingComponent";
+import LoadingScreen from "../../components/LoadingScreen";
 import { Add } from "@mui/icons-material";
 import RegisterTenantModal from "./RegisterTenantModal";
 
@@ -42,7 +42,7 @@ const TenantList: FC = () => {
   const [openModal, setOpenModal] = useState(false);
 
 
-  if (loadingInitial) return <LoadingComponent content='Loading Tenants...' />
+  if (loadingInitial) return <LoadingScreen content='Loading Tenants...' />
 
 
   return (

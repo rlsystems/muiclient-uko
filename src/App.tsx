@@ -17,7 +17,7 @@ import { useStore } from './app/stores/store'; //main mobx store
 
 import DashboardSidebar from "./navigation/DashboardSideBar";
 import DashboardNavbar from './navigation/DashboardNavbar';
-import LoadingComponent from './components/LoadingComponent';
+import LoadingScreen from './components/LoadingScreen';
 
 
 //Pages
@@ -30,6 +30,7 @@ import UserList from './pages/users/UserList';
 import VenueList from './pages/venues/VenueList';
 
 import AccountSettings from './pages/profile/AccountSettings';
+import routes, { renderRoutes } from './routes';
 
 
 
@@ -68,7 +69,7 @@ function App() {
   }));
 
 
-  if (!commonStore.appLoaded) return <LoadingComponent />
+  if (!commonStore.appLoaded) return <LoadingScreen />
 
   return (
     <>
@@ -78,14 +79,14 @@ function App() {
 
           <ToastContainer position='bottom-right' hideProgressBar />
 
-
+          {renderRoutes(routes)}
           {/* Full Pages */}
-          <Switch>
+          {/* <Switch>
             <Route exact path='/login' component={Login} />
-            <Route exact path='/' component={HomePage} />
+            <Route exact path='/' component={HomePage} /> */}
 
             {/* Pages with Side Navigation Bar */}
-            <Route
+            {/* <Route
               path={'/(.+)'}
               render={() => (
 
@@ -97,9 +98,9 @@ function App() {
                     <DashboardNavbar />
                     <Switch>
 
-                      <Route exact path='/venues' component={VenueList} />
+                      <Route exact path='/venues' component={VenueList} /> */}
                       {/* <Route exact key={location.key} path={['/createVenue', '/editVenue/:id']} component={VenueForm} /> */}
-
+{/*
                       <Route exact path='/profile' component={AccountSettings} />
                       <Route exact path='/users' component={UserList} />
                       <Route exact path='/tenants' component={TenantList} />
@@ -113,7 +114,7 @@ function App() {
                 </>
 
               )} />
-          </Switch>
+          </Switch> */}
 
         </ThemeProvider>
       </StyledEngineProvider>

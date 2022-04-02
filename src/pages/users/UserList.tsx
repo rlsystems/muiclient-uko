@@ -10,7 +10,7 @@ import { observer } from "mobx-react-lite";
 //import { useNavigate } from "react-router-dom";
 
 import { useStore } from '../../app/stores/store';
-import LoadingComponent from "../../components/LoadingComponent";
+import LoadingScreen from "../../components/LoadingScreen";
 import RegisterUserModal from "./RegisterUserModal";
 import { Add } from "@mui/icons-material";
 
@@ -46,7 +46,7 @@ const UserList: FC = () => {
 
 
 
-  if (appUserStore.loadingInitial) return <LoadingComponent content='Loading Users...' />
+  if (appUserStore.loadingInitial) return <LoadingScreen content='Loading Users...' />
 
 
   return (
@@ -67,7 +67,7 @@ const UserList: FC = () => {
         onClose={() => setOpenModal(false)}
       />
       }
-    
+
       <DataTable columnShape={UserColumnShape} data={appUsersSorted} />
 
     </Box>

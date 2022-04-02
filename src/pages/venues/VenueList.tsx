@@ -11,7 +11,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from '../../app/stores/store';
 import VenueColumnShape from "./VenueColumnShape";
 import { Add } from "@mui/icons-material";
-import LoadingComponent from "../../components/LoadingComponent";
+import LoadingScreen from "../../components/LoadingScreen";
 
 
 
@@ -39,7 +39,7 @@ const VenueList: FC = () => {
   }, [venueRegistry.size, loadVenues])
 
 
-   if (loadingInitial) return <LoadingComponent content='Loading Venues...' />
+  if (loadingInitial) return <LoadingScreen content='Loading Venues...' />
 
 
   return (
