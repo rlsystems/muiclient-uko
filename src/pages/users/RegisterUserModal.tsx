@@ -22,6 +22,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { RegisterUserFormValues } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
+import { toast } from "react-toastify";
 
 // component props interface
 interface Props {
@@ -76,9 +77,10 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid, resetForm } = useFormik({
     initialValues: newUserFormValues,
     validationSchema: validationSchema,
-    onSubmit: (appUser: RegisterUserFormValues) => {
-      createAppUser(appUser)
-        .then(() => handleClose())
+    onSubmit: async (appUser: RegisterUserFormValues) => {
+      await createAppUser(appUser)
+      toast.success("User Added Successfully!")
+      handleClose()
     }
 
   });
@@ -90,12 +92,12 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   }
 
 
-  //To prevent closing when you click backdrop 
+  //To prevent closing when you click backdrop
   //--underscore is shorthand for unused parameters
   const handleBackdropClose = (_: any, reason: any) => {
     if (reason && reason == "backdropClick")
     return;
-    handleClose(); 
+    handleClose();
   }
 
 

@@ -1,3 +1,10 @@
+export enum RoleID  {
+    basic = "basic",
+    editor = "editor",
+    admin = "admin",
+    root = "root"
+}
+
 export interface User {
     id: string;
     firstName: string;
@@ -16,7 +23,7 @@ export interface RegisterUserFormValues {
     password: string;
     confirmPassword: string;
     phoneNumber: string;
-    roleId: string;   
+    roleId: string;
 }
 
 

@@ -1,8 +1,7 @@
+import { RoleID } from "app/models/user";
 import Icons from "../icons/sidebar";
 
-
-
-const index = [
+const menuList = [
   {
     title: "Venues",
     Icon: Icons.UserManagementIcon,
@@ -13,15 +12,15 @@ const index = [
     title: "Users",
     Icon: Icons.UserProfileIcon,
     path: "/users",
-    roles: 'admin'
+    roles: [RoleID.root, RoleID.admin]
   },
   {
     title: "Tenants",
     Icon: Icons.AccountSettingsIcon,
     path: "/tenants",
-    roles: 'root'
+    roles: [RoleID.root]
   }
 
 ];
 
-export default index;
+export default menuList;

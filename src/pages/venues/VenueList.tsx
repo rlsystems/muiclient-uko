@@ -1,4 +1,4 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, Button, styled, Tooltip } from "@mui/material";
 import DataTable from "../../components/dataTable/DataTable";
 import FlexBox from "../../components/FlexBox";
 import SearchInput from "../../components/SearchInput";
@@ -12,6 +12,7 @@ import { useStore } from '../../app/stores/store';
 import VenueColumnShape from "./VenueColumnShape";
 import { Add } from "@mui/icons-material";
 import LoadingScreen from "../../components/LoadingScreen";
+import { RoleID } from "app/models/user";
 
 
 
@@ -24,11 +25,8 @@ const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
 
 }));
 
-const VenueList: FC = () => {
-
-
-
-  const { venueStore, commonStore } = useStore();
+const VenueList = () => {
+  const { venueStore, commonStore, userStore } = useStore();
   const { loadVenues, venueRegistry, venuesSorted, loadingInitial } = venueStore;
   const { setTitle } = commonStore;
 
@@ -38,23 +36,34 @@ const VenueList: FC = () => {
     if (venueRegistry.size <= 1) loadVenues();
   }, [venueRegistry.size, loadVenues])
 
-
   if (loadingInitial) return <LoadingScreen content='Loading Venues...' />
-
 
   return (
     <Box pt={2} pb={4}>
       <StyledFlexBox>
         <SearchInput placeholder="Search venues..." />
-        <Button
-          endIcon={<Add />}
-          variant="contained"
-          onClick={() => console.log('new venue')}>
-          {("Add Venue")}
-        </Button>
+        {
+          userStore.currentUser?.roleId !== RoleID.basic ?
+            <Button
+              endIcon={<Add />}
+              variant="contained"
+              onClick={() => console.log('new venue')}
+            >
+              {("Add Venue")}
+            </Button> :
+            <Tooltip title="Basic user cannot use this feature">
+              <span>
+                <Button
+                  endIcon={<Add />}
+                  disabled
+                  variant="contained"
+                >
+                  {("Add Venue")}
+                </Button>
+              </span>
+            </Tooltip>
+          }
       </StyledFlexBox>
-
-
 
       <DataTable columnShape={VenueColumnShape} data={venuesSorted} />
 
