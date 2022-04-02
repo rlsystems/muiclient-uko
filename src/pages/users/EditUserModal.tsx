@@ -24,6 +24,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { User } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
+import { toast } from "react-toastify";
 
 
 // component props interface
@@ -75,21 +76,21 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
 
 
     const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid } = useFormik({
-        initialValues: userFormValues,
-        validationSchema: validationSchema,
-        onSubmit: (user: User, { resetForm }) => {
-
-            isRootUser ? user.roleId = "root" : "";
-
-            updateAppUser(user)
-                .then(() => onClose())
-                .then(() => resetForm())
-        }
+      initialValues: userFormValues,
+      validationSchema: validationSchema,
+      onSubmit: async (user: User, { resetForm }) => {
+        // TODO: Ask Ryan what the below line is for
+        // isRootUser ? user.roleId = "root" : "";
+        await updateAppUser(user)
+        toast.success("User Edited Successfully!")
+        onClose()
+        resetForm()
+      }
     });
 
 
     const handleDelete = (id: string) => {
-        deleteAppUser(id).then(() => onClose());
+      deleteAppUser(id).then(() => onClose());
     }
 
     ////--Alternative syntax

@@ -1,15 +1,17 @@
+import { RoleID } from "app/models/user";
 import React, { Fragment, ReactNode } from "react";
+import { Redirect } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
-import Login from "../../pages/authentication/Login";
 
 interface AuthGuardProps {
   children: ReactNode;
+  roles?: RoleID[]
 }
 
-const AuthGuard = ({ children }: AuthGuardProps) => {
-  const { userStore: {isLoggedIn} } = useStore();
-
-  if (!isLoggedIn) return <Login />;
+const AuthGuard = ({ children, roles }: AuthGuardProps) => {
+  const { userStore: {isLoggedIn, currentUser} } = useStore();
+  if (!isLoggedIn) return <Redirect to="/login" />;
+  if (roles && !roles.includes(currentUser?.roleId as RoleID)) return <Redirect to="/venues" />;
 
   return <Fragment>{children}</Fragment>;
 };

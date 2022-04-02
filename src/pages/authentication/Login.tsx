@@ -23,6 +23,7 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
+import { toast } from "react-toastify";
 
 const Login: FC = () => {
   const [error, setError] = useState("");
@@ -52,9 +53,9 @@ const Login: FC = () => {
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit: (values) => {
-        userStore.login(values);
-        //toast.success("You Logged In Successfully test");
+      onSubmit: async (values) => {
+        await userStore.login(values);
+        toast.success("Logged In Successfully!");
       },
     });
 
@@ -66,12 +67,12 @@ const Login: FC = () => {
     populateField("tenant", "root");
   }
 
-  //To prepopulate a field it must be touched 
+  //To prepopulate a field it must be touched
   const populateField = (name: string, value: string) => {
     setFieldValue(name, value);
     setTimeout(() => setFieldTouched(name, true));
   };
-  
+
 
   return (
     <FlexBox

@@ -1,4 +1,4 @@
-
+import { RoleID } from 'app/models/user';
 import React, { Suspense, Fragment, lazy, LazyExoticComponent, FC } from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
 import AuthGuard from './components/authentication/AuthGuard';
@@ -13,6 +13,7 @@ interface RouteType {
   routes?: RouteType[];
   exact?: boolean;
   path?: string;
+  roles?: RoleID[]
 }
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
@@ -33,7 +34,7 @@ const AccountSettingsPage = Loadable(lazy(() => import('./pages/profile/AccountS
 export const renderRoutes = (routes: RouteType[] = []) => (
     <Switch>
       {routes.map((route, i) => {
-        const Guard = route.guard || Fragment;
+        const Guard = route.guard || React.Component;
         const Layout = route.layout || Fragment;
         const Component = route.component || React.Component;
 
@@ -43,7 +44,7 @@ export const renderRoutes = (routes: RouteType[] = []) => (
             path={route.path}
             exact={route.exact}
             render={(props) => (
-              <Guard>
+              route.guard ? <Guard roles={route.roles}>
                 <Layout>
                   {route.routes ? (
                     renderRoutes(route.routes)
@@ -51,7 +52,14 @@ export const renderRoutes = (routes: RouteType[] = []) => (
                     <Component {...props} />
                   )}
                 </Layout>
-              </Guard>
+              </Guard> :
+                <Layout>
+                  {route.routes ? (
+                    renderRoutes(route.routes)
+                  ) : (
+                    <Component {...props} />
+                  )}
+                </Layout>
             )}
           />
         );
@@ -59,7 +67,7 @@ export const renderRoutes = (routes: RouteType[] = []) => (
     </Switch>
 );
 
-const routes = [
+const routes: RouteType[] = [
   {
     exact: true,
     path: '/404',
@@ -72,48 +80,46 @@ const routes = [
     component: LoginPage
   },
   {
+    exact: true,
+    guard: GuestGuard,
     path: '/',
-    guard: AuthGuard,
+    component: HomePage
+  },
+  {
+    path: '/',
     layout: DashboardLayout,
     routes: [
       {
         exact: true,
         path: '/venues',
+        guard: AuthGuard,
         component: VenueListPage
       },
       {
         exact: true,
         path: '/profile',
+        guard: AuthGuard,
         component: AccountSettingsPage
       },
       {
         exact: true,
         path: '/users',
-        component: UserListPage
+        component: UserListPage,
+        guard: AuthGuard,
+        roles: [RoleID.root, RoleID.admin]
       },
       {
         exact: true,
         path: '/tenants',
-        component: TenantListPage
+        component: TenantListPage,
+        guard: AuthGuard,
+        roles: [RoleID.root]
       },
-      {
-        exact: true,
-        path: '/',
-        component: HomePage
-      },
-      {
-        component: () => <Redirect to="/404" />
-      }
     ]
   },
   {
     path: '*',
     routes: [
-      {
-        exact: true,
-        path: '/',
-        component: () => <Redirect to="/login" />
-      },
       {
         component: () => <Redirect to="/404" />
       }

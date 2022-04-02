@@ -9,7 +9,7 @@ interface GuestGuardProps {
 const GuestGuard = ({ children }: GuestGuardProps) => {
   const { userStore: {isLoggedIn} } = useStore();
 
-  if (isLoggedIn) return <Redirect to="/dashboard" />;
+  if (isLoggedIn) return <Redirect to="/venues" />;
 
   return <Fragment>{children}</Fragment>;
 };

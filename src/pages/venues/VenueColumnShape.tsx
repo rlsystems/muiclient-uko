@@ -1,8 +1,9 @@
-import { useState } from "react";
-import FlexBox from "../../components/FlexBox";
-import { H6, Small, Tiny } from "../../components/Typography";
+import { H6 } from "../../components/Typography";
 import UkoAvatar from "../../components/UkoAvatar";
 import EditIconButton from "../../components/EditIconButton";
+import { useStore } from "app/stores/store";
+import { RoleID } from "app/models/user";
+import { Tooltip } from "@mui/material";
 
 const VenueColumnShape = [
   {
@@ -22,26 +23,26 @@ const VenueColumnShape = [
   {
     Header: "Description",
     accessor: "description",
-    minWidth: 200,   
+    minWidth: 200,
   },
   {
     Header: "Guid",
     accessor: "id",
     minWidth: 150,
   },
- 
   {
     Header: "Edit",
     accessor: "action",
     Cell: ({ row }: any) => {
+      const {userStore} = useStore();
 
-      return (
-        <>
-          <EditIconButton onClick={() => console.log('edit')} />
-
-
-        </>
-      );
+      return userStore.currentUser?.roleId !== RoleID.basic ?
+          <EditIconButton onClick={() => console.log('edit')} /> :
+          <Tooltip title="Basic user cannot use this feature">
+            <span>
+              <EditIconButton disabled/>
+            </span>
+          </Tooltip>
     },
   },
 ];
