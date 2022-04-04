@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'material-react-toastify';
 
 import { store } from '../stores/store';
-import { TokenData, User, UserLogin, RegisterUserFormValues } from '../models/user';
+import { TokenData, User, UserLogin, RegisterUserFormValues, ChangePasswordRequest, ForgotPasswordRequest, ResetPasswordRequest } from '../models/user';
 import { SearchParams } from '../models/searchParams';
 import { PaginatedResult } from '../models/paginatedResult';
 import { Result } from '../models/result';
@@ -13,8 +13,8 @@ import { Venue } from '../models/venue';
 
 
 //Local Dev / Azure Dev
-//axios.defaults.baseURL = 'https://localhost:7250/api';
-axios.defaults.baseURL = 'https://aspnano.azurewebsites.net/api';
+axios.defaults.baseURL = 'https://localhost:7250/api';
+//axios.defaults.baseURL = 'https://aspnano.azurewebsites.net/api';
 
 
 //Artifical delay, for development
@@ -38,7 +38,7 @@ axios.interceptors.request.use(config => { //this will send up the token with ev
 })
 
 axios.interceptors.response.use(async response => {
-    //await sleep(1000); //Artifical delay, for development
+    await sleep(1000); //Artifical delay, for development
     return response;
 
 }, (error: AxiosError) => {
@@ -92,7 +92,11 @@ const requests = {
 const Account = {
     current: () => requests.get<Result<User>>('/identity/profile'),
     login: (user: UserLogin) => requests.post<Result<TokenData>>(`/tokens`, user), 
-    update: (user: User) => requests.put<void>(`/identity/profile`, user), 
+    update: (user: User) => requests.put<void>(`/identity/profile`, user),
+    changePassword: (changePasswordRequest: ChangePasswordRequest) => requests.put<Result>(`/identity/change-password`, changePasswordRequest),  
+    forgotPassword: (forgotPasswordRequest: ForgotPasswordRequest) => requests.post<Result>(`/identity/forgot-password`, forgotPasswordRequest),  
+    resetPassword: (resetPasswordRequest: ResetPasswordRequest) => requests.post<Result>(`/identity/reset-password`, resetPasswordRequest),  
+
 }
 
 //App Users (Admin User Management)

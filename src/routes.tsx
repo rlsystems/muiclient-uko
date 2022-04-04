@@ -26,6 +26,8 @@ const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
 const NotFoundPage = Loadable(lazy(() => import('./pages/NotFound')));
 const HomePage = Loadable(lazy(() => import('./pages/home/HomePage')));
 const LoginPage = Loadable(lazy(() => import('./pages/authentication/Login')));
+const ForgotPasswordPage = Loadable(lazy(() => import('./pages/authentication/ForgotPassword')));
+const ResetPasswordPage = Loadable(lazy(() => import('./pages/authentication/ResetPassword')));
 const TenantListPage = Loadable(lazy(() => import('./pages/tenants/TenantList')));
 const UserListPage = Loadable(lazy(() => import('./pages/users/UserList')));
 const VenueListPage = Loadable(lazy(() => import('./pages/venues/VenueList')));
@@ -78,6 +80,18 @@ const routes: RouteType[] = [
     guard: GuestGuard,
     path: '/login',
     component: LoginPage
+  },
+  {
+    exact: true,
+    guard: GuestGuard,
+    path: '/forgot-password',
+    component: ForgotPasswordPage
+  },
+  {
+    exact: true,
+    guard: GuestGuard,
+    path: '/reset-password',
+    component: ResetPasswordPage
   },
   {
     exact: true,

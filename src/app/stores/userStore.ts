@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { User, UserLogin } from "../models/user";
+import { ChangePasswordRequest, ForgotPasswordRequest, ResetPasswordRequest, User, UserLogin } from "../models/user";
 import { store } from "./store";
 import { history } from '../..';
 import { Venue } from "../models/venue";
@@ -89,6 +89,36 @@ export default class UserStore {
             runInAction(() => {
                 store.appUserStore.updateAppUserLoading = false;
             })
+        }
+    }
+
+
+    changePassword = async (changePasswordRequest: ChangePasswordRequest) => {      
+        try {
+            const response = await agent.Account.changePassword(changePasswordRequest);
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    forgotPassword = async (forgotPasswordRequest: ForgotPasswordRequest) => {    
+        store.commonStore.setTenant(forgotPasswordRequest.tenant);  
+        try {
+            const response = await agent.Account.forgotPassword(forgotPasswordRequest);
+            return response
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    resetPassword = async (resetPasswordRequest: ResetPasswordRequest) => {    
+        store.commonStore.setTenant(resetPasswordRequest.tenant);  
+        try {
+            const response = await agent.Account.resetPassword(resetPasswordRequest);
+            return response
+        } catch (error) {
+            console.log(error);
         }
     }
 

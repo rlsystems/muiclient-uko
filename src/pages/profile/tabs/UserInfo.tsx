@@ -57,7 +57,7 @@ const UserInfo: FC = () => {
 
   });
 
-  const { values, errors, touched, handleChange, handleSubmit, isSubmitting, isValid, dirty  } = useFormik({
+  const { values, errors, touched, handleChange, handleSubmit, handleBlur, isSubmitting, isValid, dirty  } = useFormik({
     initialValues: userFormValues,
     validationSchema: fieldValidationSchema,
     onSubmit: (values) => {
@@ -141,6 +141,7 @@ const UserInfo: FC = () => {
               name="firstName"
               label="First Name"
               value={values.firstName}
+              onBlur={handleBlur}
               onChange={handleChange}
               helperText={touched.firstName && errors.firstName}
               error={Boolean(touched.firstName && errors.firstName)}
@@ -152,6 +153,7 @@ const UserInfo: FC = () => {
               name="lastName"
               label="Last Name"
               value={values.lastName}
+              onBlur={handleBlur}
               onChange={handleChange}
               helperText={touched.lastName && errors.lastName}
               error={Boolean(touched.lastName && errors.lastName)}
@@ -164,6 +166,7 @@ const UserInfo: FC = () => {
               label="Email"
               value={values.email}
               onChange={handleChange}
+              onBlur={handleBlur}
               helperText={touched.email && errors.email}
               error={Boolean(touched.email && errors.email)}
             />
@@ -175,6 +178,7 @@ const UserInfo: FC = () => {
               label="Phone Number"
               value={values.phoneNumber}
               onChange={handleChange}
+              onBlur={handleBlur}
               helperText={touched.phoneNumber && errors.phoneNumber}
               error={Boolean(touched.phoneNumber && errors.phoneNumber)}
             />

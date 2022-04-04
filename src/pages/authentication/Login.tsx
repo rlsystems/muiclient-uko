@@ -150,8 +150,24 @@ const Login: FC = () => {
                   helperText={touched.tenant && errors.tenant}
                 />
               </TextFieldWrapper>
-            </FlexBox>
+   
 
+            </FlexBox>
+            <FlexBox mt={2} alignItems="center" justifyContent="space-between">
+              <FormControlLabel
+                control={
+                  <Switch
+                    name="remember"
+                    checked
+                  />
+                }
+                label="Remember Me"
+                sx={{ "& .MuiTypography-root": { fontWeight: 600 } }}
+              />
+              <Link to="/forgot-password">
+                <Small color="secondary.red">Forgot Password?</Small>
+              </Link>
+            </FlexBox>
 
 
             {error && (
@@ -173,7 +189,8 @@ const Login: FC = () => {
                 sx={{ mt: 3, mb: 2 }}
                 disabled={!isValid}
                 color="primary" variant="contained"
-                fullWidth type="submit"
+                fullWidth
+                type="submit"
                 loading={isSubmitting}
 
               >
