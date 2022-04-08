@@ -2,19 +2,22 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'material-react-toastify';
 
 import { store } from '../stores/store';
-import { TokenData, User, UserLogin, RegisterUserFormValues, ChangePasswordRequest, ForgotPasswordRequest, ResetPasswordRequest } from '../models/user';
+import { User, RegisterUserRequest, ChangePasswordRequest, UpdateProfileRequest } from '../models/user';
+import { TokenData, UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
+
 import { SearchParams } from '../models/searchParams';
 import { PaginatedResult } from '../models/paginatedResult';
 import { Result } from '../models/result';
 import { CreateTenantRequest, Tenant } from '../models/tenant';
 import { Venue } from '../models/venue';
+import { object } from 'yup';
 
 
 
 
 //Local Dev / Azure Dev
-axios.defaults.baseURL = 'https://localhost:7250/api';
-//axios.defaults.baseURL = 'https://aspnano.azurewebsites.net/api';
+//axios.defaults.baseURL = 'https://localhost:7250/api';
+axios.defaults.baseURL = 'https://aspnano.azurewebsites.net/api';
 
 
 //Artifical delay, for development
@@ -83,7 +86,7 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
-    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+    put: <T>(url: string, body: {}, options?: {}) => axios.put<T>(url, body, options).then(responseBody),
     del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
 
@@ -92,7 +95,20 @@ const requests = {
 const Account = {
     current: () => requests.get<Result<User>>('/identity/profile'),
     login: (user: UserLogin) => requests.post<Result<TokenData>>(`/tokens`, user), 
-    update: (user: User) => requests.put<void>(`/identity/profile`, user),
+    update: (user: UpdateProfileRequest) => requests.put<Result<User>>(`/identity/profile`, user),
+
+    updateProfile: (user: UpdateProfileRequest) => {
+        let formData = new FormData();
+
+        Object.entries(user).forEach( ([key, val]) => {
+            formData.append(key, val);
+        })
+        
+        return requests.put<Result<User>>('/identity/profile', formData, {
+            headers: { 'Content-type': 'multipart/form-data' }
+        })
+
+    },
     changePassword: (changePasswordRequest: ChangePasswordRequest) => requests.put<Result>(`/identity/change-password`, changePasswordRequest),  
     forgotPassword: (forgotPasswordRequest: ForgotPasswordRequest) => requests.post<Result>(`/identity/forgot-password`, forgotPasswordRequest),  
     resetPassword: (resetPasswordRequest: ResetPasswordRequest) => requests.post<Result>(`/identity/reset-password`, resetPasswordRequest),  
@@ -102,7 +118,7 @@ const Account = {
 //App Users (Admin User Management)
 const Users = {
     list: () => requests.get<Result<User[]>>('/identity/userlist'),
-    create: (appUser: RegisterUserFormValues) => requests.post<Result<String>>(`/identity/register`, appUser),
+    create: (appUser: RegisterUserRequest) => requests.post<Result<String>>(`/identity/register`, appUser),
     details: (id: string) => requests.get<Result<User>>(`/identity/user/${id}`),
     update: (user: User) => requests.put<void>(`/identity/user/${user.id}`, user), //with id is admin editing a user
     delete: (id: string) => requests.del<void>(`/identity/user/${id}`), //with id is admin editing a user

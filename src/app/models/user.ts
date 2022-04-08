@@ -5,6 +5,8 @@ export enum RoleID  {
     root = "root"
 }
 
+
+//Profile / AppUser share this class
 export interface User {
     id: string;
     firstName: string;
@@ -13,9 +15,11 @@ export interface User {
     phoneNumber: string;
     isActive: boolean;
     roleId: string;
+    imageUrl: string;
 }
 
-export interface RegisterUserFormValues {
+//Admin Create New User
+export interface RegisterUserRequest {
     id: string;
     firstName: string;
     lastName: string;
@@ -26,37 +30,25 @@ export interface RegisterUserFormValues {
     roleId: string;
 }
 
+//Update your own profile (includes image upload, excludes role and active)
+export interface UpdateProfileRequest {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    imageFile?: Blob;
+    imageUrl: string;
+    deleteCurrentImage: boolean;
+}
+
+//Update your own password
 export interface ChangePasswordRequest {
     password: string;
     newPassword: string;
     confirmNewPassword: string;
 }
 
-export interface ForgotPasswordRequest {
-    email: string;
-    tenant: string; //in production, would come from domain
-}
-
-export interface ResetPasswordRequest {
-    email: string;
-    token: string;
-    password: string;
-    confirmPassword: string;
-    tenant: string; //in production, would come from domain
-}
 
 
-//for login
-export interface UserLogin {
-    email: string;
-    password: string;
-    tenant: string; //in production, would come from domain
-}
 
-
-export interface TokenData {
-    token: string;
-    refreshToken: string;
-    refreshTokenExpiryTime: string;
-
-}

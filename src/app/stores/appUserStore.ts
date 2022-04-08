@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { RegisterUserFormValues, User } from "../models/user";
+import { RegisterUserRequest, User } from "../models/user";
 
 
 export default class AppUserStore {
@@ -9,7 +9,7 @@ export default class AppUserStore {
     selectedAppUser: User | undefined = undefined;
 
     editMode: boolean = false;
-    createAppUserLoading: boolean = false; 
+    createAppUserLoading: boolean = false; //could we use local state for these instead?
     updateAppUserLoading: boolean = false; 
     deleteAppUserLoading: boolean = false; 
 
@@ -82,7 +82,7 @@ export default class AppUserStore {
     //---------------------------------
 
     //register a new user
-    createAppUser = async (appUser: RegisterUserFormValues) => {
+    createAppUser = async (appUser: RegisterUserRequest) => {
         this.createAppUserLoading = true;
 
         try {
@@ -97,6 +97,7 @@ export default class AppUserStore {
                     email: appUser.email,
                     phoneNumber: appUser.phoneNumber,
                     roleId: appUser.roleId,
+                    imageUrl: "",
                     isActive: true
                 }
                 

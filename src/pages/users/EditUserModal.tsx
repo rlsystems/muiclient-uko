@@ -63,7 +63,8 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
         email: data.email,
         phoneNumber: data.phoneNumber,
         isActive: data.isActive,
-        roleId: data.roleId
+        roleId: data.roleId,
+        imageUrl: ""
     });
 
     const validationSchema = Yup.object({

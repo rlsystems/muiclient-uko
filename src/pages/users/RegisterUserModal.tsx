@@ -20,7 +20,7 @@ import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
 
 import { useStore } from "../../app/stores/store";
-import { RegisterUserFormValues } from "../../app/models/user";
+import { RegisterUserRequest } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 
@@ -51,7 +51,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   const { appUserStore } = useStore();
   const { createAppUser, createAppUserLoading } = appUserStore;
 
-  const [newUserFormValues, setNewUserFormValues] = useState<RegisterUserFormValues>({
+  const [newUserFormValues, setNewUserFormValues] = useState<RegisterUserRequest>({
     id: '',
     firstName: '',
     lastName: '',
@@ -77,8 +77,8 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid, resetForm } = useFormik({
     initialValues: newUserFormValues,
     validationSchema: validationSchema,
-    onSubmit: async (appUser: RegisterUserFormValues) => {
-      await createAppUser(appUser)
+    onSubmit: async (registerUser: RegisterUserRequest) => {
+      await createAppUser(registerUser)
       toast.success("User Added Successfully!")
       handleClose()
     }

@@ -1,6 +1,8 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { ChangePasswordRequest, ForgotPasswordRequest, ResetPasswordRequest, User, UserLogin } from "../models/user";
+import { ChangePasswordRequest, UpdateProfileRequest, User } from "../models/user";
+import { UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
+
 import { store } from "./store";
 import { history } from '../..';
 import { Venue } from "../models/venue";
@@ -75,13 +77,13 @@ export default class UserStore {
     }
 
 
-    updateCurrentUser = async (user: User) => {
+    updateCurrentUser = async (user: UpdateProfileRequest) => {
         store.appUserStore.updateAppUserLoading = true;
         try {
-            await agent.Account.update(user);
+            let updatedUser = await agent.Account.updateProfile(user);
             runInAction(() => {
-                store.appUserStore.appUserRegistry.set(user.id, user); //update in listing
-                this.currentUser = user;       
+                store.appUserStore.appUserRegistry.set(user.id, updatedUser.data); 
+                this.currentUser = updatedUser.data; //image will update but fields will not -- why??
                 store.appUserStore.updateAppUserLoading = false;
             })
         } catch (error) {

@@ -22,7 +22,6 @@ import {
   import { observer } from "mobx-react-lite";
   
   import { useStore } from "../../app/stores/store";
-  import { RegisterUserFormValues } from "../../app/models/user";
   import { LoadingButton } from "@mui/lab";
 import { CreateTenantRequest } from "../../app/models/tenant";
   

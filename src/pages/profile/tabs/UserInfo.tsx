@@ -1,11 +1,5 @@
 import {
   CameraAlt,
-  Clear,
-  Facebook,
-  Instagram,
-
-  SportsBasketball,
-  Twitter,
 } from "@mui/icons-material";
 import {
   Autocomplete,
@@ -22,30 +16,32 @@ import LightTextField from "../../../components/LightTextField";
 import { H5, H6, Tiny } from "../../../components/Typography";
 import UkoAvatar from "../../../components/UkoAvatar";
 import { useFormik } from "formik";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import * as Yup from "yup";
-import { StyledBadge, StyledChip, StyledFormControlLabel, StyledInput } from "../StyledComponent";
+import { StyledBadge,  StyledFormControlLabel } from "../StyledComponent";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { User } from "../../../app/models/user";
+import { UpdateProfileRequest, User } from "../../../app/models/user";
 import { LoadingButton } from "@mui/lab";
+import { toast } from "react-toastify";
 
 const UserInfo: FC = () => {
-  const { userStore, commonStore } = useStore();
+  const { userStore } = useStore();
 
   const { currentUser, updateCurrentUser } = userStore;
-
+  const [isUpdating, setIsUpdating] = useState(false);
   
 
 
-  const [userFormValues, setUserFormValues] = useState<User>({ //Local State
+  const [userFormValues, setUserFormValues] = useState<UpdateProfileRequest>({ //Local State
     id: currentUser?.id || "",
     firstName: currentUser?.firstName || "",
     lastName: currentUser?.lastName || "",  
     phoneNumber: currentUser?.phoneNumber || "",  
     email: currentUser?.email || "",  
-    isActive: true,
-    roleId: "",
+    imageFile: undefined,
+    imageUrl: "",
+    deleteCurrentImage: false
 });
 
   const fieldValidationSchema = Yup.object().shape({
@@ -57,13 +53,30 @@ const UserInfo: FC = () => {
 
   });
 
-  const { values, errors, touched, handleChange, handleSubmit, handleBlur, isSubmitting, isValid, dirty  } = useFormik({
+  const { values, errors, touched, handleChange, handleSubmit, handleBlur, isSubmitting, isValid, dirty, setFieldValue, resetForm  } = useFormik({
     initialValues: userFormValues,
     validationSchema: fieldValidationSchema,
-    onSubmit: (values) => {
-      updateCurrentUser(values);
+    enableReinitialize: true,
+    onSubmit: async (values) => {
+      setIsUpdating(true);
+      await updateCurrentUser(values);
+      toast.success("Profile Updated"); //how does it know if updateCurrentUser is success or failure?
+      resetForm(); //is this how we make the save button go back to being disabled? (make the form untouched again), strange that isSubmitting doesnt work
+      setIsUpdating(false);
+   
+
+      //after selecting an image, the image should display in the UI (like even before its uploaded)
+      //check this link: https://medium.com/geekculture/how-to-upload-and-preview-images-in-react-js-4e22a903f3db
+
+      //create the popover for Add / Delete
+      //to handle delete, send deleteCurrentImage = true (this is already working on API)
+
     },
   });
+
+  useEffect(()=> {
+
+  })
 
   return (
     <Card sx={{ padding: "1.5rem", pb: "4rem" }}>
@@ -82,6 +95,8 @@ const UserInfo: FC = () => {
               badgeContent={
                 <label htmlFor="icon-button-file">
                   <input
+                    onChange={e => setFieldValue("imageFile", e.target?.files?.[0])}
+                    name="imageFile"
                     type="file"
                     accept="image/*"
                     id="icon-button-file"
@@ -98,7 +113,7 @@ const UserInfo: FC = () => {
             >
               <UkoAvatar
                 alt="Avatar"
-                src={"/static/avatar/001-man.svg"}
+                src={currentUser?.imageUrl || "/001-man.svg"}
                 sx={{ width: 90, height: 90 }}
               />
             </StyledBadge>
@@ -126,7 +141,7 @@ const UserInfo: FC = () => {
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}
-              loading={isSubmitting}
+              loading={isUpdating} //ok to use local state?
               sx={{ width: 124, fontSize: 12 }}
             >
               Save
