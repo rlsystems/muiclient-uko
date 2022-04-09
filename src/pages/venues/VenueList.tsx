@@ -30,7 +30,9 @@ const VenueList = () => {
   const { loadVenues, venueRegistry, venuesSorted, loadingInitial } = venueStore;
   const { setTitle } = commonStore;
 
-  setTitle("Venues");
+  useEffect(() => {
+    setTitle("Venues");
+  }, [])
 
   useEffect(() => {
     if (venueRegistry.size <= 1) loadVenues();

@@ -10,7 +10,6 @@ import { PaginatedResult } from '../models/paginatedResult';
 import { Result } from '../models/result';
 import { CreateTenantRequest, Tenant } from '../models/tenant';
 import { Venue } from '../models/venue';
-import { object } from 'yup';
 
 
 
@@ -31,7 +30,7 @@ const sleep = (delay: number) => {
 
 axios.interceptors.request.use(config => { //this will send up the token with every request, when there is a token
     const token = store.commonStore.token;
- 
+
     config.headers = {
         Tenant: store.commonStore.tenant ?? '',
     };
@@ -63,7 +62,7 @@ axios.interceptors.response.use(async response => {
                 }
                 throw modalStateErrors.flat();
             }
-         
+
             break;
         case 401:
             toast.error('unauthorized');
@@ -94,7 +93,7 @@ const requests = {
 //Identity (Yourself)
 const Account = {
     current: () => requests.get<Result<User>>('/identity/profile'),
-    login: (user: UserLogin) => requests.post<Result<TokenData>>(`/tokens`, user), 
+    login: (user: UserLogin) => requests.post<Result<TokenData>>(`/tokens`, user),
     update: (user: UpdateProfileRequest) => requests.put<Result<User>>(`/identity/profile`, user),
 
     updateProfile: (user: UpdateProfileRequest) => {
@@ -103,15 +102,15 @@ const Account = {
         Object.entries(user).forEach( ([key, val]) => {
             formData.append(key, val);
         })
-        
+
         return requests.put<Result<User>>('/identity/profile', formData, {
             headers: { 'Content-type': 'multipart/form-data' }
         })
 
     },
-    changePassword: (changePasswordRequest: ChangePasswordRequest) => requests.put<Result>(`/identity/change-password`, changePasswordRequest),  
-    forgotPassword: (forgotPasswordRequest: ForgotPasswordRequest) => requests.post<Result>(`/identity/forgot-password`, forgotPasswordRequest),  
-    resetPassword: (resetPasswordRequest: ResetPasswordRequest) => requests.post<Result>(`/identity/reset-password`, resetPasswordRequest),  
+    changePassword: (changePasswordRequest: ChangePasswordRequest) => requests.put<Result>(`/identity/change-password`, changePasswordRequest),
+    forgotPassword: (forgotPasswordRequest: ForgotPasswordRequest) => requests.post<Result>(`/identity/forgot-password`, forgotPasswordRequest),
+    resetPassword: (resetPasswordRequest: ResetPasswordRequest) => requests.post<Result>(`/identity/reset-password`, resetPasswordRequest),
 
 }
 
@@ -137,19 +136,19 @@ const Tenants = {
 
 const Venues = {
 
-    search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/getallvenues`, params), //post 
+    search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/getallvenues`, params), //post
 
     create: (venue: Venue) => requests.post<Result<String>>('/venues', venue),
     details: (id: string) => requests.get<Result<Venue>>(`/venues/${id}`),
     update: (venue: Venue) => requests.put<void>(`/venues/${venue.id}`, venue),
     delete: (id: string) => requests.del<void>(`/venues/${id}`), //or Result<string> is ok too
-    
+
 
 
 }
 
 const agent = {
-    Account, 
+    Account,
     Users,
     Tenants,
     Venues

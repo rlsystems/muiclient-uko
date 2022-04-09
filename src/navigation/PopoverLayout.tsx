@@ -4,7 +4,7 @@ import React, { FC } from "react";
 
 // component props interface
 interface PopoverLayoutProps {
-  title: string | JSX.Element;
+  title?: string | JSX.Element;
   hiddenViewButton?: boolean;
   popoverOpen: boolean;
   popoverClose: () => void;
@@ -13,6 +13,7 @@ interface PopoverLayoutProps {
   anchorRef: React.MutableRefObject<null>;
   minWidth?: number | string;
   maxWidth?: number | string;
+  noHeader?: boolean
 }
 
 const PopoverLayout: FC<PopoverLayoutProps> = (props) => {
@@ -25,6 +26,7 @@ const PopoverLayout: FC<PopoverLayoutProps> = (props) => {
     hiddenViewButton,
     minWidth,
     maxWidth,
+    noHeader
   } = props;
   return (
     <Popover
@@ -41,27 +43,35 @@ const PopoverLayout: FC<PopoverLayoutProps> = (props) => {
         },
       }}
     >
-      <H4 fontWeight="700" p={2}>
-        {title || "Notifications"}
-      </H4>
-      <Divider />
-
-      {children}
-
-      {!hiddenViewButton && (
-        <Box p={2}>
-          <ButtonBase
-            disableRipple
-            sx={{
-              margin: "auto",
-              display: "block",
-              color: "primary.main",
-            }}
-          >
-            View all Notifications
-          </ButtonBase>
-        </Box>
-      )}
+      {/*
+        Fragment added to avoid warning
+        Reference: https://medium.com/@david.zhao.blog/warning-failed-prop-type-invalid-prop-children-supplied-to-forwardref-expected-a-d73d6fda47f1
+      */}
+      <React.Fragment>
+        {noHeader ||
+          <React.Fragment>
+            <H4 fontWeight="700" p={2}>
+              {title || "Notifications"}
+            </H4>
+            <Divider />
+          </React.Fragment>
+        }
+        {children}
+        {!hiddenViewButton && (
+          <Box p={2}>
+            <ButtonBase
+              disableRipple
+              sx={{
+                margin: "auto",
+                display: "block",
+                color: "primary.main",
+              }}
+              >
+              View all Notifications
+            </ButtonBase>
+          </Box>
+        )}
+      </React.Fragment>
     </Popover>
   );
 };

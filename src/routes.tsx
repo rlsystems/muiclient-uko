@@ -23,7 +23,8 @@ const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
     </Suspense>
   );
 
-const NotFoundPage = Loadable(lazy(() => import('./pages/NotFound')));
+const NotFoundPage = Loadable(lazy(() => import('./pages/404')));
+const UnauthorizedPage = Loadable(lazy(() => import('./pages/403')));
 const HomePage = Loadable(lazy(() => import('./pages/home/HomePage')));
 const LoginPage = Loadable(lazy(() => import('./pages/authentication/Login')));
 const ForgotPasswordPage = Loadable(lazy(() => import('./pages/authentication/ForgotPassword')));
@@ -74,6 +75,11 @@ const routes: RouteType[] = [
     exact: true,
     path: '/404',
     component: NotFoundPage
+  },
+  {
+    exact: true,
+    path: '/403',
+    component: UnauthorizedPage
   },
   {
     exact: true,
@@ -129,6 +135,9 @@ const routes: RouteType[] = [
         guard: AuthGuard,
         roles: [RoleID.root]
       },
+      {
+        component: () => <Redirect to="/404" />
+      }
     ]
   },
   {

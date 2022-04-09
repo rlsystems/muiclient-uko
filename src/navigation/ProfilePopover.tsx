@@ -6,6 +6,7 @@ import { FC, Fragment, useRef, useState } from "react";
 import PopoverLayout from "./PopoverLayout";
 import { useStore } from "../app/stores/store";
 import { useHistory } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 // styled components
 const StyledSmall = styled(Small)(({ theme }) => ({
   display: "block",
@@ -50,7 +51,7 @@ const ProfilePopover: FC = () => {
           }}
         >
           <UkoAvatar
-            src={"/static/avatar/001-man.svg"}
+            src={currentUser?.imageUrl || "/static/001-man.svg"}
             sx={{ width: 30, height: 30, ml: 1 }}
           />
         </Badge>
@@ -66,7 +67,7 @@ const ProfilePopover: FC = () => {
         title={
           <FlexBox alignItems="center">
             <UkoAvatar
-              src={"/static/avatar/001-man.svg"}
+              src={currentUser?.imageUrl || "/static/001-man.svg"}
               sx={{ width: 35, height: 35 }}
             />
 
@@ -80,7 +81,7 @@ const ProfilePopover: FC = () => {
         }
       >
         <Box pt={1}>
- 
+
 
           <StyledSmall
             onClick={() => handleMenuItem("/profile")}
@@ -110,4 +111,4 @@ const ProfilePopover: FC = () => {
   );
 };
 
-export default ProfilePopover;
+export default observer(ProfilePopover);
