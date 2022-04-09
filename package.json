@@ -17,7 +17,6 @@
     "axios": "^0.24.0",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
-    "material-react-toastify": "^1.0.1",
     "mobx": "^6.3.10",
     "mobx-react-lite": "^3.2.2",
     "nprogress": "^0.2.0",

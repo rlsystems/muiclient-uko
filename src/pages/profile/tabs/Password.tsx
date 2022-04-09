@@ -14,7 +14,7 @@ const Password: FC = () => {
   const { userStore, commonStore } = useStore();
   const { changePassword } = userStore;
 
-  const [strength, setStrength] = useState(10);
+  const [strength, setStrength] = useState(0);
 
 
   const [passwordFormValues, setPasswordFormValues] = useState<ChangePasswordRequest>({ //Local State
@@ -30,7 +30,7 @@ const Password: FC = () => {
     newPassword: Yup.string()
       .required("New password is required!"),
     confirmNewPassword: Yup.string()
-      .required("Confirm new password is required!"),
+      .required("Confirm new password is required!").oneOf([Yup.ref('newPassword')], 'Your passwords do not match!'),
   });
 
   const { values, errors, touched, handleChange, handleSubmit, handleBlur, isSubmitting, resetForm, isValid, dirty } = useFormik({
@@ -50,26 +50,27 @@ const Password: FC = () => {
 
   });
 
-  //What type should 'e' be
-  const checkStrength = (e: any) => {
-    handleChange(e);   
+  const checkPasswordStrength = (password: string) => {
+    let calculatedStrength = 0;
+    const checkLength = new RegExp('(?=.{8,})');
+    const checkLower = new RegExp('(?=.*[a-z])');
+    const checkUpper = new RegExp('(?=.*[A-Z])');
+    const checkNumber = new RegExp('(?=.*[0-9])');
+    const checkSpecial = new RegExp('(?=.*[^A-Za-z0-9])');
 
-    let calculatedStrength = 10;
-    let newPassword = e.target.value;
-
-    const checkLength = new RegExp('(?=.{8,})'); 
-    const checkLower = new RegExp('(?=.*[a-z])'); 
-    const checkUpper = new RegExp('(?=.*[A-Z])'); 
-    const checkNumber = new RegExp('(?=.*[0-9])'); 
-    const checkSpecial = new RegExp('(?=.*[^A-Za-z0-9])'); 
-
-    checkLower.test(newPassword) ? calculatedStrength += 15 : calculatedStrength;
-    checkUpper.test(newPassword) ? calculatedStrength += 15 : calculatedStrength;
-    checkLength.test(newPassword) ? calculatedStrength += 20 : calculatedStrength;  
-    checkNumber.test(newPassword) ? calculatedStrength += 20 : calculatedStrength;
-    checkSpecial.test(newPassword) ? calculatedStrength += 20 : calculatedStrength;
+    checkLower.test(password) ? calculatedStrength += 20 : calculatedStrength;
+    checkUpper.test(password) ? calculatedStrength += 20 : calculatedStrength;
+    checkLength.test(password) ? calculatedStrength += 20 : calculatedStrength;
+    checkNumber.test(password) ? calculatedStrength += 20 : calculatedStrength;
+    checkSpecial.test(password) ? calculatedStrength += 20 : calculatedStrength;
     setStrength(calculatedStrength);
+  }
 
+  //What type should 'e' be
+  const handlePasswordFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange(e);
+    const newPassword = e.target.value;
+    checkPasswordStrength(newPassword);
   }
 
 
@@ -94,7 +95,8 @@ const Password: FC = () => {
               name="newPassword"
               type="password"
               value={values.newPassword}
-              onChange={checkStrength}
+              onChange={handlePasswordFieldChange}
+              onBlur={handleBlur}
               helperText={touched.newPassword && errors.newPassword}
               error={Boolean(touched.newPassword && errors.newPassword)}
               sx={{ mt: 2, mb: 1 }}
@@ -107,6 +109,7 @@ const Password: FC = () => {
               type="password"
               value={values.confirmNewPassword}
               onChange={handleChange}
+              onBlur={handleBlur}
               helperText={touched.confirmNewPassword && errors.confirmNewPassword}
               error={Boolean(touched.confirmNewPassword && errors.confirmNewPassword)}
               sx={{ mt: 2 }}
@@ -141,6 +144,7 @@ const Password: FC = () => {
               type="password"
               value={values.password}
               onChange={handleChange}
+              onBlur={handleBlur}
               helperText={touched.password && errors.password}
               error={Boolean(touched.password && errors.password)}
               sx={{ mt: 2 }}
