@@ -27,7 +27,7 @@ export default class UserStore {
         store.commonStore.setTenant(creds.tenant);
         try {
             const response = await agent.Account.login(creds);
-            if(!response.succeeded) throw(Error(response.messages[0]))
+            if(!response.succeeded) throw new Error(response.messages[0]);
             store.commonStore.setToken(response.data.token);
             const user = await agent.Account.current();
 
