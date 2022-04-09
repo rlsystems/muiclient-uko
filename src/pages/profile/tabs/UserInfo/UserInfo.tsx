@@ -1,46 +1,44 @@
+import { FC, useState } from "react";
 import {
-  CameraAlt,
-} from "@mui/icons-material";
-import {
-  Autocomplete,
   Box,
   Button,
   Card,
   Divider,
   Grid,
-  IconButton,
   Switch,
 } from "@mui/material";
-import FlexBox from "../../../components/FlexBox";
-import LightTextField from "../../../components/LightTextField";
-import { H5, H6, Tiny } from "../../../components/Typography";
-import UkoAvatar from "../../../components/UkoAvatar";
+import FlexBox from "components/FlexBox";
+import LightTextField from "components/LightTextField";
+import { H5, H6, Tiny } from "components/Typography";
+import UkoAvatar from "components/UkoAvatar";
 import { useFormik } from "formik";
-import { FC, useEffect, useState } from "react";
 import * as Yup from "yup";
-import { StyledBadge,  StyledFormControlLabel } from "../StyledComponent";
-import { useStore } from "../../../app/stores/store";
+import { StyledBadge,  StyledFormControlLabel } from "../../StyledComponent";
+import { useStore } from "app/stores/store";
 import { observer } from "mobx-react-lite";
-import { UpdateProfileRequest, User } from "../../../app/models/user";
+import { UpdateProfileRequest } from "app/models/user";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
+import getBase64 from "app/utils/getBase64";
+import ImagePopover from "./ImagePopover";
 
 const UserInfo: FC = () => {
-  const { userStore } = useStore();
-
-  const { currentUser, updateCurrentUser } = userStore;
+  const {
+    userStore: {
+      currentUser, updateCurrentUser, getCurrentUser
+    }
+  } = useStore();
   const [isUpdating, setIsUpdating] = useState(false);
-  
-
+  const [tempImage, setTempImage] = useState(currentUser?.imageUrl)
 
   const [userFormValues, setUserFormValues] = useState<UpdateProfileRequest>({ //Local State
     id: currentUser?.id || "",
     firstName: currentUser?.firstName || "",
-    lastName: currentUser?.lastName || "",  
-    phoneNumber: currentUser?.phoneNumber || "",  
-    email: currentUser?.email || "",  
+    lastName: currentUser?.lastName || "",
+    phoneNumber: currentUser?.phoneNumber || "",
+    email: currentUser?.email || "",
     imageFile: undefined,
-    imageUrl: "",
+    imageUrl: currentUser?.imageUrl || "",
     deleteCurrentImage: false
 });
 
@@ -50,7 +48,6 @@ const UserInfo: FC = () => {
       .required("First Name is Required!"),
     lastName: Yup.string().required("Last Name is Required!"),
     email: Yup.string().required('The email is required').email(),
-
   });
 
   const { values, errors, touched, handleChange, handleSubmit, handleBlur, isSubmitting, isValid, dirty, setFieldValue, resetForm  } = useFormik({
@@ -61,9 +58,18 @@ const UserInfo: FC = () => {
       setIsUpdating(true);
       await updateCurrentUser(values);
       toast.success("Profile Updated"); //how does it know if updateCurrentUser is success or failure?
-      resetForm(); //is this how we make the save button go back to being disabled? (make the form untouched again), strange that isSubmitting doesnt work
+      // The above toast is only called if updateCurrentUser runs without fail
+      // the await keyword runs the promise there, and terminates the whole async function if the promise doesn't get resolved
+      resetForm(); // is this how we make the save button go back to being disabled? (make the form untouched again), strange that isSubmitting doesnt work
+      // It's working now actually, you can check again if I'm missing something
       setIsUpdating(false);
-   
+
+      // Performing both the below operations right now, will move to more optimized way to doing it after looking into the problem a little
+      // First one updates the field for the current page
+      // Second one updates currentUser with the latest data on Mobx store
+      setUserFormValues(values);
+      await getCurrentUser();
+
 
       //after selecting an image, the image should display in the UI (like even before its uploaded)
       //check this link: https://medium.com/geekculture/how-to-upload-and-preview-images-in-react-js-4e22a903f3db
@@ -74,9 +80,17 @@ const UserInfo: FC = () => {
     },
   });
 
-  useEffect(()=> {
+  const handleImageUpload: React.ChangeEventHandler<HTMLInputElement> = async (evt) => {
+    const file = evt.target?.files?.[0];
+    setFieldValue("imageFile", file);
+    const base64 = await getBase64(file!) as string;
+    if (base64) setTempImage(base64);
+  }
 
-  })
+  const handleImageRemove = async () => {
+    await updateCurrentUser({...values, deleteCurrentImage: true});
+    setTempImage("");
+  }
 
   return (
     <Card sx={{ padding: "1.5rem", pb: "4rem" }}>
@@ -93,27 +107,15 @@ const UserInfo: FC = () => {
               overlap="circular"
               anchorOrigin={{ vertical: "top", horizontal: "right" }}
               badgeContent={
-                <label htmlFor="icon-button-file">
-                  <input
-                    onChange={e => setFieldValue("imageFile", e.target?.files?.[0])}
-                    name="imageFile"
-                    type="file"
-                    accept="image/*"
-                    id="icon-button-file"
-                    style={{ display: "none" }}
-                  />
-
-                  <IconButton aria-label="upload picture" component="span">
-                    <CameraAlt
-                      sx={{ fontSize: 16, color: "background.paper" }}
-                    />
-                  </IconButton>
-                </label>
+                <ImagePopover
+                  handleImageUpdate={handleImageUpload}
+                  handleImageRemove={handleImageRemove}
+                />
               }
             >
               <UkoAvatar
                 alt="Avatar"
-                src={currentUser?.imageUrl || "/001-man.svg"}
+                src={tempImage || "/static/001-man.svg"}
                 sx={{ width: 90, height: 90 }}
               />
             </StyledBadge>

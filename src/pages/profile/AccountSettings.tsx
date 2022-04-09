@@ -2,7 +2,7 @@ import { Instagram, NotificationsNone } from "@mui/icons-material";
 import { Box, Button, Card, Grid, styled, useTheme } from "@mui/material";
 
 
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { H3, H6, Tiny } from "../../components/Typography";
 import convertToSlug from "../../app/utils/convertSlug";
 import FlexBox from "../../components/FlexBox";
@@ -11,7 +11,7 @@ import PasswordIcon from "../../icons/PasswordIcon";
 import ProfileIcon from "../../icons/ProfileIcon";
 import SettingIcon from "../../icons/SettingIcon";
 
-import UserInfo from "./tabs/UserInfo";
+import UserInfo from "./tabs/UserInfo/UserInfo";
 import Preferences from "./tabs/Preferences";
 import Password from "./tabs/Password";
 
@@ -28,12 +28,13 @@ const StyledButton = styled(Button)(() => ({
 }));
 
 const AccountSettings: FC = () => {
+  const { commonStore } = useStore();
 
-  const { userStore, commonStore } = useStore();
-  const { setTitle } = commonStore;
-
-  // change navbar title
-  setTitle("Account Settings");
+  // Below solves the console warning for DashboardNavbar
+  // Should fix that warning, let me know if it pops up again
+  useEffect(() => {
+    commonStore.setTitle("Account Settings");
+  }, [])
 
   const theme = useTheme();
   const [active, setActive] = useState("user-info");
@@ -65,7 +66,7 @@ const AccountSettings: FC = () => {
 
             {/* Side Menu */}
             <FlexBox
-              flexDirection="column"         
+              flexDirection="column"
             >
 
               {tabList.map(({ id, name, Icon }) => (

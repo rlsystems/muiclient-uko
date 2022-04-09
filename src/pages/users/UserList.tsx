@@ -38,8 +38,9 @@ const UserList: FC = () => {
   }, [appUserRegistry.size, loadAppUsers])
 
 
-  //Set title in Navigation
-  setTitle("Users");
+  useEffect(() => {
+    setTitle("Users");
+  }, [])
 
   //Modal State
   const [openModal, setOpenModal] = useState(false);

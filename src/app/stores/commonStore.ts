@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { ServerError } from "../models/serverError";
 
 export default class CommonStore {
@@ -28,30 +28,42 @@ export default class CommonStore {
     }
 
     setServerError = (error: ServerError) => {
-        this.error = error;
+        runInAction(() => {
+            this.error = error;
+        })
     }
 
 
 
     setToken = (token: string | null) => {
         //if(token) window.localStorage.setItem('jwt', token); //set to browser local storage --> now taken care of by the reaction
-        this.token = token;
+        runInAction(() => {
+            this.token = token;
+        })
     }
 
     setTenant = (tenant: string | null) => {
-        this.tenant = tenant;
+        runInAction(() => {
+            this.tenant = tenant;
+        })
     }
 
     setTitle = (title: string | null) => {
-        this.title = title;
+        runInAction(() => {
+            this.title = title;
+        })
     }
 
     setAppLoaded = () => {
-        this.appLoaded = true;
+        runInAction(() => {
+            this.appLoaded = true;
+        })
     }
 
     setDarkMode = () => {
-        this.darkMode == false ? this.darkMode = true : this.darkMode = false;
+        runInAction(() => {
+            this.darkMode == false ? this.darkMode = true : this.darkMode = false;
+        })
     }
 
 }

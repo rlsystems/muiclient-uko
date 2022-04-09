@@ -16,11 +16,11 @@ const UserColumnShape = [
     accessor: "name",
     minWidth: 200,
     Cell: ({ row }: any) => {
-      
-      const { avatar, firstName, lastName } = row.original;
+
+      const {  firstName, lastName, imageUrl } = row.original;
       return (
         <FlexBox alignItems="center">
-          <UkoAvatar src={avatar} />
+          <UkoAvatar src={imageUrl || "/static/001-man.svg"} />
           <FlexBox flexDirection="column" ml={1}>
             <H6 color="text.primary">{firstName + " " + lastName}</H6>
             <Tiny color="text.disabled">Lima, PE</Tiny>
@@ -78,7 +78,7 @@ const UserColumnShape = [
       // const { appUserRegistry } = appUserStore;
       const [openModal, setOpenModal] = useState(false);
       //const selectedUser = appUserStore.getAppUser(row.original['id']);
-      
+
       return (
         <>
           <EditIconButton onClick={() => setOpenModal(true)} />
@@ -87,7 +87,7 @@ const UserColumnShape = [
             data={row.original}
             onClose={() => setOpenModal(false)}
           />}
-          
+
         </>
       );
     },
