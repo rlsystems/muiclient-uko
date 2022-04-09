@@ -45,7 +45,7 @@ function App() {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={appTheme}>
         <CssBaseline />
-        <ToastContainer position='top-center' theme="dark" hideProgressBar draggable />
+        <ToastContainer position='top-center' theme="dark" hideProgressBar draggable autoClose={3000} />
         {renderRoutes(routes)}
       </ThemeProvider>
     </StyledEngineProvider>
