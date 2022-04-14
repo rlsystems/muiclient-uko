@@ -9,6 +9,7 @@ import "nprogress/nprogress.css";
 import App from './App';
 import {createBrowserHistory} from 'history';
 import { Router } from 'react-router-dom';
+import ScrollToTop from 'app/utils/ScrollToTop';
 
 
 export const history = createBrowserHistory();
@@ -18,6 +19,7 @@ export const history = createBrowserHistory();
 ReactDOM.render(
 
     <Router history={history}>
+      <ScrollToTop/>
       <App />
     </Router>
 

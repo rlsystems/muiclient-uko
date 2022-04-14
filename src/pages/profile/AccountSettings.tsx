@@ -11,7 +11,7 @@ import PasswordIcon from "../../icons/PasswordIcon";
 import ProfileIcon from "../../icons/ProfileIcon";
 import SettingIcon from "../../icons/SettingIcon";
 
-import UserInfo from "./tabs/UserInfo/UserInfo";
+import UserInfo from "./tabs/UserInfo/";
 import Preferences from "./tabs/Preferences";
 import Password from "./tabs/Password";
 

@@ -37,9 +37,9 @@ const AccountSettingsPage = Loadable(lazy(() => import('./pages/profile/AccountS
 export const renderRoutes = (routes: RouteType[] = []) => (
     <Switch>
       {routes.map((route, i) => {
-        const Guard = route.guard || React.Component;
+        const Guard = route.guard || React.Component; //creating a component 
         const Layout = route.layout || Fragment;
-        const Component = route.component || React.Component;
+        const Component = route.component || React.Component; //this is the actual page
 
         return (
           <Route

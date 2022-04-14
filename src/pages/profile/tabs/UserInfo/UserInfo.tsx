@@ -67,7 +67,7 @@ const UserInfo: FC = () => {
       // Performing both the below operations right now, will move to more optimized way to doing it after looking into the problem a little
       // First one updates the field for the current page
       // Second one updates currentUser with the latest data on Mobx store
-      setUserFormValues(values);
+      setUserFormValues(values); //full page pattern?
       await getCurrentUser();
 
 
@@ -82,7 +82,7 @@ const UserInfo: FC = () => {
 
   const handleImageUpload: React.ChangeEventHandler<HTMLInputElement> = async (evt) => {
     const file = evt.target?.files?.[0];
-    setFieldValue("imageFile", file);
+    setFieldValue("imageFile", file); //formik
     const base64 = await getBase64(file!) as string;
     if (base64) setTempImage(base64);
   }
