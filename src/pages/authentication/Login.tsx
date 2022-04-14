@@ -49,13 +49,20 @@ const Login: FC = () => {
       .required("Password is required"),
   });
 
-  const { errors, values, touched, handleBlur, handleChange, handleSubmit, dirty, isSubmitting, isValid, setFieldValue, validateForm, setFieldTouched } =
+  const { errors, values, touched, handleBlur, handleChange, handleSubmit, dirty, isSubmitting, isValid, setFieldValue, setFieldError, setFieldTouched } =
     useFormik({
       initialValues,
       validationSchema,
       onSubmit: async (values) => {
-        await userStore.login(values);
-        toast.success("Logged In Successfully!");
+        try {
+          await userStore.login(values);
+          toast.success("Logged In Successfully!");
+        } catch (error) {
+          const message = (error as Error)?.message || "Login failed";
+          toast.error(message);
+          setFieldError("email", "Wrong user credentials");
+          setFieldError("password", "Wrong user credentials");
+        }
       },
     });
 
@@ -150,7 +157,7 @@ const Login: FC = () => {
                   helperText={touched.tenant && errors.tenant}
                 />
               </TextFieldWrapper>
-   
+
 
             </FlexBox>
             <FlexBox mt={2} alignItems="center" justifyContent="space-between">

@@ -11,7 +11,7 @@ export default class UserStore {
 
     //User store is for profile management and current user
 
-    currentUser: User | null = null; 
+    currentUser: User | null = null;
     loadingInitial: boolean = false;
 
     constructor() {
@@ -22,17 +22,15 @@ export default class UserStore {
         return !!this.currentUser;
     }
 
-    
-
     login = async (creds: UserLogin) => {
-        
+
         store.commonStore.setTenant(creds.tenant);
-        console.log(creds)
-        try {          
-            const response = await agent.Account.login(creds);          
+        try {
+            const response = await agent.Account.login(creds);
+            if(!response.succeeded) throw new Error(response.messages[0]);
             store.commonStore.setToken(response.data.token);
             const user = await agent.Account.current();
-            
+
             runInAction(() => //timing issue with async operations
                 this.currentUser = user.data
             );
@@ -54,7 +52,7 @@ export default class UserStore {
         this.currentUser = null;
         history.push('/');
     };
- 
+
 
 
     setLoadingInitial = (state: boolean) => {
@@ -62,7 +60,7 @@ export default class UserStore {
     }
 
 
- 
+
     getCurrentUser = async () => {
 
         try {
@@ -82,7 +80,7 @@ export default class UserStore {
         try {
             let updatedUser = await agent.Account.updateProfile(user);
             runInAction(() => {
-                store.appUserStore.appUserRegistry.set(user.id, updatedUser.data); 
+                store.appUserStore.appUserRegistry.set(user.id, updatedUser.data);
                 this.currentUser = updatedUser.data; //image will update but fields will not -- why??
                 store.appUserStore.updateAppUserLoading = false;
             })
@@ -95,7 +93,7 @@ export default class UserStore {
     }
 
 
-    changePassword = async (changePasswordRequest: ChangePasswordRequest) => {      
+    changePassword = async (changePasswordRequest: ChangePasswordRequest) => {
         try {
             const response = await agent.Account.changePassword(changePasswordRequest);
             return response
@@ -104,8 +102,8 @@ export default class UserStore {
         }
     }
 
-    forgotPassword = async (forgotPasswordRequest: ForgotPasswordRequest) => {    
-        store.commonStore.setTenant(forgotPasswordRequest.tenant);  
+    forgotPassword = async (forgotPasswordRequest: ForgotPasswordRequest) => {
+        store.commonStore.setTenant(forgotPasswordRequest.tenant);
         try {
             const response = await agent.Account.forgotPassword(forgotPasswordRequest);
             return response
@@ -114,8 +112,8 @@ export default class UserStore {
         }
     }
 
-    resetPassword = async (resetPasswordRequest: ResetPasswordRequest) => {    
-        store.commonStore.setTenant(resetPasswordRequest.tenant);  
+    resetPassword = async (resetPasswordRequest: ResetPasswordRequest) => {
+        store.commonStore.setTenant(resetPasswordRequest.tenant);
         try {
             const response = await agent.Account.resetPassword(resetPasswordRequest);
             return response
