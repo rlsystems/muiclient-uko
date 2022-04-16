@@ -13,7 +13,7 @@ import * as Yup from "yup";
 const ResetPassword: FC = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const { userStore } = useStore();
+    const { userStore, commonStore } = useStore();
     const [strength, setStrength] = useState(10);
 
 
@@ -59,7 +59,8 @@ const ResetPassword: FC = () => {
         });
 
 
-    //What type should 'e' be
+    //repeated here and in user profile --- place in utility function??
+    //Also, what type should 'e' be -- some key press event?
     const checkStrength = (e: any) => {
         handleChange(e);
 
@@ -160,22 +161,23 @@ const ResetPassword: FC = () => {
                             error={Boolean(touched.token && errors.token)}
                             helperText={touched.token && errors.token}
                         />
+                        {!commonStore.hasSubdomain && (
+                            <LightTextField
+                                sx={{
+                                    mt: 2
+                                }}
+                                fullWidth
+                                name="tenant"
+                                label="Tenant"
+                                type="text"
+                                placeholder="Tenant"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.tenant || ""}
+                                error={Boolean(touched.tenant && errors.tenant)}
+                                helperText={touched.tenant && errors.tenant}
+                            />)}
 
-                        <LightTextField
-                            sx={{
-                                mt: 2
-                            }}
-                            fullWidth
-                            name="tenant"
-                            label="Tenant"
-                            type="text"
-                            placeholder="Tenant"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            value={values.tenant || ""}
-                            error={Boolean(touched.tenant && errors.tenant)}
-                            helperText={touched.tenant && errors.tenant}
-                        />
                         {error && (
                             <FormHelperText
                                 error
@@ -203,7 +205,7 @@ const ResetPassword: FC = () => {
                     </form>
 
                     <Small margin="auto" mt={3} color="text.disabled">
-                        Tenant key required in testing {" "}
+                        {!commonStore.hasSubdomain && ("Tenant key required in testing ")}{" "}
                         <Link to="/login">
                             <Small color="primary.main">Return to login</Small>
                         </Link>

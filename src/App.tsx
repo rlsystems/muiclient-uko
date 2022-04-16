@@ -22,6 +22,8 @@ import routes, { renderRoutes } from './routes';
 function App() {
   const location = useLocation(); //returns location object from router, useful for the key
   const { commonStore, userStore } = useStore();
+  const isDevelopment: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+
 
   //Get the current user (otherwise reloading browser will clear mobx)
   useEffect(() => {
@@ -31,6 +33,17 @@ function App() {
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore])
+
+  //check if there is a subdomain given --> will hide the tenant fields on client, API will detect the subdomain from the URI if present and use that 
+  useEffect(() => {
+    const host = window.location.host;
+    const subdomain = host.split('.');
+    const minimumSegments = isDevelopment ? 2 : 3;
+    
+    if (subdomain.length == minimumSegments) {
+      commonStore.setSubdomain();
+    }
+  }, [])
 
   // App theme
   const appTheme = ukoTheme({

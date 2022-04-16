@@ -3,13 +3,11 @@ import {
   Box,
   Button,
   Card,
-  Divider,
   FormControlLabel,
   FormHelperText,
   Switch,
 } from "@mui/material";
 import {
-  SocialIconButton,
   TextFieldWrapper,
 } from "./StyledComponents";
 import FlexBox from "../../components/FlexBox";
@@ -17,7 +15,7 @@ import LightTextField from "../../components/LightTextField";
 import { H1, H3, Paragraph, Small } from "../../components/Typography";
 import { useFormik } from "formik";
 
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 //import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
@@ -27,17 +25,16 @@ import { toast } from "react-toastify";
 
 const Login: FC = () => {
   const [error, setError] = useState("");
-
-  const { userStore } = useStore();
-
+  const { userStore, commonStore } = useStore();
 
   const initialValues = {
     email: "",
     password: "",
     tenant: "",
   };
+
   // form field value validation schema
-  const validationSchema = Yup.object().shape({
+  const validationSchema = Yup.object().shape({  
     tenant: Yup.string()
       .required('Tenant key is required'),
     email: Yup.string()
@@ -90,7 +87,7 @@ const Login: FC = () => {
         height: { sm: "100%" },
       }}
     >
-      <Card sx={{ padding: 4, maxWidth: 600, boxShadow: 1 }}>
+      <Card sx={{ padding: 4, width: "100%", maxWidth: 600, boxShadow: 1 }}>
         <FlexBox
           alignItems="center"
           flexDirection="column"
@@ -141,22 +138,26 @@ const Login: FC = () => {
                   helperText={touched.password && errors.password}
                 />
               </TextFieldWrapper>
-              <TextFieldWrapper>
-                <Paragraph fontWeight={600} mb={1} mt={3}>
-                  Tenant
-                </Paragraph>
-                <LightTextField
-                  fullWidth
-                  name="tenant"
-                  type="text"
-                  placeholder="tenant"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.tenant || ""}
-                  error={Boolean(touched.tenant && errors.tenant)}
-                  helperText={touched.tenant && errors.tenant}
-                />
-              </TextFieldWrapper>
+              {/* If no subdomain is present, render the tenant field */}
+              {!commonStore.hasSubdomain && (
+                <TextFieldWrapper>
+                  <Paragraph fontWeight={600} mb={1} mt={3}>
+                    Tenant
+                  </Paragraph>
+                  <LightTextField
+                    fullWidth
+                    name="tenant"
+                    type="text"
+                    placeholder="tenant"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.tenant || ""}
+                    error={Boolean(touched.tenant && errors.tenant)}
+                    helperText={touched.tenant && errors.tenant}
+                  />
+                </TextFieldWrapper>
+              )}
+
 
 
             </FlexBox>
@@ -193,7 +194,7 @@ const Login: FC = () => {
 
             <Box sx={{ mt: 4 }}>
               <LoadingButton
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mb: 2 }}
                 disabled={!isValid}
                 color="primary" variant="contained"
                 fullWidth

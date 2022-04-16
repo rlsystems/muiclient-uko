@@ -5,11 +5,9 @@ export default class CommonStore {
     error: ServerError | null = null;
     token: string | null = window.localStorage.getItem('jwt');
     tenant: string | null = '';
-
+    hasSubdomain: boolean = false; //set upon application loading
     title: string | null = '';
-
     darkMode = true;
-
     appLoaded = false;
 
     constructor() {
@@ -63,6 +61,12 @@ export default class CommonStore {
     setDarkMode = () => {
         runInAction(() => {
             this.darkMode == false ? this.darkMode = true : this.darkMode = false;
+        })
+    }
+
+    setSubdomain = () => {
+        runInAction(() => {
+            this.hasSubdomain = true;
         })
     }
 

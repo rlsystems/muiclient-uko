@@ -13,7 +13,7 @@ import * as Yup from "yup";
 const ForgotPassword: FC = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { userStore } = useStore();
+  const { userStore, commonStore } = useStore();
 
   const initialValues = {
     email: "demo@example.com",
@@ -52,7 +52,7 @@ const ForgotPassword: FC = () => {
       flexDirection="column"
       justifyContent="center"
     >
-      <Card sx={{ padding: 4, maxWidth: 600, marginTop: 4, boxShadow: 1 }}>
+      <Card sx={{ padding: 4, width: "100%", maxWidth: 600, marginTop: 4, boxShadow: 1 }}>
         <FlexBox
           alignItems="center"
           flexDirection="column"
@@ -80,21 +80,24 @@ const ForgotPassword: FC = () => {
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}
             />
-            <LightTextField
-              sx={{
-                mt: 2
-              }}
-              fullWidth
-              name="tenant"
-              label="Tenant"
-              type="text"
-              placeholder="Tenant"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.tenant || ""}
-              error={Boolean(touched.tenant && errors.tenant)}
-              helperText={touched.tenant && errors.tenant}
-            />
+            {!commonStore.hasSubdomain && (
+              <LightTextField
+                sx={{
+                  mt: 2
+                }}
+                fullWidth
+                name="tenant"
+                label="Tenant"
+                type="text"
+                placeholder="Tenant"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.tenant || ""}
+                error={Boolean(touched.tenant && errors.tenant)}
+                helperText={touched.tenant && errors.tenant}
+              />
+            )}
+
             {error && (
               <FormHelperText
                 error
@@ -122,7 +125,7 @@ const ForgotPassword: FC = () => {
           </form>
 
           <Small margin="auto" mt={3} color="text.disabled">
-            Tenant key required in testing {" "}
+          {!commonStore.hasSubdomain && ("Tenant key required in testing ")}{" "}
             <Link to="/login">
               <Small color="primary.main">Return to login</Small>
             </Link>
