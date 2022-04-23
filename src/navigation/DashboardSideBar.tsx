@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   List,
   ListItemButton,
   styled,
@@ -45,8 +46,9 @@ const DashboardSideBar = () => {
         </StyledListItemButton>
 
         <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>
-          {topMenuList.filter(item => !item.roles || item.roles.includes(userStore.currentUser?.roleId as RoleID)).map((nav, index) => (
+          {topMenuList.filter(item => !item.roles || item.roles.includes(userStore.currentUser?.roleId as RoleID)).map((nav, index) => (        
             <Tooltip title={nav.title} placement="right" key={index}>
+              
               <StyledListItemButton
                 disableRipple
                 onClick={() => history.push(nav.path)}

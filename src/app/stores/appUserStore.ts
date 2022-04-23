@@ -1,3 +1,4 @@
+import { SearchParams } from "app/models/searchParams";
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { RegisterUserRequest, User } from "../models/user";
@@ -14,10 +15,10 @@ export default class AppUserStore {
     deleteAppUserLoading: boolean = false; 
 
     loadingInitial: boolean = false; //for page loads
-
+    
 
     constructor() {
-        makeAutoObservable(this) //Mobx will do the above code by inference
+        makeAutoObservable(this) //Let Mobx auto create the interface for this class
     }
 
 
@@ -26,8 +27,9 @@ export default class AppUserStore {
         this.setLoadingInitial(true);
         try {
 
-            const result = await agent.Users.list(); //get list of app users
 
+            const result = await agent.Users.list(); //get list of app users
+            
             result.data.forEach(user => {
                 this.setAppUser(user);
             })

@@ -1,4 +1,4 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, Button, IconButton, styled } from "@mui/material";
 import DataTable from "../../components/dataTable/DataTable";
 import FlexBox from "../../components/FlexBox";
 import SearchInput from "../../components/SearchInput";
@@ -12,7 +12,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from '../../app/stores/store';
 import LoadingScreen from "../../components/LoadingScreen";
 import RegisterUserModal from "./RegisterUserModal";
-import { Add } from "@mui/icons-material";
+import { Add, Search, Send } from "@mui/icons-material";
 
 
 
@@ -34,7 +34,6 @@ const UserList: FC = () => {
 
   useEffect(() => {
     if (appUserRegistry.size <= 1) loadAppUsers();
-    ;
   }, [appUserRegistry.size, loadAppUsers])
 
 
@@ -53,7 +52,21 @@ const UserList: FC = () => {
   return (
     <Box pt={2} pb={4}>
       <StyledFlexBox>
-        <SearchInput placeholder="Search users..." />
+        <FlexBox width={"440px"}>
+          <SearchInput placeholder="Search users..." />
+          
+          <Button
+            sx={{
+              marginLeft: 2
+            }}
+            startIcon={<Search/>}
+            variant="contained"
+            >         
+              {("Search")}
+          </Button>
+
+        </FlexBox>
+
         <Button
           endIcon={<Add />}
           variant="contained"

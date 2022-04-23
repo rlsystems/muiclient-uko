@@ -12,7 +12,8 @@ const menuList = [
     title: "Users",
     Icon: Icons.UserProfileIcon,
     path: "/users",
-    roles: [RoleID.root, RoleID.admin]
+    roles: [RoleID.root, RoleID.admin],
+    divider: true
   },
   {
     title: "Tenants",

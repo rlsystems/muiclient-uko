@@ -1,7 +1,9 @@
-import { ArrowRightAlt } from "@mui/icons-material";
+import { ArrowRightAlt, KeyboardArrowDown } from "@mui/icons-material";
 import {
   Box,
   ButtonBase,
+  MenuItem,
+  Select,
   Stack,
   Table,
   TableBody,
@@ -22,6 +24,7 @@ import {
   useTable,
 } from "react-table";
 import ScrollBar from "simplebar-react";
+import { StyledSelectInput } from "pages/profile/StyledComponent";
 
 // component props interface
 interface DataTableProps {
@@ -155,7 +158,22 @@ const DataTable: FC<DataTableProps> = (props) => {
       </ScrollBar>
 
       {!hidePagination && (
+
         <Stack alignItems="flex-end" marginY={1}>
+          {/* make this select the same blue color, same size if possible, and position it to the left of the pagination*/}
+          <Select
+            value={10}
+          >
+            <MenuItem value="10" >
+              10
+            </MenuItem>
+            <MenuItem value="25" >
+              25
+            </MenuItem>
+            <MenuItem value="50" >
+              50
+            </MenuItem>
+          </Select>
           <StyledPagination
             count={pageOptions.length}
             shape="rounded"

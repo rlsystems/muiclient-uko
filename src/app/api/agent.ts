@@ -10,27 +10,13 @@ import { PaginatedResult } from '../models/paginatedResult';
 import { Result } from '../models/result';
 import { CreateTenantRequest, Tenant } from '../models/tenant';
 import { Venue } from '../models/venue';
+import sleep from 'app/utils/sleep';
 
-
-
-
-//Local Dev / Azure Dev
-//axios.defaults.baseURL = 'https://localhost:7250/api';
-//axios.defaults.baseURL = 'https://aspnano.azurewebsites.net/api';
-
+//Base URL: https://localhost:7250/api or https://aspnano.azurewebsites.net/api
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 
-//Artifical delay, for development
-const sleep = (delay: number) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay)
-    })
-}
-
-
-
-axios.interceptors.request.use(config => { //this will send up the token with every request, when there is a token
+axios.interceptors.request.use(config => { //Send up the token with every request, when there is a token
     const token = store.commonStore.token;
 
     config.headers = {
@@ -42,7 +28,7 @@ axios.interceptors.request.use(config => { //this will send up the token with ev
 })
 
 axios.interceptors.response.use(async response => {
-    if (process.env.NODE_ENV === 'development') await sleep(1000); //Artifical delay, for development
+    if (process.env.NODE_ENV === 'development') await sleep(1000); //Artifical delay for development
     return response;
 
 }, (error: AxiosError) => {
@@ -83,14 +69,12 @@ axios.interceptors.response.use(async response => {
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
-
 const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
     put: <T>(url: string, body: {}, options?: {}) => axios.put<T>(url, body, options).then(responseBody),
     del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
-
 
 //Identity (Yourself)
 const Account = {
@@ -113,22 +97,34 @@ const Account = {
     changePassword: (changePasswordRequest: ChangePasswordRequest) => requests.put<Result>(`/identity/change-password`, changePasswordRequest),
     forgotPassword: (forgotPasswordRequest: ForgotPasswordRequest) => requests.post<Result>(`/identity/forgot-password`, forgotPasswordRequest),
     resetPassword: (resetPasswordRequest: ResetPasswordRequest) => requests.post<Result>(`/identity/reset-password`, resetPasswordRequest),
-
 }
+
+
+
+const Venues = {
+    search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/VenueListPaginated`, params), //server-side pagination
+    create: (venue: Venue) => requests.post<Result<String>>('/venues', venue),
+    details: (id: string) => requests.get<Result<Venue>>(`/venues/${id}`),
+    update: (venue: Venue) => requests.put<void>(`/venues/${venue.id}`, venue),
+    delete: (id: string) => requests.del<void>(`/venues/${id}`),
+}
+
+
 
 //App Users (Admin User Management)
 const Users = {
-    list: () => requests.get<Result<User[]>>('/identity/userlist'),
+    //list: (params: SearchParams) => requests.post<PaginatedResult<User>>('/identity/userlist', params), // server-side pagination
+    list: () => requests.get<Result<User[]>>('/identity/'), // full list for client-side pagination
     create: (appUser: RegisterUserRequest) => requests.post<Result<String>>(`/identity/register`, appUser),
     details: (id: string) => requests.get<Result<User>>(`/identity/user/${id}`),
-    update: (user: User) => requests.put<void>(`/identity/user/${user.id}`, user), //with id is admin editing a user
-    delete: (id: string) => requests.del<void>(`/identity/user/${id}`), //with id is admin editing a user
+    update: (user: User) => requests.put<void>(`/identity/user/${user.id}`, user), 
+    delete: (id: string) => requests.del<void>(`/identity/user/${id}`), 
 
 }
 
 //Tenants
 const Tenants = {
-    list: () => requests.get<Result<Tenant[]>>('/tenants'),
+    list: () => requests.get<Result<Tenant[]>>('/tenants'), // full list for client-side pagination
     details: (id: string) => requests.get<Result<Tenant>>(`/tenants/${id}`),
     create: (tenant: CreateTenantRequest) => requests.post<Result<Tenant>>(`/tenants`, tenant),
 
@@ -136,18 +132,7 @@ const Tenants = {
 
 
 
-const Venues = {
 
-    search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/getallvenues`, params), //post
-
-    create: (venue: Venue) => requests.post<Result<String>>('/venues', venue),
-    details: (id: string) => requests.get<Result<Venue>>(`/venues/${id}`),
-    update: (venue: Venue) => requests.put<void>(`/venues/${venue.id}`, venue),
-    delete: (id: string) => requests.del<void>(`/venues/${id}`), //or Result<string> is ok too
-
-
-
-}
 
 const agent = {
     Account,

@@ -25,7 +25,8 @@ export default class VenueStore {
 
             const params: SearchParams = {     
                 pageNumber: 1,
-                pageSize: 10
+                pageSize: 10,
+                keyword: ""
             }
             console.log('loading venues');
             const result = await agent.Venues.search(params); //get list of venues
