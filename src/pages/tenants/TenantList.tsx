@@ -1,22 +1,19 @@
+import { FC, useEffect, useMemo, useState } from "react";
 import { Box, Button, styled } from "@mui/material";
-import DataTable from "../../components/dataTable/DataTable";
-import FlexBox from "../../components/FlexBox";
-import SearchInput from "../../components/SearchInput";
-
-//import useTitle from "hooks/useTitle";
-import { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-
-
-import { useStore } from '../../app/stores/store';
-import TenantColumnShape from "./TenantColumnShape";
-import LoadingScreen from "../../components/LoadingScreen";
 import { Add } from "@mui/icons-material";
+import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
+
+
+import { useStore } from 'app/stores/store';
+import FlexBox from "components/FlexBox";
+import TenantColumnShape from "./TenantColumnShape";
+import LoadingScreen from "components/LoadingScreen";
 import RegisterTenantModal from "./RegisterTenantModal";
+import ReactTable from "components/ReactTable";
+import { Tenant } from "app/models/tenant";
+import GlobalFilter from "components/GlobalFilter";
 
-
-
-// styled component
 const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
@@ -26,12 +23,36 @@ const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
 }));
 
 const TenantList: FC = () => {
-
-
-
   const { tenantStore, commonStore } = useStore();
   const { loadTenants, tenantRegistry, tenantsSorted, loadingInitial } = tenantStore;
   const { setTitle } = commonStore;
+  const data: Tenant[] = useMemo(() => tenantsSorted, [tenantsSorted]);
+  const columns: any = useMemo(() => TenantColumnShape, [TenantColumnShape]);
+
+
+  const {
+  getTableProps,
+  getTableBodyProps,
+  headerGroups,
+  prepareRow,
+  page,
+  pageOptions,
+  setPageSize,
+  gotoPage,
+  preGlobalFilteredRows,
+  setGlobalFilter,
+  state,
+}: any = useTable(
+  {
+    columns,
+    data,
+  },
+  useFilters,
+  useGlobalFilter,
+  useSortBy,
+  useExpanded,
+  usePagination
+);
 
   useEffect(() => {
     setTitle("Tenants");
@@ -43,26 +64,45 @@ const TenantList: FC = () => {
 
   const [openModal, setOpenModal] = useState(false);
 
-
   if (loadingInitial) return <LoadingScreen content='Loading Tenants...' />
-
 
   return (
     <Box pt={2} pb={4}>
       <StyledFlexBox>
-        <SearchInput placeholder="Search tenants..." />
-        <Button endIcon={<Add />} variant="contained" onClick={() => setOpenModal(true)}>
-          {("Add Tenant")}
+        <GlobalFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          setGlobalFilter={setGlobalFilter}
+          globalFilter={state.globalFilter}
+          inputProps={{
+            placeholder: 'Search tenants...'
+          }}
+        />
+        <Button
+          endIcon={<Add />}
+          variant="contained"
+          onClick={() => setOpenModal(true)}>
+          Add Tenant
         </Button>
       </StyledFlexBox>
-
 
       <RegisterTenantModal
         open={openModal}
         data={null}
         onClose={() => setOpenModal(false)}
       />
-      <DataTable columnShape={TenantColumnShape} data={tenantsSorted} />
+
+      <ReactTable
+        getTableProps={getTableProps}
+        getTableBodyProps={getTableBodyProps}
+        headerGroups={headerGroups}
+        prepareRow={prepareRow}
+        page={page}
+        pageOptions={pageOptions}
+        pageIndex={state.pageIndex}
+        pageSize={state.pageSize}
+        setPageSize={setPageSize}
+        gotoPage={gotoPage}
+      />
 
     </Box>
   );

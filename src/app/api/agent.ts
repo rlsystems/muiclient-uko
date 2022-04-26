@@ -9,12 +9,11 @@ import { SearchParams } from '../models/searchParams';
 import { PaginatedResult } from '../models/paginatedResult';
 import { Result } from '../models/result';
 import { CreateTenantRequest, Tenant } from '../models/tenant';
-import { Venue } from '../models/venue';
+import { AddVenueRequest, Venue } from '../models/venue';
 import sleep from 'app/utils/sleep';
 
 //Base URL: https://localhost:7250/api or https://aspnano.azurewebsites.net/api
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-
 
 axios.interceptors.request.use(config => { //Send up the token with every request, when there is a token
     const token = store.commonStore.token;
@@ -103,7 +102,7 @@ const Account = {
 
 const Venues = {
     search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/VenueListPaginated`, params), //server-side pagination
-    create: (venue: Venue) => requests.post<Result<String>>('/venues', venue),
+    create: (venue: AddVenueRequest) => requests.post<Result<String>>('/venues', venue),
     details: (id: string) => requests.get<Result<Venue>>(`/venues/${id}`),
     update: (venue: Venue) => requests.put<void>(`/venues/${venue.id}`, venue),
     delete: (id: string) => requests.del<void>(`/venues/${id}`),
@@ -117,8 +116,8 @@ const Users = {
     list: () => requests.get<Result<User[]>>('/identity/'), // full list for client-side pagination
     create: (appUser: RegisterUserRequest) => requests.post<Result<String>>(`/identity/register`, appUser),
     details: (id: string) => requests.get<Result<User>>(`/identity/user/${id}`),
-    update: (user: User) => requests.put<void>(`/identity/user/${user.id}`, user), 
-    delete: (id: string) => requests.del<void>(`/identity/user/${id}`), 
+    update: (user: User) => requests.put<void>(`/identity/user/${user.id}`, user),
+    delete: (id: string) => requests.del<void>(`/identity/user/${id}`),
 
 }
 

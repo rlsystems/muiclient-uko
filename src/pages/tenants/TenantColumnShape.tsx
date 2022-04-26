@@ -1,8 +1,6 @@
 import { useState } from "react";
-import FlexBox from "../../components/FlexBox";
-import { H6, Small, Tiny } from "../../components/Typography";
-import UkoAvatar from "../../components/UkoAvatar";
-import EditIconButton from "../../components/EditIconButton";
+import { H6, Small } from "components/Typography";
+import EditIconButton from "components/EditIconButton";
 
 const TenantColumnShape = [
   {
@@ -23,6 +21,7 @@ const TenantColumnShape = [
     Header: "Active",
     accessor: "isActive",
     minWidth: 150,
+    canFilter: false,
     Cell: ({ value }: any) => (
       <Small
         sx={{
@@ -31,7 +30,7 @@ const TenantColumnShape = [
         }}
       >
         {/* <CheckDoneIcon color="success" /> */}
-        {value.toString() =="true" ? "Yes" : "No"}
+        {value.toString() === "true" ? "Yes" : "No"}
       </Small>
     ),
   },
@@ -39,17 +38,10 @@ const TenantColumnShape = [
   {
     Header: "Edit",
     accessor: "action",
-    Cell: ({ row }: any) => {
-      // const { appUserStore } = useStore();
-      // const { appUserRegistry } = appUserStore;
-      const [openModal, setOpenModal] = useState(false);
-      //const selectedUser = appUserStore.getAppUser(row.original['id']);
+    Cell: () => {
+      const [, setOpenModal] = useState(false);
       return (
-        <>
-          <EditIconButton onClick={() => setOpenModal(true)} />
-        
-          
-        </>
+        <EditIconButton onClick={() => setOpenModal(true)} />
       );
     },
   },

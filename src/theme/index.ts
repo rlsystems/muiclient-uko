@@ -344,26 +344,31 @@ const themesOptions = {
 };
 
 export type themeSettingsProps = {
-  theme: string;
-  direction: string;
-  responsiveFontSizes: boolean;
+  colorMode?: 'dark' | 'light';
+  direction?: 'ltr' | 'rtl';
+  isResponsiveFontSizes?: boolean;
 };
 
-export const ukoTheme = (config: themeSettingsProps) => {
-  let themeOption = themesOptions[config.theme];
+export const ukoTheme = ({
+  colorMode = 'dark',
+  direction = 'ltr',
+  isResponsiveFontSizes = true
+}: themeSettingsProps) => {
+
+  let themeOption = themesOptions[colorMode];
 
   if (!themeOption) {
-    console.warn(new Error(`The theme ${config.theme} is not valid`));
+    console.warn(new Error(`The theme ${colorMode} is not valid`));
     themeOption = themesOptions[THEMES.LIGHT];
   }
   //@ts-ignore
   const merged = merge({}, baseOptions, themeOption, {
-    direction: config.direction,
+    direction: direction,
   });
   //@ts-ignore
   let theme = createTheme(merged);
 
-  if (config.responsiveFontSizes) {
+  if (isResponsiveFontSizes) {
     theme = responsiveFontSizes(theme);
   }
 
