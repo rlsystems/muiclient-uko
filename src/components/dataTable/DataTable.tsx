@@ -51,7 +51,7 @@ const DataTable: FC<DataTableProps> = ({
   queryPageSize,
   totalPageCount,
   dispatch,
-  rowClick, 
+  rowClick,
   showFooter,
   hidePagination }) => {
 
