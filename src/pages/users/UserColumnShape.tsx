@@ -19,7 +19,7 @@ const UserColumnShape = [
           <NanoAvatar src={imageUrl || ""} />
           <FlexBox flexDirection="column" ml={2}>
             <H6 color="text.primary">{firstName + " " + lastName}</H6>
-            
+
           </FlexBox>
         </FlexBox>
       );

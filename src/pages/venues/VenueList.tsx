@@ -66,7 +66,7 @@ const VenueList = () => {
         <Stack direction="row" alignItems="stretch">
           <SearchInput
             value={searchQuery} //QUESTION! - must inputs always have this loop
-            onChange={handleSearchInputField} 
+            onChange={handleSearchInputField}
             placeholder="Search venues..."
           />
 
