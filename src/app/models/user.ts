@@ -48,7 +48,3 @@ export interface ChangePasswordRequest {
     newPassword: string;
     confirmNewPassword: string;
 }
-
-
-
-

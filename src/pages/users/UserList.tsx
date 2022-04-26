@@ -1,77 +1,86 @@
-import { Box, Button, IconButton, styled } from "@mui/material";
-import DataTable from "../../components/dataTable/DataTable";
-import FlexBox from "../../components/FlexBox";
-import SearchInput from "../../components/SearchInput";
-import UserColumnShape from "./UserColumnShape";
-//import useTitle from "hooks/useTitle";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
+import { Box, Button, styled } from "@mui/material";
+import { Add } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
-//import { useTranslation } from "react-i18next";
-//import { useNavigate } from "react-router-dom";
+import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
 
-import { useStore } from '../../app/stores/store';
-import LoadingScreen from "../../components/LoadingScreen";
+import { useStore } from 'app/stores/store';
+import LoadingScreen from "components/LoadingScreen";
+import FlexBox from "components/FlexBox";
+import ReactTable from "components/ReactTable";
+import GlobalFilter from "components/GlobalFilter";
 import RegisterUserModal from "./RegisterUserModal";
-import { Add, Search, Send } from "@mui/icons-material";
+import UserColumnShape from "./UserColumnShape";
 
-
-
-// styled component
 const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   flexWrap: "wrap",
   marginBottom: 20,
-
 }));
 
 const UserList: FC = () => {
-
-
   const { appUserStore, commonStore } = useStore();
-  const { loadAppUsers, appUserRegistry, appUsersSorted } = appUserStore;
+  const { loadAppUsers, appUserRegistry, appUsersSorted, loadingInitial } = appUserStore;
   const { setTitle } = commonStore;
+  const [openModal, setOpenModal] = useState(false);
 
-  useEffect(() => {
-    if (appUserRegistry.size <= 1) loadAppUsers();
-  }, [appUserRegistry.size, loadAppUsers])
+  const data: any = useMemo(() => appUsersSorted, [appUsersSorted]);
+  const columns: any = useMemo(() => UserColumnShape, [UserColumnShape]);
 
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    pageOptions,
+    pageIndex,
+    pageSize,
+    setPageSize,
+    gotoPage,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state,
+  }: any = useTable(
+    {
+      columns,
+      data,
+    },
+    useGlobalFilter,
+    useFilters,
+    useSortBy,
+    useExpanded,
+    usePagination
+  );
 
   useEffect(() => {
     setTitle("Users");
   }, [])
 
-  //Modal State
-  const [openModal, setOpenModal] = useState(false);
+  useEffect(() => {
+    if (appUserRegistry.size <= 1) loadAppUsers();
+  }, [appUserRegistry.size, loadAppUsers])
 
-
-
-  if (appUserStore.loadingInitial) return <LoadingScreen content='Loading Users...' />
-
+  if (loadingInitial) return <LoadingScreen content='Loading Users...' />
 
   return (
     <Box pt={2} pb={4}>
       <StyledFlexBox>
-        <FlexBox width={"440px"}>
-          <SearchInput placeholder="Search users..." />
-          
-          <Button
-            sx={{
-              marginLeft: 2
+          <GlobalFilter
+            preGlobalFilteredRows={preGlobalFilteredRows}
+            setGlobalFilter={setGlobalFilter}
+            globalFilter={state.globalFilter}
+            inputProps={{
+              placeholder: "Search users...",
             }}
-            startIcon={<Search/>}
-            variant="contained"
-            >         
-              {("Search")}
-          </Button>
-
-        </FlexBox>
+          />
 
         <Button
           endIcon={<Add />}
           variant="contained"
           onClick={() => setOpenModal(true)}>
-          {("Add User")}
+          Add User
         </Button>
       </StyledFlexBox>
 
@@ -79,10 +88,20 @@ const UserList: FC = () => {
         open={openModal}
         data={null}
         onClose={() => setOpenModal(false)}
-      />
-      }
+      />}
 
-      <DataTable columnShape={UserColumnShape} data={appUsersSorted} />
+      <ReactTable
+        getTableProps={getTableProps}
+        getTableBodyProps={getTableBodyProps}
+        headerGroups={headerGroups}
+        prepareRow={prepareRow}
+        page={page}
+        pageOptions={pageOptions}
+        pageIndex={state.pageIndex}
+        pageSize={state.pageSize}
+        setPageSize={setPageSize}
+        gotoPage={gotoPage}
+      />
 
     </Box>
   );

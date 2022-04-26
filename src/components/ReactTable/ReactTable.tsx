@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC } from "react";
 import {
   Box,
   ButtonBase,
@@ -13,54 +13,34 @@ import {
 } from "@mui/material";
 import { ArrowRightAlt } from "@mui/icons-material";
 import {
-  useExpanded,
-  usePagination,
-  useSortBy,
-  useTable,
+  TableBodyProps,
+  TableProps,
 } from "react-table";
 import ScrollBar from "simplebar-react";
 
 import { CustomSelectInput } from "components/common";
-import { StyledPagination, StyledDataTableHeaderCell, StyledDataTableRow, StyledDataTableRowCell } from "components/DataTable/DataTable.styled";
+import { StyledPagination } from "components/DataTable/DataTable.styled";
 import FlexBox from "components/FlexBox";
 import { H5 } from "components/Typography";
-import { PAGE_CHANGED, PAGE_SIZE_CHANGED, ReducerType, TOTAL_PAGE_COUNT_CHANGED } from "app/hooks/usePaginationMetaData";
-import { CustomTableOptions } from "app/models/reactTable";
-import { Venue } from "app/models/venue";
-import { useStore } from "app/stores/store";
+import { StyledReactTableHeaderCell, StyledReactTableRow, StyledReactTableRowCell } from "./ReactTable.styled";
 
-interface DataTableProps {
-  data: any;
-  columns: any;
-  queryPageIndex: number;
-  queryPageSize: number;
-  totalPageCount: number;
-  dispatch: React.Dispatch<{
-    type: ReducerType,
-    payload: any;
-  }>
+interface ReactTableProps {
+  getTableProps: () => TableProps,
+  getTableBodyProps: () => TableBodyProps,
+  headerGroups: any[],
+  prepareRow: any,
+  page: any[],
+  pageOptions: any,
+  pageIndex: number,
+  pageSize: number,
+  setPageSize: (pageSize: number) => void,
+  gotoPage: any,
   rowClick?: (rowData: object) => void;
   hidePagination?: boolean;
   showFooter?: boolean;
 }
 
-const DataTable: FC<DataTableProps> = ({
-  data,
-  columns,
-  queryPageIndex,
-  queryPageSize,
-  totalPageCount,
-  dispatch,
-  rowClick,
-  showFooter,
-  hidePagination }) => {
-
-  const { venueStore: { venueMetaData, loadVenues } } = useStore();
-  const initialState = useMemo(() => ({
-      pageIndex: queryPageIndex,
-      pageSize: queryPageSize
-    }), [queryPageIndex, queryPageSize])
-
+const ReactTable: FC<ReactTableProps> = (props) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -68,41 +48,22 @@ const DataTable: FC<DataTableProps> = ({
     prepareRow,
     page,
     pageOptions,
+    pageIndex,
+    pageSize,
     setPageSize,
     gotoPage,
-    state,
-  }: any  = useTable(
-    {
-      columns,
-      data,
-      initialState,
-      manualPagination: true,
-      pageCount: totalPageCount
-    } as CustomTableOptions<Venue>,
-    useSortBy,
-    useExpanded,
-    usePagination
-  );
+    rowClick,
+    showFooter,
+    hidePagination
+  } = props;
 
-  const handleChangePage = async (_: any, newPage: number) => {
+  const handleChangePage = (_: any, newPage: number) => {
     gotoPage(newPage - 1)
-    dispatch({ type: PAGE_CHANGED, payload: newPage - 1 });
   }
 
-  const handleChangeRowsPerPage = async (event: SelectChangeEvent<number>) => {
-    const newPageSize = Number(event.target.value)
-    setPageSize(newPageSize);
-    dispatch({ type: PAGE_SIZE_CHANGED, payload: newPageSize });
-    dispatch({ type: PAGE_CHANGED, payload: 0 });
-    gotoPage(0);
+  const handleChangeRowsPerPage = (event: SelectChangeEvent<number>) => {
+    setPageSize(Number(event.target.value))
   }
-
-  useEffect(() => {
-    dispatch({
-      type: TOTAL_PAGE_COUNT_CHANGED,
-      payload: venueMetaData?.totalPages,
-    });
-  }, [venueMetaData?.totalPages]);
 
   return (
     <Box>
@@ -118,12 +79,12 @@ const DataTable: FC<DataTableProps> = ({
             {headerGroups.map((headerGroup: any) => (
               <TableRow {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column: any) => (
-                  <StyledDataTableHeaderCell
+                  <StyledReactTableHeaderCell
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     column={column}
                   >
                     {column.render("Header")}
-                  </StyledDataTableHeaderCell>
+                  </StyledReactTableHeaderCell>
                 ))}
               </TableRow>
             ))}
@@ -133,17 +94,17 @@ const DataTable: FC<DataTableProps> = ({
             {page.map((row: any) => {
               prepareRow(row);
               return (
-                <StyledDataTableRow
+                <StyledReactTableRow
                   {...row.getRowProps()}
                   onClick={rowClick && rowClick(row.original)}
                   rowClick={Boolean(rowClick)}
                 >
                   {row.cells.map((cell: any) => (
-                    <StyledDataTableRowCell {...cell.getCellProps()}>
+                    <StyledReactTableRowCell {...cell.getCellProps()}>
                       {cell.render("Cell")}
-                    </StyledDataTableRowCell>
+                    </StyledReactTableRowCell>
                   ))}
-                </StyledDataTableRow>
+                </StyledReactTableRow>
               );
             })}
           </TableBody>
@@ -152,8 +113,9 @@ const DataTable: FC<DataTableProps> = ({
 
       {!hidePagination && (
         <Stack alignItems="center" justifyContent="flex-end" marginY={1} direction="row">
+          {/* make this select the same blue color, same size if possible, and position it to the left of the pagination*/}
           <Select
-            value={state.pageSize}
+            value={pageSize}
             onChange={handleChangeRowsPerPage}
             input={<CustomSelectInput />}
           >
@@ -167,7 +129,7 @@ const DataTable: FC<DataTableProps> = ({
             count={pageOptions.length}
             shape="rounded"
             onChange={handleChangePage}
-            page={queryPageIndex + 1}
+            page={pageIndex + 1}
           />
         </Stack>
       )}
@@ -191,4 +153,4 @@ const DataTable: FC<DataTableProps> = ({
   );
 };
 
-export default DataTable;
+export default ReactTable;

@@ -34,12 +34,12 @@ function App() {
     }
   }, [commonStore, userStore])
 
-  //check if there is a subdomain given --> will hide the tenant fields on client, API will detect the subdomain from the URI if present and use that 
+  //check if there is a subdomain given --> will hide the tenant fields on client, API will detect the subdomain from the URI if present and use that
   useEffect(() => {
     const host = window.location.host;
     const subdomain = host.split('.');
     const minimumSegments = isDevelopment ? 2 : 3;
-    
+
     if (subdomain.length == minimumSegments) {
       commonStore.setSubdomain();
     }
@@ -48,8 +48,8 @@ function App() {
   // App theme
   const appTheme = ukoTheme({
     direction: "ltr",
-    theme: commonStore.darkMode ? 'dark' : 'light',
-    responsiveFontSizes: true,
+    colorMode: commonStore.darkMode ? 'dark' : 'light',
+    isResponsiveFontSizes: true,
   });
 
   if (!commonStore.appLoaded) return <LoadingScreen />

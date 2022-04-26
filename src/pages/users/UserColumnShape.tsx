@@ -1,19 +1,15 @@
 import { useState } from "react";
-import FlexBox from "../../components/FlexBox";
-import { H6, Small, Tiny } from "../../components/Typography";
-import UkoAvatar from "../../components/UkoAvatar";
-import EditIconButton from "../../components/EditIconButton";
+import FlexBox from "components/FlexBox";
+import { H6, Small, Tiny } from "components/Typography";
+import UkoAvatar from "components/UkoAvatar";
+import EditIconButton from "components/EditIconButton";
 import EditUserModal from "./EditUserModal";
-import CheckBoxIcon from "../../icons/CheckBoxIcon";
-import CheckDoneIcon from "../../icons/CheckDoneIcon";
-import { useStore } from "../../app/stores/store";
-
 
 
 const UserColumnShape = [
   {
     Header: "Name",
-    accessor: "name",
+    accessor: (row: any) => row.firstName + " " + row.lastName,
     minWidth: 200,
     Cell: ({ row }: any) => {
 
@@ -33,6 +29,7 @@ const UserColumnShape = [
     Header: "Role",
     accessor: "roleId",
     minWidth: 200,
+    canFilter: false,
     Cell: ({ value }: any) => (
 
 
@@ -58,6 +55,7 @@ const UserColumnShape = [
     Header: "Active",
     accessor: "isActive",
     minWidth: 150,
+    canFilter: false,
     Cell: ({ value }: any) => (
       <Small
         sx={{
@@ -74,10 +72,7 @@ const UserColumnShape = [
     Header: "Edit",
     accessor: "action",
     Cell: ({ row }: any) => {
-      // const { appUserStore } = useStore();
-      // const { appUserRegistry } = appUserStore;
       const [openModal, setOpenModal] = useState(false);
-      //const selectedUser = appUserStore.getAppUser(row.original['id']);
 
       return (
         <>
@@ -87,7 +82,6 @@ const UserColumnShape = [
             data={row.original}
             onClose={() => setOpenModal(false)}
           />}
-
         </>
       );
     },
