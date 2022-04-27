@@ -39,7 +39,7 @@ interface DataTableProps {
     type: ReducerType,
     payload: any;
   }>
-  rowClick?: (rowData: object) => void;
+  rowClick?: (rowData: object) => void; //QUESTION! - these are extra option props
   hidePagination?: boolean;
   showFooter?: boolean;
 }
@@ -56,12 +56,12 @@ const DataTable: FC<DataTableProps> = ({
   hidePagination }) => {
 
   const { venueStore: { venueMetaData, loadVenues } } = useStore();
-  const initialState = useMemo(() => ({
+  const initialState = useMemo(() => ({ //QUESTION! -why use memo -what would the syntax look like if not using memo - a regular js function like line 87?
       pageIndex: queryPageIndex,
       pageSize: queryPageSize
     }), [queryPageIndex, queryPageSize])
 
-  const {
+  const { //QUESTION! - so we are using react table for server side pagination also?
     getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -70,7 +70,7 @@ const DataTable: FC<DataTableProps> = ({
     pageOptions,
     setPageSize,
     gotoPage,
-    state,
+    state, //QUESTION! - state is a variable given by React Table?
   }: any  = useTable(
     {
       columns,
@@ -86,7 +86,7 @@ const DataTable: FC<DataTableProps> = ({
 
   const handleChangePage = async (_: any, newPage: number) => {
     gotoPage(newPage - 1)
-    dispatch({ type: PAGE_CHANGED, payload: newPage - 1 });
+    dispatch({ type: PAGE_CHANGED, payload: newPage - 1 }); //QUESTION! - this is a hook right? why wouldnt we just use a variable in the store for this
   }
 
   const handleChangeRowsPerPage = async (event: SelectChangeEvent<number>) => {
