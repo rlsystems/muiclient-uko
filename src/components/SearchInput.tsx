@@ -3,7 +3,7 @@ import SearchIcon from "../icons/SearchIcon";
 import { FC } from "react";
 
 // styled component
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({ theme }) => ({ //QUESTION! - what is input base its different than a regular input?
   height: 45,
   fontSize: 13,
   width: "100%",
@@ -25,8 +25,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const SearchInput: FC<InputBaseProps> = (props) => {
   return (
     <StyledInputBase
-      {...props}
-      startAdornment={
+      {...props} 
+      startAdornment={ //QUESTION! - what is this
         <SearchIcon
           sx={{
             fontSize: 16,

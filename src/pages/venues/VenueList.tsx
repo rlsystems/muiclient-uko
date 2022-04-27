@@ -28,7 +28,7 @@ const VenueList = () => {
   const [openModal, setOpenModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [{ queryPageIndex, queryPageSize, totalPageCount }, dispatch] =
-    usePaginationMetaData();
+    usePaginationMetaData(); //QUESTION! - what is the purpose of this
   // const timeout = useRef()
   const data: Venue[] = useMemo(() => venues, [venues]);
   const columns: any = useMemo(() => VenueColumnShape, [VenueColumnShape]);
@@ -46,8 +46,8 @@ const VenueList = () => {
 
   const handleSearchInputField = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {value} = evt.target;
-    setSearchQuery(value);
-    if (!value) loadVenues(queryPageIndex + 1, queryPageSize);
+    setSearchQuery(value); //QUESTION! - does this fire on keypress?
+    if (!value) loadVenues(queryPageIndex + 1, queryPageSize); //QUESTION! - if null value, load venues - gets 10 value from usePaginationMetaData?
   }
 
   useEffect(() => {
@@ -55,8 +55,8 @@ const VenueList = () => {
   }, []) //must always pass an array
 
   useEffect(() => {
-    loadVenues(queryPageIndex + 1, queryPageSize);
-  }, [loadVenues, queryPageSize, queryPageIndex])
+    loadVenues(queryPageIndex + 1, queryPageSize); //QUESTION! - start discussion here
+  }, [loadVenues, queryPageSize, queryPageIndex]) //QUESTION! - what triggers the table re-rendering
 
   if (loadingInitial || loading) return <LoadingScreen content='Loading Venues...' />
 
@@ -65,8 +65,8 @@ const VenueList = () => {
       <StyledFlexBox>
         <Stack direction="row" alignItems="stretch">
           <SearchInput
-            value={searchQuery}
-            onChange={handleSearchInputField}
+            value={searchQuery} //QUESTION! - must inputs always have this loop
+            onChange={handleSearchInputField} 
             placeholder="Search venues..."
           />
 
