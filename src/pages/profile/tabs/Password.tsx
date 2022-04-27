@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import FlexBox from "components/FlexBox";
+import checkPasswordStrength from "app/utils/checkPasswordStrength";
 
 const Password: FC = () => {
   const { userStore, commonStore } = useStore();
@@ -47,30 +48,15 @@ const Password: FC = () => {
       setStrength(10);
       resetForm();
     },
-
   });
 
-  const checkPasswordStrength = (password: string) => {
-    let calculatedStrength = 0;
-    const checkLength = new RegExp('(?=.{8,})');
-    const checkLower = new RegExp('(?=.*[a-z])');
-    const checkUpper = new RegExp('(?=.*[A-Z])');
-    const checkNumber = new RegExp('(?=.*[0-9])');
-    const checkSpecial = new RegExp('(?=.*[^A-Za-z0-9])');
-
-    checkLower.test(password) ? calculatedStrength += 20 : calculatedStrength;
-    checkUpper.test(password) ? calculatedStrength += 20 : calculatedStrength;
-    checkLength.test(password) ? calculatedStrength += 20 : calculatedStrength;
-    checkNumber.test(password) ? calculatedStrength += 20 : calculatedStrength;
-    checkSpecial.test(password) ? calculatedStrength += 20 : calculatedStrength;
-    setStrength(calculatedStrength);
-  }
-
-  //What type should 'e' be
   const handlePasswordFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
     const newPassword = e.target.value;
-    checkPasswordStrength(newPassword);
+    const passwordStrength = checkPasswordStrength(newPassword, {
+      checkFor: ['length', 'lowerCase', 'upperCase', 'number', 'specialCharacter']
+    }).strength
+    setStrength(passwordStrength);
   }
 
 
