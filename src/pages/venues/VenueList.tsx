@@ -22,13 +22,14 @@ const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
 }));
 
 const VenueList = () => {
-  const { venueStore, commonStore, userStore } = useStore();
+  const { venueStore, commonStore, userStore, preferencesStore } = useStore();
   const { loadVenues, venues, loadingInitial, loading } = venueStore;
+  const { rowsPerPage } = preferencesStore;
   const { setTitle } = commonStore;
   const [openModal, setOpenModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [{ queryPageIndex, queryPageSize, totalPageCount }, dispatch] =
-    usePaginationMetaData(); //QUESTION! - what is the purpose of this
+    usePaginationMetaData({queryPageSize: rowsPerPage, queryPageIndex: 0, totalPageCount: 0}); //QUESTION! - what is the purpose of this
   // const timeout = useRef()
   const data: Venue[] = useMemo(() => venues, [venues]);
   const columns: any = useMemo(() => VenueColumnShape, [VenueColumnShape]);

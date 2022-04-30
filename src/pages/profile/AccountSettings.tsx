@@ -16,6 +16,7 @@ import Preferences from "./tabs/Preferences";
 import Password from "./tabs/Password";
 
 import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 
 // styled component
@@ -91,7 +92,7 @@ const AccountSettings: FC = () => {
         <Grid item lg={7} xs={9}>
           {active === convertToSlug(tabList[0].name) && <UserInfo />}
           {active === convertToSlug(tabList[1].name) && <Password />}
-
+          {active === convertToSlug(tabList[2].name) && <Preferences />}
         </Grid>
       </Grid>
     </Box>
@@ -108,10 +109,12 @@ const tabList = [
     id: 2,
     name: "Password",
     Icon: PasswordIcon,
-  }
+  },
+  {
+    id: 3,
+    name: "Preferences",
+    Icon: SettingIcon,
+  },
 ];
 
-
-
-
-export default AccountSettings;
+export default observer(AccountSettings);

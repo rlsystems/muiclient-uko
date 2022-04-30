@@ -6,6 +6,7 @@ import ModalStore from "./modalStore";
 import TenantStore from "./tenantStore";
 import UserStore from "./userStore";
 import VenueStore from "./venueStore";
+import PreferencesStore from "./preferencesStore";
 
 interface Store {
     commonStore: CommonStore;
@@ -13,7 +14,8 @@ interface Store {
     modalStore: ModalStore;
     appUserStore: AppUserStore;
     tenantStore: TenantStore;
-    venueStore: VenueStore
+    venueStore: VenueStore;
+    preferencesStore: PreferencesStore;
 }
 
 export const store: Store = {
@@ -22,11 +24,12 @@ export const store: Store = {
     modalStore: new ModalStore(),
     appUserStore: new AppUserStore(),
     tenantStore: new TenantStore(),
-    venueStore: new VenueStore()
+    venueStore: new VenueStore(),
+    preferencesStore: new PreferencesStore()
 }
 
 export const StoreContext = createContext(store); //store context is an object with activityStore inside
 
-export function useStore() { //this is a hook 
+export function useStore() { //this is a hook
     return useContext(StoreContext);
 }

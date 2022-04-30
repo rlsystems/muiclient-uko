@@ -56,20 +56,12 @@ const StyledIconButton = styled(IconButton)(() => ({
 
 // root component
 const DashboardNavbar: FC = () => {
-  const { commonStore } = useStore();
-
-  let mode = 'dark';
-  if (commonStore.darkMode === true) {
-    mode = 'dark';
-
-  } else {
-    mode = 'light';
-  }
+  const { commonStore, preferencesStore } = useStore();
 
 
   return (
     <DashboardNavbarRoot position="sticky">
-      <StyledToolBar>     
+      <StyledToolBar>
 
         <H2
           fontSize={21}
@@ -84,7 +76,7 @@ const DashboardNavbar: FC = () => {
         <Box flexGrow={1} ml={1} />
 
 
-        {mode === "light" ? (
+        {preferencesStore.colorMode === "light" ? (
           <StyledIconButton
             disableRipple
             onClick={() => commonStore.setDarkMode()}

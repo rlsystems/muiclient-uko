@@ -43,9 +43,9 @@ const reducer = (state: StateType, { type, payload }: {
   }
 };
 
-const usePaginationMetaData = (): [StateType, DispatchType] => {
+const usePaginationMetaData = (state = initialState): [StateType, DispatchType] => {
   return (
-    React.useReducer(reducer, initialState)
+    React.useReducer(reducer, state)
   )
 }
 

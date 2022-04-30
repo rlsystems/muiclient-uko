@@ -14,14 +14,13 @@ import { ToastContainer } from 'react-toastify';
 
 import { useStore } from './app/stores/store'; //main mobx store
 
-
 import LoadingScreen from './components/LoadingScreen';
 
 import routes, { renderRoutes } from './routes';
 
 function App() {
   const location = useLocation(); //returns location object from router, useful for the key
-  const { commonStore, userStore } = useStore();
+  const { commonStore, userStore, preferencesStore } = useStore();
   const isDevelopment: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 
@@ -48,7 +47,7 @@ function App() {
   // App theme
   const appTheme = ukoTheme({
     direction: "ltr",
-    colorMode: commonStore.darkMode ? 'dark' : 'light',
+    colorMode: preferencesStore.colorMode,
     isResponsiveFontSizes: true,
   });
 

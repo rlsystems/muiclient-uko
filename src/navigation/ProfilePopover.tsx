@@ -91,7 +91,7 @@ const ProfilePopover: FC = () => {
           <StyledSmall
             onClick={() => handleMenuItem("/profile")}
           >
-            Settings
+            Preferences
           </StyledSmall>
 
 

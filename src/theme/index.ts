@@ -343,9 +343,12 @@ const themesOptions = {
   },
 };
 
+export type ColorMode = 'dark' | 'light';
+export type Direction = 'ltr' | 'rtl';
+
 export type themeSettingsProps = {
-  colorMode?: 'dark' | 'light';
-  direction?: 'ltr' | 'rtl';
+  colorMode?: ColorMode;
+  direction?: Direction;
   isResponsiveFontSizes?: boolean;
 };
 
