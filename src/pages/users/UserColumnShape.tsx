@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FlexBox from "components/FlexBox";
 import { H6, Small, Tiny } from "components/Typography";
-import UkoAvatar from "components/UkoAvatar";
+import NanoAvatar from "components/NanoAvatar";
 import EditIconButton from "components/EditIconButton";
 import EditUserModal from "./EditUserModal";
 
@@ -16,10 +16,10 @@ const UserColumnShape = [
       const {  firstName, lastName, imageUrl } = row.original;
       return (
         <FlexBox alignItems="center">
-          <UkoAvatar src={imageUrl || "/static/001-man.svg"} />
-          <FlexBox flexDirection="column" ml={1}>
+          <NanoAvatar src={imageUrl || ""} />
+          <FlexBox flexDirection="column" ml={2}>
             <H6 color="text.primary">{firstName + " " + lastName}</H6>
-            <Tiny color="text.disabled">Lima, PE</Tiny>
+            
           </FlexBox>
         </FlexBox>
       );

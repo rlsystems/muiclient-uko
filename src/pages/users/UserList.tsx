@@ -45,7 +45,7 @@ const UserList: FC = () => {
   }: any = useTable(
     {
       columns,
-      data,
+      data
     },
     useGlobalFilter,
     useFilters,

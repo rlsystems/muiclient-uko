@@ -19,7 +19,7 @@ import {
 import ScrollBar from "simplebar-react";
 
 import { CustomSelectInput } from "components/common";
-import { StyledPagination } from "components/DataTable/DataTable.styled";
+import { StyledPagination } from "components/dataTable/DataTable.styled";
 import FlexBox from "components/FlexBox";
 import { H5 } from "components/Typography";
 import { StyledReactTableHeaderCell, StyledReactTableRow, StyledReactTableRowCell } from "./ReactTable.styled";

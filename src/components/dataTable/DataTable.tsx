@@ -21,7 +21,7 @@ import {
 import ScrollBar from "simplebar-react";
 
 import { CustomSelectInput } from "components/common";
-import { StyledPagination, StyledDataTableHeaderCell, StyledDataTableRow, StyledDataTableRowCell } from "components/DataTable/DataTable.styled";
+import { StyledPagination, StyledDataTableHeaderCell, StyledDataTableRow, StyledDataTableRowCell } from "components/dataTable/DataTable.styled";
 import FlexBox from "components/FlexBox";
 import { H5 } from "components/Typography";
 import { PAGE_CHANGED, PAGE_SIZE_CHANGED, ReducerType, TOTAL_PAGE_COUNT_CHANGED } from "app/hooks/usePaginationMetaData";

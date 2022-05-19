@@ -42,7 +42,7 @@ const DashboardSideBar = () => {
     <MainMenu>
       <List sx={{ height: "100%" }}>
         <StyledListItemButton disableRipple>
-          <img src="/logo/logo.svg" alt="UKO Logo" width={31} />
+          <img src="/logo/nanoLogo.png" alt="Nano Logo" width={31} />
         </StyledListItemButton>
 
         <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>

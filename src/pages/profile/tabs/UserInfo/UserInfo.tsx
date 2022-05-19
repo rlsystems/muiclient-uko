@@ -10,10 +10,10 @@ import {
 import FlexBox from "components/FlexBox";
 import LightTextField from "components/LightTextField";
 import { H5, H6, Tiny } from "components/Typography";
-import UkoAvatar from "components/UkoAvatar";
+import NanoAvatar from "components/NanoAvatar";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { StyledBadge,  StyledFormControlLabel } from "../../StyledComponent";
+import { StyledBadge, StyledFormControlLabel } from "../../StyledComponent";
 import { useStore } from "app/stores/store";
 import { observer } from "mobx-react-lite";
 import { UpdateProfileRequest } from "app/models/user";
@@ -40,7 +40,7 @@ const UserInfo: FC = () => {
     imageFile: undefined,
     imageUrl: currentUser?.imageUrl || "",
     deleteCurrentImage: false
-});
+  });
 
   const fieldValidationSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -50,7 +50,7 @@ const UserInfo: FC = () => {
     email: Yup.string().required('The email is required').email(),
   });
 
-  const { values, errors, touched, handleChange, handleSubmit, handleBlur, isSubmitting, isValid, dirty, setFieldValue, resetForm  } = useFormik({
+  const { values, errors, touched, handleChange, handleSubmit, handleBlur, isSubmitting, isValid, dirty, setFieldValue, resetForm } = useFormik({
     initialValues: userFormValues,
     validationSchema: fieldValidationSchema,
     enableReinitialize: true,
@@ -88,7 +88,7 @@ const UserInfo: FC = () => {
   }
 
   const handleImageRemove = async () => {
-    await updateCurrentUser({...values, deleteCurrentImage: true});
+    await updateCurrentUser({ ...values, deleteCurrentImage: true });
     setTempImage("");
   }
 
@@ -113,15 +113,15 @@ const UserInfo: FC = () => {
                 />
               }
             >
-              <UkoAvatar
+              <NanoAvatar
                 alt="Avatar"
-                src={tempImage || "/static/001-man.svg"}
+                src={tempImage || ""}
                 sx={{ width: 90, height: 90 }}
               />
             </StyledBadge>
             <Box ml="1rem">
               <H5>{currentUser?.firstName}</H5>
-              <Tiny color="text.disabled">UI / UX Designer</Tiny>
+              <Tiny color="text.disabled" sx={{ textTransform: "capitalize" }}>{currentUser?.roleId} Level User</Tiny>
             </Box>
           </FlexBox>
 

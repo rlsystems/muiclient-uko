@@ -12,8 +12,8 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
       : theme.palette.primary[200],
 }));
 
-const UkoAvatar: FC<AvatarProps> = (props) => {
+const NanoAvatar: FC<AvatarProps> = (props) => {
   return <StyledAvatar {...props} />;
 };
 
-export default UkoAvatar;
+export default NanoAvatar;

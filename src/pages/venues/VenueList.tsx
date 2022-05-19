@@ -3,7 +3,7 @@ import { Box, Button, Stack, styled, Tooltip } from "@mui/material";
 import { Add, Search } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
 
-import DataTable from "components/DataTable";
+import DataTable from "components/dataTable";
 import FlexBox from "components/FlexBox";
 import SearchInput from "components/SearchInput";
 import LoadingScreen from "components/LoadingScreen";

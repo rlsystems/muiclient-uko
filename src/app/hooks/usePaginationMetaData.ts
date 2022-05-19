@@ -2,7 +2,7 @@ import React from 'react'
 
 export const initialState = {
   queryPageIndex: 0,
-  queryPageSize: 10,
+  queryPageSize: 5,
   totalPageCount: 0,
 };
 
