@@ -2,6 +2,7 @@ import { FC } from "react";
 import {
   Box,
   ButtonBase,
+  CircularProgress,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -10,6 +11,7 @@ import {
   TableBody,
   TableHead,
   TableRow,
+
 } from "@mui/material";
 import { ArrowRightAlt } from "@mui/icons-material";
 import {
@@ -21,7 +23,7 @@ import ScrollBar from "simplebar-react";
 import { CustomSelectInput } from "components/common";
 import { StyledPagination } from "components/dataTable/DataTable.styled";
 import FlexBox from "components/FlexBox";
-import { H5 } from "components/Typography";
+import { H6, H5 } from "components/Typography";
 import { StyledReactTableHeaderCell, StyledReactTableRow, StyledReactTableRowCell } from "./ReactTable.styled";
 
 interface ReactTableProps {
@@ -38,6 +40,7 @@ interface ReactTableProps {
   rowClick?: (rowData: object) => void;
   hidePagination?: boolean;
   showFooter?: boolean;
+  isLoading?: boolean;
 }
 
 const ReactTable: FC<ReactTableProps> = (props) => {
@@ -54,7 +57,8 @@ const ReactTable: FC<ReactTableProps> = (props) => {
     gotoPage,
     rowClick,
     showFooter,
-    hidePagination
+    hidePagination,
+    isLoading
   } = props;
 
   const handleChangePage = (_: any, newPage: number) => {
@@ -83,14 +87,15 @@ const ReactTable: FC<ReactTableProps> = (props) => {
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     column={column}
                   >
-                    {column.render("Header")}
+                    <H6 color="text.primary" sx={{opacity: .7}} >{column.render("Header")}</H6>
                   </StyledReactTableHeaderCell>
                 ))}
               </TableRow>
             ))}
           </TableHead>
 
-          <TableBody {...getTableBodyProps()}>
+          {!isLoading &&
+            <TableBody {...getTableBodyProps()}>
             {page.map((row: any) => {
               prepareRow(row);
               return (
@@ -107,8 +112,11 @@ const ReactTable: FC<ReactTableProps> = (props) => {
                 </StyledReactTableRow>
               );
             })}
-          </TableBody>
+          </TableBody>}
         </Table>
+        {isLoading && (<Box my={6} width="100%" display="flex" justifyContent="center">
+              <CircularProgress />
+        </Box>)}
       </ScrollBar>
 
       {!hidePagination && (

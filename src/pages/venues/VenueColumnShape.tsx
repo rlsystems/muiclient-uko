@@ -7,37 +7,39 @@ import MoreOptions from "components/MoreOptions";
 import { StyledDisabledBox } from "components/common";
 import { MoreVert } from "@mui/icons-material";
 import EditVenueModal from './EditVenueModal'
+import { Venue } from "app/models/venue";
+import { ColumnShape } from "components/ServerTable/ServerTable";
 
-const VenueColumnShape = [
+const VenueColumnShape: ColumnShape<Venue>[] = [
   {
-    Header: "Name",
+    header: "Name",
     accessor: "name",
     minWidth: 200,
-    Cell: ({ row }: any) => {
-
-      const { name } = row.original;
+    renderRow: (row: Venue) => {
       return (
         <H6 color="text.primary"
           sx={{textTransform: "capitalize"}}
-        >{name}</H6>
+        >
+          {row.name}
+        </H6>
       );
     },
   },
   {
-    Header: "Description",
+    header: "Description",
     accessor: "description",
     minWidth: 200,
   },
   {
-    Header: "Guid",
+    header: "Guid",
     accessor: "id",
     minWidth: 150,
   },
   {
-    Header: "Actions",
-    accessor: "_",
+    header: "Actions",
+    accessor: null,
     minWidth: 80,
-    Cell: ({ row }: any) => {
+    renderRow: (row: Venue) => {
       const { userStore, venueStore} = useStore();
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
       const [openModal, setOpenModal] = useState(false);
@@ -54,7 +56,7 @@ const VenueColumnShape = [
         setOpenModal(true);
       }
       const handleDelete = () => {
-        venueStore.deleteVenue(row.original.id);
+        venueStore.deleteVenue(row.id);
       }
 
       return <React.Fragment>
@@ -76,7 +78,7 @@ const VenueColumnShape = [
           <EditVenueModal
             open={openModal}
             onClose={() => setOpenModal(false)}
-            data={row.original}
+            data={row}
           />
         </React.Fragment>
     },

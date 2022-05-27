@@ -35,8 +35,6 @@ const UserList: FC = () => {
     prepareRow,
     page,
     pageOptions,
-    pageIndex,
-    pageSize,
     setPageSize,
     gotoPage,
     preGlobalFilteredRows,
@@ -59,10 +57,10 @@ const UserList: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (appUserRegistry.size <= 1) loadAppUsers();
-  }, [appUserRegistry.size, loadAppUsers])
+    loadAppUsers();
+  }, [loadAppUsers])
 
-  if (loadingInitial) return <LoadingScreen content='Loading Users...' />
+  // if (loadingInitial) return <LoadingScreen content='Loading Users...' />
 
   return (
     <Box pt={2} pb={4}>
@@ -101,6 +99,7 @@ const UserList: FC = () => {
         pageSize={state.pageSize}
         setPageSize={setPageSize}
         gotoPage={gotoPage}
+        isLoading={loadingInitial}
       />
 
     </Box>

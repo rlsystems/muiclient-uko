@@ -3,7 +3,7 @@ import React, { Suspense, Fragment, lazy, LazyExoticComponent, FC } from 'react'
 import { Switch, Redirect, Route } from 'react-router-dom';
 import AuthGuard from './components/authentication/AuthGuard';
 import GuestGuard from './components/authentication/GuestGuard';
-import DashboardLayout from './components/Layouts/DashboardLayout';
+import DashboardLayout from './components/layouts/DashboardLayout';
 import LoadingScreen from './components/LoadingScreen';
 
 interface RouteType {
@@ -37,7 +37,7 @@ const AccountSettingsPage = Loadable(lazy(() => import('./pages/profile/AccountS
 export const renderRoutes = (routes: RouteType[] = []) => (
     <Switch>
       {routes.map((route, i) => {
-        const Guard = route.guard || React.Component; //creating a component 
+        const Guard = route.guard || React.Component; //creating a component
         const Layout = route.layout || Fragment;
         const Component = route.component || React.Component; //this is the actual page
 

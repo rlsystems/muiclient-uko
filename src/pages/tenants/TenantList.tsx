@@ -8,7 +8,6 @@ import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, use
 import { useStore } from 'app/stores/store';
 import FlexBox from "components/FlexBox";
 import TenantColumnShape from "./TenantColumnShape";
-import LoadingScreen from "components/LoadingScreen";
 import RegisterTenantModal from "./RegisterTenantModal";
 import ReactTable from "components/ReactTable";
 import { Tenant } from "app/models/tenant";
@@ -59,12 +58,10 @@ const TenantList: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (tenantRegistry.size <= 1) loadTenants();
-  }, [tenantRegistry.size, loadTenants])
+    loadTenants();
+  }, [loadTenants])
 
   const [openModal, setOpenModal] = useState(false);
-
-  if (loadingInitial) return <LoadingScreen content='Loading Tenants...' />
 
   return (
     <Box pt={2} pb={4}>
@@ -102,6 +99,7 @@ const TenantList: FC = () => {
         pageSize={state.pageSize}
         setPageSize={setPageSize}
         gotoPage={gotoPage}
+        isLoading={loadingInitial}
       />
 
     </Box>
