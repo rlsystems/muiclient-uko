@@ -12,6 +12,8 @@ import RegisterTenantModal from "./RegisterTenantModal";
 import ReactTable from "components/ReactTable";
 import { Tenant } from "app/models/tenant";
 import GlobalFilter from "components/GlobalFilter";
+import { paginationInitialState } from "app/hooks/usePaginationMetaData";
+import { CustomTableOptions } from "app/models/reactTable";
 
 const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
   justifyContent: "space-between",
@@ -28,6 +30,10 @@ const TenantList: FC = () => {
   const data: Tenant[] = useMemo(() => tenantsSorted, [tenantsSorted]);
   const columns: any = useMemo(() => TenantColumnShape, [TenantColumnShape]);
 
+  const initialState = useMemo(() => ({
+      pageIndex: paginationInitialState.queryPageIndex,
+      pageSize: paginationInitialState.queryPageSize
+  }), [])
 
   const {
   getTableProps,
@@ -45,7 +51,8 @@ const TenantList: FC = () => {
   {
     columns,
     data,
-  },
+    initialState
+  } as CustomTableOptions<Tenant>,
   useFilters,
   useGlobalFilter,
   useSortBy,

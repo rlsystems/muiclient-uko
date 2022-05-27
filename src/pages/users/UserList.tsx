@@ -11,6 +11,8 @@ import ReactTable from "components/ReactTable";
 import GlobalFilter from "components/GlobalFilter";
 import RegisterUserModal from "./RegisterUserModal";
 import UserColumnShape from "./UserColumnShape";
+import { paginationInitialState } from "app/hooks/usePaginationMetaData";
+import { CustomTableOptions } from "app/models/reactTable";
 
 const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
   justifyContent: "space-between",
@@ -28,6 +30,11 @@ const UserList: FC = () => {
   const data: any = useMemo(() => appUsersSorted, [appUsersSorted]);
   const columns: any = useMemo(() => UserColumnShape, [UserColumnShape]);
 
+  const initialState = useMemo(() => ({
+      pageIndex: paginationInitialState.queryPageIndex,
+      pageSize: paginationInitialState.queryPageSize
+  }), [])
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -43,8 +50,9 @@ const UserList: FC = () => {
   }: any = useTable(
     {
       columns,
-      data
-    },
+      data,
+      initialState
+    } as CustomTableOptions<any>,
     useGlobalFilter,
     useFilters,
     useSortBy,

@@ -1,12 +1,12 @@
 import React from 'react'
 
-export const initialState = {
+export const paginationInitialState = {
   queryPageIndex: 0,
   queryPageSize: 5,
   totalPageCount: 0,
 };
 
-export type PaginationStateType = typeof initialState;
+export type PaginationStateType = typeof paginationInitialState;
 export type PaginationDispatchType = React.Dispatch<{
       type: ReducerType,
       payload: number
@@ -45,7 +45,7 @@ const reducer = (state: PaginationStateType, { type, payload }: {
 
 const usePaginationMetaData = (): [PaginationStateType, PaginationDispatchType] => {
   return (
-    React.useReducer(reducer, initialState)
+    React.useReducer(reducer, paginationInitialState)
   )
 }
 
