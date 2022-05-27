@@ -1,20 +1,13 @@
 import styled from "@emotion/styled";
 import { TableCell, TableRow } from "@mui/material";
-import { ukoTheme } from "theme";
-
-const theme = ukoTheme({});
-const borderColor = theme.palette.mode === 'light' ?
-      theme.palette.text.secondary :
-      theme.palette.divider;
-
 
 export const StyledReactTableHeaderCell = styled(TableCell, {shouldForwardProp: prop => prop !== 'column'})<{column: any}>`
   padding-top: 0;
   padding-bottom: 0;
-  font-size: ${theme.typography.pxToRem(13)};
+  font-size: ${({theme}) => theme.typography.pxToRem(13)};
   font-weight: 600;
   border-bottom: 0;
-  color: ${theme.palette.text.disabled};
+  color: ${({theme}) => theme.palette.text.disabled};
   width: ${p => p.column.width};
   min-width: ${p => p.column.minWidth};
   max-width: ${p => p.column.maxWidth};
@@ -25,14 +18,16 @@ export const StyledReactTableHeaderCell = styled(TableCell, {shouldForwardProp: 
 `
 
 export const StyledReactTableRow = styled(TableRow, { shouldForwardProp: p => p !== 'rowClick' })<{rowClick?: boolean}>`
-  background-color: ${theme.palette.background.paper};
+  background-color: ${({theme}) => theme.palette.background.paper};
   cursor: ${p => p.rowClick ? "pointer" : "unset"};
 
   & td:first-of-type {
     border-left: 1px solid;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    border-color: ${borderColor};
+    border-color: ${({theme}) => theme.palette.mode === 'light' ?
+      theme.palette.text.secondary :
+      theme.palette.divider};
   }
 
   & td:last-of-type {
@@ -40,22 +35,26 @@ export const StyledReactTableRow = styled(TableRow, { shouldForwardProp: p => p 
     border-right: 1px solid;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    border-color: ${borderColor};
+    border-color: ${({theme}) => theme.palette.mode === 'light' ?
+      theme.palette.text.secondary :
+      theme.palette.divider};
   }
 
   &:last-of-type .MuiTableCell-root {
     border-bottom:
-      ${theme.palette.mode === "dark"
+      ${({theme}) => theme.palette.mode === "dark"
         ? `1px solid ${theme.palette.divider} !important`
         : `1px solid ${theme.palette.text.secondary} !important`};
   }
 `
 
 export const StyledReactTableRowCell = styled(TableCell)`
-  font-size: ${theme.typography.pxToRem(13)};
+  font-size: ${({theme}) => theme.typography.pxToRem(13)};
   font-weight: 500;
-  color: ${theme.palette.text.disabled};
+  color: ${({theme}) => theme.palette.text.disabled};
   border-top: 1px solid;
   border-bottom: 1px solid;
-  border-color: ${borderColor};
+  border-color: ${({theme}) => theme.palette.mode === 'light' ?
+      theme.palette.text.secondary :
+      theme.palette.divider};
 `

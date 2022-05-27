@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { InputBase, styled as muiStyled } from "@mui/material";
+import { Color, darken, InputBase, styled as muiStyled } from "@mui/material";
 
 export const CustomSelectInput = muiStyled(InputBase)(({ theme }) => ({
   marginRight: theme.spacing(2),
@@ -37,4 +37,16 @@ export const StyledDisabledBox = styled.div`
   pointer-events: none;
   cursor: not-allowed;
   opacity: 0.5;
+`
+
+export const StyledLink = styled.a<{color?: string, italic?: boolean}>`
+  color: ${p => p.color || "currentColor"};
+  text-decoration: none;
+  cursor: pointer;
+  font-style: ${p => p.italic? "italic": "normal"};
+  transition: color 150ms ease-out;
+
+  &:hover {
+    color: ${p => p.color? darken(p.color, .2): "currentColor"};
+  }
 `
