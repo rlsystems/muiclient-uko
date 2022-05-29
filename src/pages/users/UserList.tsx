@@ -11,6 +11,8 @@ import ReactTable from "components/ReactTable";
 import GlobalFilter from "components/GlobalFilter";
 import RegisterUserModal from "./RegisterUserModal";
 import UserColumnShape from "./UserColumnShape";
+import { paginationInitialState } from "app/hooks/usePaginationMetaData";
+import { CustomTableOptions } from "app/models/reactTable";
 
 const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
   justifyContent: "space-between",
@@ -28,6 +30,11 @@ const UserList: FC = () => {
   const data: any = useMemo(() => appUsersSorted, [appUsersSorted]);
   const columns: any = useMemo(() => UserColumnShape, [UserColumnShape]);
 
+  const initialState = useMemo(() => ({
+      pageIndex: paginationInitialState.queryPageIndex,
+      pageSize: paginationInitialState.queryPageSize
+  }), [])
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -35,8 +42,6 @@ const UserList: FC = () => {
     prepareRow,
     page,
     pageOptions,
-    pageIndex,
-    pageSize,
     setPageSize,
     gotoPage,
     preGlobalFilteredRows,
@@ -45,8 +50,9 @@ const UserList: FC = () => {
   }: any = useTable(
     {
       columns,
-      data
-    },
+      data,
+      initialState
+    } as CustomTableOptions<any>,
     useGlobalFilter,
     useFilters,
     useSortBy,
@@ -59,10 +65,10 @@ const UserList: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (appUserRegistry.size <= 1) loadAppUsers();
-  }, [appUserRegistry.size, loadAppUsers])
+    loadAppUsers();
+  }, [loadAppUsers])
 
-  if (loadingInitial) return <LoadingScreen content='Loading Users...' />
+  // if (loadingInitial) return <LoadingScreen content='Loading Users...' />
 
   return (
     <Box pt={2} pb={4}>
@@ -101,6 +107,7 @@ const UserList: FC = () => {
         pageSize={state.pageSize}
         setPageSize={setPageSize}
         gotoPage={gotoPage}
+        isLoading={loadingInitial}
       />
 
     </Box>

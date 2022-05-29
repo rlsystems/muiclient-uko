@@ -11,6 +11,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+
 import { ArrowRightAlt } from "@mui/icons-material";
 import {
   useExpanded,
@@ -30,7 +31,7 @@ import { Venue } from "app/models/venue";
 import { useStore } from "app/stores/store";
 
 interface DataTableProps {
-  data: any;
+  data: any[];
   columns: any;
   queryPageIndex: number;
   queryPageSize: number;
@@ -51,12 +52,14 @@ const DataTable: FC<DataTableProps> = ({
   queryPageSize,
   totalPageCount,
   dispatch,
-  rowClick, 
+  rowClick,
   showFooter,
   hidePagination }) => {
 
   const { venueStore: { venueMetaData, loadVenues } } = useStore();
-  const initialState = useMemo(() => ({ //QUESTION! -why use memo -what would the syntax look like if not using memo - a regular js function like line 87?
+  const initialState = useMemo(() => ({
+    //QUESTION! -why use memo -what would the syntax look like if not using memo - a regular js function like line 87?
+    // ANSWER => Mot an function, but an object instead, we just creating an object for initial state of the pagination
       pageIndex: queryPageIndex,
       pageSize: queryPageSize
     }), [queryPageIndex, queryPageSize])

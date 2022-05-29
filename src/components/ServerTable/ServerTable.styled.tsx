@@ -1,9 +1,9 @@
 import { alpha, InputBase, Pagination, styled as muiStyled, TableRow, TableCell } from "@mui/material";
 import SearchIcon from "icons/SearchIcon";
 import styled from "@emotion/styled";
+import { ColumnShape } from "./ServerTable";
 
-
-export const StyledDataTableHeaderCell = styled(TableCell, {shouldForwardProp: prop => prop !== 'column'})<{column: any}>`
+export const StyledServerTableHeaderCell = styled(TableCell, {shouldForwardProp: prop => prop !== 'column'})<{column: ColumnShape<any>}>`
   padding-top: 0;
   padding-bottom: 0;
   font-size: ${({theme}) => theme.typography.pxToRem(13)};
@@ -19,7 +19,7 @@ export const StyledDataTableHeaderCell = styled(TableCell, {shouldForwardProp: p
   }
 `
 
-export const StyledDataTableRow = styled(TableRow, { shouldForwardProp: p => p !== 'rowClick' })<{rowClick?: boolean}>`
+export const StyledServerTableRow = styled(TableRow, { shouldForwardProp: p => p !== 'rowClick' })<{rowClick?: boolean}>`
   background-color: ${({theme}) => theme.palette.background.paper};
   cursor: ${p => p.rowClick ? "pointer" : "unset"};
 
@@ -52,7 +52,7 @@ export const StyledDataTableRow = styled(TableRow, { shouldForwardProp: p => p !
   }
 `
 
-export const StyledDataTableRowCell = styled(TableCell)`
+export const StyledServerTableRowCell = styled(TableCell)`
   font-size: ${({theme}) => theme.typography.pxToRem(13)};
   font-weight: 500;
   color: ${({theme}) => theme.palette.text.disabled};

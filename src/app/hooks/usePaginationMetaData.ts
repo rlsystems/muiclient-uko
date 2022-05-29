@@ -1,15 +1,15 @@
 import React from 'react'
 
-export const initialState = {
+export const paginationInitialState = {
   queryPageIndex: 0,
   queryPageSize: 5,
   totalPageCount: 0,
 };
 
-type StateType = typeof initialState;
-type DispatchType = React.Dispatch<{
+export type PaginationStateType = typeof paginationInitialState;
+export type PaginationDispatchType = React.Dispatch<{
       type: ReducerType,
-      payload: Partial<StateType>
+      payload: number
     }>
 
 export const PAGE_CHANGED = 'PAGE_CHANGED';
@@ -18,7 +18,7 @@ export const TOTAL_PAGE_COUNT_CHANGED = 'TOTAL_PAGE_COUNT_CHANGED';
 
 export type ReducerType = 'PAGE_CHANGED' | 'PAGE_SIZE_CHANGED' | 'TOTAL_PAGE_COUNT_CHANGED'
 
-const reducer = (state: StateType, { type, payload }: {
+const reducer = (state: PaginationStateType, { type, payload }: {
     type: ReducerType,
     payload: any
   }) => {
@@ -43,9 +43,9 @@ const reducer = (state: StateType, { type, payload }: {
   }
 };
 
-const usePaginationMetaData = (): [StateType, DispatchType] => {
+const usePaginationMetaData = (): [PaginationStateType, PaginationDispatchType] => {
   return (
-    React.useReducer(reducer, initialState)
+    React.useReducer(reducer, paginationInitialState)
   )
 }
 

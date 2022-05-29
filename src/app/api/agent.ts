@@ -29,18 +29,17 @@ axios.interceptors.request.use(config => { //Send up the token with every reques
 axios.interceptors.response.use(async response => {
     if (process.env.NODE_ENV === 'development') await sleep(1000); //Artifical delay for development
     return response;
-
 }, (error: AxiosError) => {
     const { data, status, config } = error.response!;
     switch (status) {
         case 400:
-            if(typeof data === 'string'){
+            if (typeof data === 'string') {
                 toast.error(data);
             }
-            if(config.method === 'get' && data.errors.hasOwnProperty('id')) {
+            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
                 //history.push('/not-found');
             }
-            if(data.errors){
+            if (data.errors){
                 const modalStateErrors = [];
                 for (const key in data.errors){
                     if(data.errors[key]){
@@ -52,7 +51,8 @@ axios.interceptors.response.use(async response => {
 
             break;
         case 401:
-            toast.error('unauthorized');
+            // toast.error('unauthorized');
+            store.userStore.logout();
             break;
         case 404:
             //history.push('/not-found')
@@ -98,8 +98,6 @@ const Account = {
     resetPassword: (resetPasswordRequest: ResetPasswordRequest) => requests.post<Result>(`/identity/reset-password`, resetPasswordRequest),
 }
 
-
-
 const Venues = {
     search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/VenueListPaginated`, params), //server-side pagination
     create: (venue: AddVenueRequest) => requests.post<Result<String>>('/venues', venue),
@@ -107,8 +105,6 @@ const Venues = {
     update: (venue: Venue) => requests.put<void>(`/venues/${venue.id}`, venue),
     delete: (id: string) => requests.del<void>(`/venues/${id}`),
 }
-
-
 
 //App Users (Admin User Management)
 const Users = {
@@ -118,7 +114,6 @@ const Users = {
     details: (id: string) => requests.get<Result<User>>(`/identity/user/${id}`),
     update: (user: User) => requests.put<void>(`/identity/user/${user.id}`, user),
     delete: (id: string) => requests.del<void>(`/identity/user/${id}`),
-
 }
 
 //Tenants
@@ -126,12 +121,7 @@ const Tenants = {
     list: () => requests.get<Result<Tenant[]>>('/tenants'), // full list for client-side pagination
     details: (id: string) => requests.get<Result<Tenant>>(`/tenants/${id}`),
     create: (tenant: CreateTenantRequest) => requests.post<Result<Tenant>>(`/tenants`, tenant),
-
 }
-
-
-
-
 
 const agent = {
     Account,

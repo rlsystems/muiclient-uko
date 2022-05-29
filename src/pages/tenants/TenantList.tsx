@@ -8,11 +8,12 @@ import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, use
 import { useStore } from 'app/stores/store';
 import FlexBox from "components/FlexBox";
 import TenantColumnShape from "./TenantColumnShape";
-import LoadingScreen from "components/LoadingScreen";
 import RegisterTenantModal from "./RegisterTenantModal";
 import ReactTable from "components/ReactTable";
 import { Tenant } from "app/models/tenant";
 import GlobalFilter from "components/GlobalFilter";
+import { paginationInitialState } from "app/hooks/usePaginationMetaData";
+import { CustomTableOptions } from "app/models/reactTable";
 
 const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
   justifyContent: "space-between",
@@ -29,6 +30,10 @@ const TenantList: FC = () => {
   const data: Tenant[] = useMemo(() => tenantsSorted, [tenantsSorted]);
   const columns: any = useMemo(() => TenantColumnShape, [TenantColumnShape]);
 
+  const initialState = useMemo(() => ({
+      pageIndex: paginationInitialState.queryPageIndex,
+      pageSize: paginationInitialState.queryPageSize
+  }), [])
 
   const {
   getTableProps,
@@ -46,7 +51,8 @@ const TenantList: FC = () => {
   {
     columns,
     data,
-  },
+    initialState
+  } as CustomTableOptions<Tenant>,
   useFilters,
   useGlobalFilter,
   useSortBy,
@@ -59,12 +65,10 @@ const TenantList: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (tenantRegistry.size <= 1) loadTenants();
-  }, [tenantRegistry.size, loadTenants])
+    loadTenants();
+  }, [loadTenants])
 
   const [openModal, setOpenModal] = useState(false);
-
-  if (loadingInitial) return <LoadingScreen content='Loading Tenants...' />
 
   return (
     <Box pt={2} pb={4}>
@@ -102,6 +106,7 @@ const TenantList: FC = () => {
         pageSize={state.pageSize}
         setPageSize={setPageSize}
         gotoPage={gotoPage}
+        isLoading={loadingInitial}
       />
 
     </Box>

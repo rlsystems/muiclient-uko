@@ -10,9 +10,6 @@ interface IProps {
 const LoadingScreen = (props: IProps) => {
   NProgress.configure({
     showSpinner: false,
-    // easing: "ease",
-    // speed: 700,
-    // minimum: 0.1,
   });
 
   useEffect(() => {

@@ -4,8 +4,9 @@ import { useEffect } from 'react';
 
 import { StyledEngineProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
-import { nanoTheme } from "./theme/index";
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import {ThemeProvider} from "@emotion/react"
+import { nanoTheme } from "./theme";
 
 import { observer } from 'mobx-react-lite';
 import { useLocation } from 'react-router-dom';
@@ -56,11 +57,13 @@ function App() {
 
   return (
     <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={appTheme}>
-        <CssBaseline />
-        <ToastContainer position='top-center' theme="dark" hideProgressBar draggable autoClose={3000} />
-        {renderRoutes(routes)}
-      </ThemeProvider>
+      <MuiThemeProvider theme={appTheme}>
+        <ThemeProvider theme={appTheme}>
+          <CssBaseline />
+          <ToastContainer position='top-center' theme="dark" hideProgressBar draggable autoClose={3000} />
+          {renderRoutes(routes)}
+        </ThemeProvider>
+      </MuiThemeProvider>
     </StyledEngineProvider>
   );
 }
