@@ -10,11 +10,11 @@ export default class AppUserStore {
     selectedAppUser: User | undefined = undefined;
 
     editMode: boolean = false;
-    createAppUserLoading: boolean = false; //could we use local state for these instead?
+    createAppUserLoading: boolean = false; 
     updateAppUserLoading: boolean = false; 
     deleteAppUserLoading: boolean = false; 
 
-    loadingInitial: boolean = false; //for page loads
+    loadingInitial: boolean = false; 
     
 
     constructor() {

@@ -37,7 +37,7 @@ export default class VenueStore {
                 keyword
             }
             console.log('loading venues');
-            const {data, ...metaData} = await agent.Venues.search(params); //get list of venues //QUESTION! - where does ...metaData come from
+            const {data, ...metaData} = await agent.Venues.search(params); //get list of venues
             runInAction(() => {
                 this.venues = data;
             })

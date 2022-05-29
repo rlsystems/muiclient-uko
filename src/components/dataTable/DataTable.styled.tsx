@@ -1,9 +1,9 @@
 import { alpha, InputBase, Pagination, styled as muiStyled, TableRow, TableCell } from "@mui/material";
 import SearchIcon from "icons/SearchIcon";
 import styled from "@emotion/styled";
-import { ukoTheme } from "theme";
+import { nanoTheme } from "theme";
 
-const theme = ukoTheme({});
+const theme = nanoTheme({});
 const borderColor = theme.palette.mode === 'light' ?
       theme.palette.text.secondary :
       theme.palette.divider;

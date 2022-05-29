@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { StyledEngineProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import { ukoTheme } from "./theme/index";
+import { nanoTheme } from "./theme/index";
 
 import { observer } from 'mobx-react-lite';
 import { useLocation } from 'react-router-dom';
@@ -46,7 +46,7 @@ function App() {
   }, [])
 
   // App theme
-  const appTheme = ukoTheme({
+  const appTheme = nanoTheme({
     direction: "ltr",
     colorMode: commonStore.darkMode ? 'dark' : 'light',
     isResponsiveFontSizes: true,

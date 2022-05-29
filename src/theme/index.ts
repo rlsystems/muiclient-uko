@@ -349,7 +349,7 @@ export type themeSettingsProps = {
   isResponsiveFontSizes?: boolean;
 };
 
-export const ukoTheme = ({
+export const nanoTheme = ({
   colorMode = 'dark',
   direction = 'ltr',
   isResponsiveFontSizes = true
