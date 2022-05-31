@@ -26,7 +26,7 @@ const SearchInput: FC<InputBaseProps> = (props) => {
   return (
     <StyledInputBase
       {...props} 
-      startAdornment={ //QUESTION! - what is this
+      startAdornment={ //icon and start or end of input (MUI) 
         <SearchIcon
           sx={{
             fontSize: 16,

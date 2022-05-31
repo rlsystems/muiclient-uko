@@ -20,11 +20,11 @@ import { StyledPagination } from "components/dataTable/DataTable.styled";
 
 export interface ColumnShape<T> {
   header: string
-  accessor: keyof T | null
+  accessor: keyof T | null //similar to an ID
   minWidth: string | number
   maxWidth?: string | number
   width?: string | number
-  renderRow?: (row: any) => React.ReactNode
+  renderRow?: (row: any) => React.ReactNode //like Cell (function) from react table
 }
 
 type ServerTableProps<T> = {
@@ -36,6 +36,8 @@ type ServerTableProps<T> = {
   isLoading?: boolean
 }
 
+//Record is a utility type in TS
+//reading generics 
 const ServerTable = <T extends Record<string, any>>({
   data,
   columns,
@@ -44,9 +46,12 @@ const ServerTable = <T extends Record<string, any>>({
   hidePagination,
   isLoading }: ServerTableProps<T>) => {
   const handleChangePage = async (_: any, newPage: number) => {
-    if (!paginationDispatch) return
-    paginationDispatch({ type: PAGE_CHANGED, payload: newPage - 1 }); //QUESTION! - this is a hook right? why wouldnt we just use a variable in the store for this
+    if (!paginationDispatch) return //if no dispatch return nothing
+    paginationDispatch({ type: PAGE_CHANGED, payload: newPage - 1 }); //build in dispatch - this is a hook
   }
+
+  //this could be a mobx store
+  //-- challenge
 
   const handleChangeRowsPerPage = async (event: SelectChangeEvent<number>) => {
     if (!paginationDispatch) return
@@ -88,7 +93,7 @@ const ServerTable = <T extends Record<string, any>>({
           </TableBody>}
         </Table>
         {isLoading && (<Box my={6} width="100%" display="flex" justifyContent="center">
-              <CircularProgress />
+              <CircularProgress/>
         </Box>)}
       </ScrollBar>
 

@@ -3,7 +3,7 @@ import React, { Suspense, Fragment, lazy, LazyExoticComponent, FC } from 'react'
 import { Switch, Redirect, Route } from 'react-router-dom';
 import AuthGuard from './components/authentication/AuthGuard';
 import GuestGuard from './components/authentication/GuestGuard';
-import DashboardLayout from './components/layouts/DashboardLayout';
+import DashboardLayout from './components/Layouts/DashboardLayout';
 import LoadingScreen from './components/LoadingScreen';
 
 interface RouteType {

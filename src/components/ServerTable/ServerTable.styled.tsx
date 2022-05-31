@@ -3,6 +3,7 @@ import SearchIcon from "icons/SearchIcon";
 import styled from "@emotion/styled";
 import { ColumnShape } from "./ServerTable";
 
+//EMOTION ENGINE  -- https://mui.com/material-ui/guides/interoperability/#styled-components  -- https://mui.com/material-ui/guides/interoperability/#emotion
 export const StyledServerTableHeaderCell = styled(TableCell, {shouldForwardProp: prop => prop !== 'column'})<{column: ColumnShape<any>}>`
   padding-top: 0;
   padding-bottom: 0;
