@@ -50,13 +50,11 @@ const EditVenueModal: FC<Props> = ({ open, onClose, data }) => {
     id: data.id,
     name: data.name,
     description: data.description,
-    type: data.type,
   });
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Venue name is required'),
     description: Yup.string().required('Venue description is required'),
-    type: Yup.number().required().min(0).max(1),
   });
 
 
@@ -86,11 +84,11 @@ const EditVenueModal: FC<Props> = ({ open, onClose, data }) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <StyledModalCard>
-        <H2 mb={2}>Add Venue</H2>
+        <H2 mb={2}>Edit Venue</H2>
         <Divider />
         <form onSubmit={handleSubmit}>
           <Grid mt={1} container spacing={3} columnSpacing={5} className="main-form">
-            <Grid item xs={6}>
+            <Grid item xs={8}>
               <H6 mb={1}>Name</H6>
               <DarkTextField
                 id="name"
@@ -105,30 +103,7 @@ const EditVenueModal: FC<Props> = ({ open, onClose, data }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
-              <H6 mb={1}>Type</H6>
-              <RadioGroup
-                row
-                name="type"
-                value={values.type}
-                onChange={handleChange}
-              >
-                {[0, 1].map((item) => (
-                  <FormControlLabel
-                    sx={{
-                      textTransform: 'capitalize',
-                      marginRight: '40px'
-                    }}
-                    key={item}
-                    value={item}
-                    label={(item)}
-                    control={<Radio />}
-                  />
-                ))}
-              </RadioGroup>
-            </Grid>
-
-            <Grid item xs>
+            <Grid item xs={12}>
               <H6 mb={1}>Description</H6>
               <DarkTextField
               multiline

@@ -2,6 +2,13 @@ import { RoleID } from "app/models/user";
 import Icons from "../icons/sidebar";
 
 const menuList = [
+
+  {
+    title: "UI Component Samples",
+    Icon: Icons.PagesIcon,
+    path: "/samples",
+    roles: null
+  },
   {
     title: "Venues",
     Icon: Icons.UserManagementIcon,

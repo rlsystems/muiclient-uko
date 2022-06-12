@@ -107,7 +107,6 @@ export default class VenueStore {
             const venueRequestBody = {
                 Name: venue.name,
                 Description: venue.description,
-                Type: venue.type
             }
             let response = await agent.Venues.create(venueRequestBody);
             runInAction(async () => {

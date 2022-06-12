@@ -22,7 +22,7 @@ export default observer(function VenueForm() {
       id: '',
       name: '',
       description: '',
-      type: 0
+
   });
 
   //gets passed to formik
@@ -96,18 +96,7 @@ export default observer(function VenueForm() {
                   error={formik.touched.description && Boolean(formik.errors.description)}
                   helperText={formik.touched.description && formik.errors.description}
               />
-              <TextField
-                  fullWidth
-                  margin="normal"
-                  id="type"
-                  name="type"
-                  label="Type"
-                  value={formik.values.type}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.type && Boolean(formik.errors.type)}
-                  helperText={formik.touched.type && formik.errors.type}
-              />
+             
 
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', mt: 3, mb: 2 }}>
                   <Button component={Link} to='/venues' variant="text">Cancel</Button>

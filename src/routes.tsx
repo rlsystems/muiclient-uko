@@ -32,6 +32,8 @@ const ResetPasswordPage = Loadable(lazy(() => import('./pages/authentication/Res
 const TenantListPage = Loadable(lazy(() => import('./pages/tenants/TenantList')));
 const UserListPage = Loadable(lazy(() => import('./pages/users/UserList')));
 const VenueListPage = Loadable(lazy(() => import('./pages/venues/VenueList')));
+const SampleListPage = Loadable(lazy(() => import('./pages/samples/SampleList')));
+
 const AccountSettingsPage = Loadable(lazy(() => import('./pages/profile/AccountSettings')));
 
 export const renderRoutes = (routes: RouteType[] = []) => (
@@ -114,6 +116,12 @@ const routes: RouteType[] = [
         path: '/venues',
         guard: AuthGuard,
         component: VenueListPage
+      },
+      {
+        exact: true,
+        path: '/samples',
+        guard: AuthGuard,
+        component: SampleListPage
       },
       {
         exact: true,

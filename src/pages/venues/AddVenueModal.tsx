@@ -51,13 +51,11 @@ const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
     id: '',
     name: '',
     description: '',
-    type: 1
   });
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Venue name is required'),
     description: Yup.string().required('Venue description is required'),
-    type: Yup.number().required().min(0).max(1),
   });
 
 
@@ -76,7 +74,8 @@ const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
     onClose();
   }
 
-  // TODO: keep in production
+  //// OPTIONAL: to prevent modal from closing on backdrop click
+
   // const handleBackdropClose = (_: any, reason: any) => {
   //   if (reason && reason == "backdropClick")
   //   return;
@@ -91,7 +90,7 @@ const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
         <Divider />
         <form onSubmit={handleSubmit}>
           <Grid mt={1} container spacing={3} columnSpacing={5} className="main-form">
-            <Grid item xs={6}>
+            <Grid item xs={8}>
               <H6 mb={1}>Name</H6>
               <DarkTextField
                 id="name"
@@ -105,31 +104,7 @@ const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
                 autoComplete="new-password"
               />
             </Grid>
-
-            <Grid item xs={6}>
-              <H6 mb={1}>Type</H6>
-              <RadioGroup
-                row
-                name="type"
-                value={values.type}
-                onChange={handleChange}
-              >
-                {[0, 1].map((item) => (
-                  <FormControlLabel
-                    sx={{
-                      textTransform: 'capitalize',
-                      marginRight: '40px'
-                    }}
-                    key={item}
-                    value={item}
-                    label={(item)}
-                    control={<Radio />}
-                  />
-                ))}
-              </RadioGroup>
-            </Grid>
-
-            <Grid item xs>
+            <Grid item xs={12}>
               <H6 mb={1}>Description</H6>
               <DarkTextField
               multiline

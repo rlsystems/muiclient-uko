@@ -1,3 +1,4 @@
+import { Tenant } from "app/models/tenant";
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { ServerError } from "../models/serverError";
 

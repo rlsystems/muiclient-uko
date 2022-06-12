@@ -1,10 +1,18 @@
 import { LoadingButton } from "@mui/lab";
 import {
+  Alert,
   Box,
   Button,
   Card,
+  Chip,
+  Divider,
   FormControlLabel,
   FormHelperText,
+  Grid,
+  InputBase,
+  MenuItem,
+  Select,
+  styled,
   Switch,
 } from "@mui/material";
 import {
@@ -12,7 +20,7 @@ import {
 } from "./StyledComponents";
 import FlexBox from "../../components/FlexBox";
 import LightTextField from "../../components/LightTextField";
-import { H1, H3, Paragraph, Small } from "../../components/Typography";
+import { H1, H3, Paragraph, Small, Tiny } from "../../components/Typography";
 import { useFormik } from "formik";
 
 import { FC, useState, useEffect } from "react";
@@ -22,19 +30,22 @@ import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { toast } from "react-toastify";
+import { KeyboardArrowDown } from "@mui/icons-material";
+import { StyledSelectInput } from "components/StyledComponent";
 
 const Login: FC = () => {
   const [error, setError] = useState("");
-  const { userStore, commonStore } = useStore();
+  const { userStore, commonStore, tenantStore } = useStore();
+  const { loadTenants, tenantsSorted } = tenantStore;
 
   const initialValues = {
     email: "",
     password: "",
-    tenant: "",
+    tenant: "root",
   };
 
   // form field value validation schema
-  const validationSchema = Yup.object().shape({  
+  const validationSchema = Yup.object().shape({
     tenant: Yup.string()
       .required('Tenant key is required'),
     email: Yup.string()
@@ -76,6 +87,11 @@ const Login: FC = () => {
     setFieldValue(name, value);
     setTimeout(() => setFieldTouched(name, true));
   };
+
+  useEffect(() => {
+    loadTenants();
+  }, [loadTenants])
+
 
 
   return (
@@ -138,25 +154,7 @@ const Login: FC = () => {
                   helperText={touched.password && errors.password}
                 />
               </TextFieldWrapper>
-              {/* If no subdomain is present, render the tenant field */}
-              {!commonStore.hasSubdomain && (
-                <TextFieldWrapper>
-                  <Paragraph fontWeight={600} mb={1} mt={3}>
-                    Tenant
-                  </Paragraph>
-                  <LightTextField
-                    fullWidth
-                    name="tenant"
-                    type="text"
-                    placeholder="tenant"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.tenant || ""}
-                    error={Boolean(touched.tenant && errors.tenant)}
-                    helperText={touched.tenant && errors.tenant}
-                  />
-                </TextFieldWrapper>
-              )}
+
 
 
 
@@ -205,21 +203,69 @@ const Login: FC = () => {
                 Submit
               </LoadingButton>
             </Box>
-            <Box sx={{ mt: 2 }}>
+
+            <Divider sx={{ mt: 3, width: "100%", alignItems: "center" }}>
+              <H3 color="text.disabled" px={1}>
+                Welcome
+              </H3>
+            </Divider>
+            <Box sx={{ mt: 1 }}>
+              <Tiny display="block" color="text.disabled" fontWeight={500} textAlign="center">
+                In this demo, specify the tenant with the dropdown selection. You can use the Admin Credentials button to quickly populate the fields.
+              </Tiny>
+            </Box>
+
+            <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
               <Button
                 onClick={() => handleAdminCredentials()}
                 color="primary"
                 variant="outlined"
-
+                sx={{ height: 50 }}
               >
                 Admin Credentials
               </Button>
+              {/* If no subdomain is present, render the tenant field */}
+              {!commonStore.hasSubdomain && (
+                <TextFieldWrapper>
+                  <Paragraph fontWeight={600} mb={1} mt={3}>
+                    Tenant
+                  </Paragraph>
+                  <Select
+                    name="tenant"
+                    type="text"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.tenant || ""}
+                    error={Boolean(touched.tenant && errors.tenant)}
+                    IconComponent={() => <KeyboardArrowDown />}
+                    input={<StyledSelectInput />}
+                  >
+                    {tenantsSorted.map((item) => (
+                      <MenuItem value={item.key} sx={{ fontSize: 12, fontWeight: 500, textTransform: "capitalize" }}>
+                        {item.key}
+                      </MenuItem>
+                    ))}
+
+
+                  </Select>
+                </TextFieldWrapper>
+              )}
             </Box>
+
+
           </form>
 
 
         </FlexBox>
       </Card>
+      <Alert
+        sx={{ marginTop: 2, padding: 2, width: "100%", maxWidth: 600, boxShadow: 1 }}
+        severity="success"
+        variant="outlined">
+          Root superadmin: admin@root.com<br/>
+          Beta admin: admin@beta.com <br/>
+          Default password: Password123!
+        </Alert>
     </FlexBox>
   );
 };

@@ -75,9 +75,9 @@ const VenueList = () => {
   }, [venueMetaData?.totalPages]);
 
   useEffect(() => {
-    loadVenues(state.queryPageIndex + 1, state.queryPageSize); //QUESTION! - start discussion here
+    loadVenues(state.queryPageIndex + 1, state.queryPageSize); 
     setFilteredQuery("")
-  }, [loadVenues, state.queryPageSize, state.queryPageIndex]) //QUESTION! - what triggers the table re-rendering
+  }, [loadVenues, state.queryPageSize, state.queryPageIndex]) 
 
   return (
     <Box pt={2} pb={4}>
@@ -139,14 +139,7 @@ const VenueList = () => {
           onClose={() => setOpenModal(false)}
       />)}
 
-      {/* <DataTable
-        data={data}
-        columns={columns}
-        dispatch={dispatch}
-        queryPageSize={queryPageSize}
-        queryPageIndex={queryPageIndex}
-        totalPageCount={totalPageCount}
-      /> */}
+
       <ServerTable
         data={data}
         columns={columns}
