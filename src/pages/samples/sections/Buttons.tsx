@@ -10,8 +10,10 @@ import {
     RadioGroup,
     styled,
 } from "@mui/material";
+import FlexBox from "components/FlexBox";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -19,9 +21,14 @@ import { FC } from "react";
 const Buttons: FC = () => {
     return (
         <Card sx={{ padding: 3 }}>
-            <H5>Buttons</H5>
+             <FlexBox justifyContent={"space-between"}>
+                <H5>Buttons</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-button/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
             <Small color="text.disabled">
-                Several button varieties, icon buttons, etc.
+                Several button varieties, icon buttons, loading state, etc.
             </Small>
 
             <Grid container spacing={3} mt={1}>

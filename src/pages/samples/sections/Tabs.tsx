@@ -5,9 +5,10 @@ import {
     Divider,
     Tab,
 } from "@mui/material";
+import FlexBox from "components/FlexBox";
 import { H5, Small } from "components/Typography";
 import { FC, SyntheticEvent, useState } from "react";
-
+import { NavLink } from "react-router-dom";
 
 const Tabs: FC = () => {
     const [tabValue, setTabValue] = useState("1");
@@ -19,12 +20,18 @@ const Tabs: FC = () => {
 
     return (
         <Card sx={{ padding: 3 }}>
-            <H5>Tabs</H5>
+            <FlexBox justifyContent={"space-between"}>
+                <H5>Tabs</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-tabs/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
             <Small color="text.disabled">
                 Tabs for switching between content
             </Small>
 
             <Box mt={1}>
+
                 <TabContext value={tabValue}>
                     <TabList
                         onChange={handleChange}

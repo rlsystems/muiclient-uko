@@ -4,14 +4,21 @@ import {
     Grid,
     Switch,
 } from "@mui/material";
+import FlexBox from "components/FlexBox";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";
+import { NavLink } from "react-router-dom";
 
 
 const Switches: FC = () => {
     return (
         <Card sx={{ padding: 3 }}>
-            <H5>Switches</H5>
+            <FlexBox justifyContent={"space-between"}>
+                <H5>Switches</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-switch/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
             <Small color="text.disabled">
                 Switch toggles
             </Small>

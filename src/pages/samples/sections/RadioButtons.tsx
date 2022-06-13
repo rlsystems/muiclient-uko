@@ -7,8 +7,10 @@ import {
     RadioGroup,
     styled,
 } from "@mui/material";
+import FlexBox from "components/FlexBox";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";
+import { NavLink } from "react-router-dom";
 
 
 const StyledFormControl = styled(FormControlLabel)(() => ({
@@ -21,12 +23,16 @@ const StyledFormControl = styled(FormControlLabel)(() => ({
 const RadioButtons: FC = () => {
     return (
         <Card sx={{ padding: 3}}>
-            <H5>Radio Buttons</H5>
+            <FlexBox justifyContent={"space-between"}>
+                <H5>Radio Buttons</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-radio-button/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
             <Small color="text.disabled">
-                What is the status of the delivery
+                For selecting a single option
             </Small>
-
-            <Box>
+            <Box mt={2}>
                 <RadioGroup
                     row
                     name="status"

@@ -1,27 +1,25 @@
 import {
-    Box,
     Card,
-    Checkbox,
-    Divider,
-    FormControlLabel,
     Grid,
-    styled,
-    Switch,
 } from "@mui/material";
 import DarkTextField from "components/DarkTextField";
-import { StyledFormControlLabel } from "components/StyledComponent";
+import FlexBox from "components/FlexBox";
 import { H5, Small } from "components/Typography";
-import { values } from "lodash";
 import { FC } from "react";
-import { Label } from "recharts";
+import { NavLink } from "react-router-dom";
 
 
 
 
 const TextInputsDark: FC = () => {
     return (
-        <Card sx={{ padding: 3}}>
-            <H5>Text Inputs</H5>
+        <Card sx={{ padding: 3 }}>
+            <FlexBox justifyContent={"space-between"}>
+                <H5>Styled Text Inputs</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-text-field/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
             <Small color="text.disabled">
                 Alternate style dark text inputs
             </Small>

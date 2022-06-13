@@ -6,25 +6,28 @@ import {
     MenuItem,
     Select,
 } from "@mui/material";
+import FlexBox from "components/FlexBox";
 import { DarkMenuItem, DarkStyledSelectInput, StyledSelectInput } from "components/StyledComponent";
 import { H5, Small } from "components/Typography";
 import { FC, useState } from "react";
-
-
+import { NavLink } from "react-router-dom";
 
 
 const Selections: FC = () => {
-   
-
     const [language, setLanguage] = useState("english");
     const [status, setStatus] = useState("available");
     const [region, setRegion] = useState("north");
 
     return (
         <Card sx={{ padding: 3 }}>
-            <H5>Selections</H5>
+            <FlexBox justifyContent={"space-between"}>
+                <H5>Selections</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-select/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
             <Small color="text.disabled">
-                Default, Styled, and Dark Styled selection inputs
+                Default, styled, and alternate styled selection inputs
             </Small>
 
             <Grid container spacing={4} marginTop={.5}>
@@ -79,9 +82,7 @@ const Selections: FC = () => {
                         <DarkMenuItem value="pending">Pending</DarkMenuItem>
                     </Select>
                 </Grid>
-
             </Grid>
-
         </Card>
     );
 };

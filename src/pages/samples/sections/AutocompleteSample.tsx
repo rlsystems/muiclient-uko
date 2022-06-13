@@ -5,10 +5,12 @@ import {
     Grid,
 
 } from "@mui/material";
+import FlexBox from "components/FlexBox";
 import LightTextField from "components/LightTextField";
 import { StyledChip } from "components/StyledComponent";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -17,7 +19,12 @@ const AutocompleteSample: FC = () => {
 
     return (
         <Card sx={{ padding: 3 }}>
-            <H5>Autocomplete</H5>
+            <FlexBox justifyContent={"space-between"}>
+                <H5>Autocomplete</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-autocomplete/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
             <Small color="text.disabled">
                 A multi-select, searchable autocomplete field
             </Small>

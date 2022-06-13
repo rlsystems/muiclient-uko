@@ -5,8 +5,10 @@ import {
     FormControlLabel,
     styled,
 } from "@mui/material";
+import FlexBox from "components/FlexBox";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -18,13 +20,19 @@ const StyledFormControl = styled(FormControlLabel)(() => ({
 
 const CheckBoxes: FC = () => {
     return (
-        <Card sx={{ padding: 3}}>
-            <H5>Checkboxes</H5>
+        <Card sx={{ padding: 3 }}>
+            <FlexBox justifyContent={"space-between"}>
+                <H5>Checkboxes</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-checkbox/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
+
             <Small color="text.disabled">
-                Which animals do you like? Select any that apply
+                For selecting multiple options
             </Small>
 
-            <Box marginTop={1}>
+            <Box marginTop={2}>
 
                 {["Cats", "Dogs", "Turtles"].map((item) => (
                     <StyledFormControl
@@ -35,7 +43,7 @@ const CheckBoxes: FC = () => {
                     />
                 ))}
 
-               
+
 
             </Box>
 

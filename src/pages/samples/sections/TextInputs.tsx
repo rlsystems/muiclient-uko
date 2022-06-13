@@ -8,11 +8,13 @@ import {
     styled,
     Switch,
 } from "@mui/material";
+import FlexBox from "components/FlexBox";
 import LightTextField from "components/LightTextField";
 import { StyledFormControlLabel } from "components/StyledComponent";
 import { H5, Small } from "components/Typography";
 import { values } from "lodash";
 import { FC } from "react";
+import { NavLink } from "react-router-dom";
 import { Label } from "recharts";
 
 
@@ -21,7 +23,12 @@ import { Label } from "recharts";
 const TextInputs: FC = () => {
     return (
         <Card sx={{ padding: 3}}>
-            <H5>Text Inputs</H5>
+             <FlexBox justifyContent={"space-between"}>
+                <H5>Text Inputs</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-text-field/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
             <Small color="text.disabled">
                 Default style text inputs
             </Small>

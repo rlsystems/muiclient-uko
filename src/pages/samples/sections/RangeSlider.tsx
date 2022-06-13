@@ -1,28 +1,31 @@
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
     Box,
     Card,
-    Divider,
     Slider,
-    Tab,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
 import { H5, Small, Tiny } from "components/Typography";
-import { FC, SyntheticEvent, useState } from "react";
+import { FC, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 
 const RangeSlider: FC = () => {
     const [value, setValue] = useState<number[]>([100, 1000]);
 
     const handleChange = (e: Event, value: number | number[]) => {
-      setValue(value as number[]);
+        setValue(value as number[]);
     };
 
     return (
         <Card sx={{ padding: 3 }}>
-            <H5>Range Slider</H5>
+            <FlexBox justifyContent={"space-between"}>
+                <H5>Range Slider</H5>
+                <NavLink to={{ pathname: "https://mui.com/material-ui/react-slider/" }} target="_blank">
+                    <Small color="primary.main">Docs</Small>
+                </NavLink>
+            </FlexBox>
             <Small color="text.disabled">
-                When you need to choose a range
+                Styled range control slider
             </Small>
 
             <Box mt={3} width="70%">

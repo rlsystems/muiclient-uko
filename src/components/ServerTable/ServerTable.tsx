@@ -79,11 +79,11 @@ const ServerTable = <T extends Record<string, any>>({
 
           {!isLoading &&
             <TableBody>
-            {data.map((row: T) => {
+            {data.map((row: T, index) => {
               return (
-                <StyledServerTableRow>
-                  {columns.map((cell) => (
-                    <StyledServerTableRowCell>
+                <StyledServerTableRow  key={index}>
+                  {columns.map((cell, index) => (
+                    <StyledServerTableRowCell key={index}>
                       {cell.renderRow ? cell?.renderRow(row) : cell.accessor ? row[cell.accessor]: null}
                     </StyledServerTableRowCell>
                   ))}

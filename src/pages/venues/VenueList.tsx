@@ -60,7 +60,7 @@ const VenueList = () => {
 
   const handleSearchInputField = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {value} = evt.target;
-    setSearchQuery(value); //QUESTION! - does this fire on keypress?
+    setSearchQuery(value);
   }
 
   useEffect(() => {
@@ -84,9 +84,7 @@ const VenueList = () => {
       <StyledFlexBox>
         <Stack direction="row" alignItems="stretch">
           <SearchInput
-            value={searchQuery} //QUESTION! - must inputs always have this loop
-            // ANSWER => For controlled inputs, yes
-            // Read: https://www.geeksforgeeks.org/react-js-uncontrolled-vs-controlled-inputs/
+            value={searchQuery}
             onChange={handleSearchInputField}
             placeholder="Search venues..."
           />
