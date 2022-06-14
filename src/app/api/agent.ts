@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 
 import { store } from '../stores/store';
-import { User, RegisterUserRequest, ChangePasswordRequest, UpdateProfileRequest } from '../models/user';
+import { User, RegisterUserRequest, ChangePasswordRequest, UpdateProfileRequest, UpdatePreferencesRequest, CurrentUser } from '../models/user';
 import { TokenData, UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
 
 import { SearchParams } from '../models/searchParams';
@@ -77,7 +77,7 @@ const requests = {
 
 //Identity (Yourself)
 const Account = {
-    current: () => requests.get<Result<User>>('/identity/profile'),
+    current: () => requests.get<Result<CurrentUser>>('/identity/profile'),
     login: (user: UserLogin) => requests.post<Result<TokenData>>(`/tokens`, user),
     update: (user: UpdateProfileRequest) => requests.put<Result<User>>(`/identity/profile`, user),
 
@@ -93,6 +93,8 @@ const Account = {
         })
 
     },
+    updatePreferences: (updatePreferencesRequest: UpdatePreferencesRequest) => requests.put<Result>(`/identity/preferences`, updatePreferencesRequest),
+
     changePassword: (changePasswordRequest: ChangePasswordRequest) => requests.put<Result>(`/identity/change-password`, changePasswordRequest),
     forgotPassword: (forgotPasswordRequest: ForgotPasswordRequest) => requests.post<Result>(`/identity/forgot-password`, forgotPasswordRequest),
     resetPassword: (resetPasswordRequest: ResetPasswordRequest) => requests.post<Result>(`/identity/reset-password`, resetPasswordRequest),

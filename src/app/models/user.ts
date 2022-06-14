@@ -6,7 +6,21 @@ export enum RoleID  {
 }
 
 
-//Profile / AppUser share this class
+//Profile 
+export interface CurrentUser {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    isActive: boolean; //remove
+    roleId: string;
+    imageUrl: string;
+    darkModeDefault: boolean;
+    pageSizeDefault: number;
+}
+
+//AppUser share this class
 export interface User {
     id: string;
     firstName: string;
@@ -42,9 +56,16 @@ export interface UpdateProfileRequest {
     deleteCurrentImage: boolean;
 }
 
+//Update your own preferences
+export interface UpdatePreferencesRequest {
+    darkModeDefault: boolean;
+    pageSizeDefault: number;
+}
+
 //Update your own password
 export interface ChangePasswordRequest {
     password: string;
     newPassword: string;
     confirmNewPassword: string;
 }
+

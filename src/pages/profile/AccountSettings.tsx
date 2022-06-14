@@ -9,13 +9,13 @@ import FlexBox from "../../components/FlexBox";
 
 import PasswordIcon from "../../icons/PasswordIcon";
 import ProfileIcon from "../../icons/ProfileIcon";
-import SettingIcon from "../../icons/SettingIcon";
 
-import UserInfo from "./tabs/UserInfo/";
+import UserInfo from "./tabs/UserInfo/UserInfo";
 import Preferences from "./tabs/Preferences";
 import Password from "./tabs/Password";
 
 import { useStore } from "../../app/stores/store";
+import SettingIcon from "../../icons/SettingIcon";
 
 
 // styled component
@@ -90,7 +90,8 @@ const AccountSettings: FC = () => {
         {/* Tab Content */}
         <Grid item lg={7} xs={9}>
           {active === convertToSlug(tabList[0].name) && <UserInfo />}
-          {active === convertToSlug(tabList[1].name) && <Password />}
+          {active === convertToSlug(tabList[1].name) && <Preferences />}
+          {active === convertToSlug(tabList[2].name) && <Password />}
 
         </Grid>
       </Grid>
@@ -106,6 +107,11 @@ const tabList = [
   },
   {
     id: 2,
+    name: "Preferences",
+    Icon: SettingIcon,
+  },
+  {
+    id: 3,
     name: "Password",
     Icon: PasswordIcon,
   }

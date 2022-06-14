@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { ChangePasswordRequest, UpdateProfileRequest, User } from "../models/user";
+import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, User } from "../models/user";
 import { UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
 
 import { store } from "./store";
@@ -9,7 +9,8 @@ import { Venue } from "../models/venue";
 
 export default class UserStore {
 
-    //User store is for profile management and current user
+    //User store is the personal store
+    //-- contains current user, edit user profile and preferences
 
     currentUser: User | null = null;
     loadingInitial: boolean = false;
@@ -65,7 +66,7 @@ export default class UserStore {
 
         try {
             const result = await agent.Account.current();
-            runInAction(() => //timing issue with async operations
+            runInAction(() => 
                 this.currentUser = result.data
             );
             return this.currentUser;
@@ -81,7 +82,7 @@ export default class UserStore {
             let updatedUser = await agent.Account.updateProfile(user);
             runInAction(() => {
                 store.appUserStore.appUserRegistry.set(user.id, updatedUser.data);
-                this.currentUser = updatedUser.data; //image will update but fields will not -- why??
+                this.currentUser = updatedUser.data;
                 store.appUserStore.updateAppUserLoading = false;
             })
         } catch (error) {
@@ -89,6 +90,15 @@ export default class UserStore {
             runInAction(() => {
                 store.appUserStore.updateAppUserLoading = false;
             })
+        }
+    }
+
+    updatePreferences = async (updatePreferencesRequest: UpdatePreferencesRequest) => {
+        try {
+            const response = await agent.Account.updatePreferences(updatePreferencesRequest);
+            return response
+        } catch (error) {
+            console.log(error);
         }
     }
 

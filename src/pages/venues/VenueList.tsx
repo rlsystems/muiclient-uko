@@ -52,8 +52,8 @@ const VenueList = () => {
   }
 
   useEffect(() => {
-    setTitle("Venues"); //places the function into the normal react flow
-  }, []) //must always pass an array
+    setTitle("Venues"); 
+  }, [])
 
   useEffect(() => {
     dispatch({

@@ -3,17 +3,14 @@ import {
   Box,
   Button,
   Card,
-  Divider,
   Grid,
-  Switch,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
 import LightTextField from "components/LightTextField";
-import { H5, H6, Tiny } from "components/Typography";
+import { H5, Tiny } from "components/Typography";
 import NanoAvatar from "components/NanoAvatar";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { StyledBadge, StyledFormControlLabel } from "../../StyledComponent";
 import { useStore } from "app/stores/store";
 import { observer } from "mobx-react-lite";
 import { UpdateProfileRequest } from "app/models/user";
@@ -21,6 +18,7 @@ import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import getBase64 from "app/utils/getBase64";
 import ImagePopover from "./ImagePopover";
+import { StyledBadge } from "components/StyledComponent";
 
 const UserInfo: FC = () => {
   const {
@@ -151,7 +149,7 @@ const UserInfo: FC = () => {
           </FlexBox>
         </FlexBox>
 
-        <Grid container spacing={4}>
+        <Grid container spacing={4} mt={1} mb={1}>
           <Grid item xs={12} sm={6}>
             <LightTextField
               fullWidth
@@ -200,36 +198,14 @@ const UserInfo: FC = () => {
               error={Boolean(touched.phoneNumber && errors.phoneNumber)}
             />
           </Grid>
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <StyledFormControlLabel
-              label={
-                <Label
-                  title="Dark Mode"
-                  body="Set dark mode as default mode."
-                />
-              }
-              control={<Switch defaultChecked />}
-              sx={{ mt: "1rem" }}
-            />
-          </Grid>
+       
+          
 
         </Grid>
       </form>
     </Card>
   );
 };
-function Label({ title, body }: { title: string; body: string }) {
-  return (
-    <Box>
-      <H6>{title}</H6>
-      <Tiny fontWeight={500} color="text.disabled">
-        {body}
-      </Tiny>
-    </Box>
-  );
-}
+
 
 export default observer(UserInfo);
