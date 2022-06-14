@@ -121,6 +121,8 @@ const Tenants = {
     list: () => requests.get<Result<Tenant[]>>('/tenants'), // full list for client-side pagination
     details: (id: string) => requests.get<Result<Tenant>>(`/tenants/${id}`),
     create: (tenant: CreateTenantRequest) => requests.post<Result<Tenant>>(`/tenants`, tenant),
+    update: (tenant: Tenant) => requests.put<Result<Tenant>>(`/tenants/`, tenant), //include id in body
+
 }
 
 const agent = {

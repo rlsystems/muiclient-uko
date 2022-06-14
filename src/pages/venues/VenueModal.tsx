@@ -26,6 +26,7 @@ import { toast } from "react-toastify";
 interface Props {
   data?: any;
   open: boolean;
+  isEdit: boolean;
   onClose: () => void;
 }
 
@@ -43,15 +44,17 @@ const StyledModalCard = styled(Card)(({ theme }) => ({
 }));
 
 
-const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
+const VenueModal: FC<Props> = ({ open, onClose, isEdit, data }) => {
   const { venueStore } = useStore();
-  const { createVenue, createVenueLoading } = venueStore;
+  const { createVenue, createUpdateLoading, updateVenue } = venueStore;
 
   const [newVenueFormValues] = useState<Venue>({
-    id: '',
-    name: '',
-    description: '',
+    id: isEdit ? data.id : '',
+    name: isEdit ? data.name : '',
+    description: isEdit ? data.description : '',
   });
+
+
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Venue name is required'),
@@ -63,8 +66,13 @@ const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
     initialValues: newVenueFormValues,
     validationSchema: validationSchema,
     onSubmit: async (addVenue: Venue) => {
-      await createVenue(addVenue)
-      toast.success("Venue Added Successfully!")
+      if (!isEdit) {
+        await createVenue(addVenue)
+        toast.success("Venue Added!")
+      } else {
+        await updateVenue(addVenue)
+        toast.success("Venue Updated!")
+      }
       handleClose()
     }
   });
@@ -74,19 +82,11 @@ const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
     onClose();
   }
 
-  //// OPTIONAL: to prevent modal from closing on backdrop click
-
-  // const handleBackdropClose = (_: any, reason: any) => {
-  //   if (reason && reason == "backdropClick")
-  //   return;
-  //   handleClose();
-  // }
-
 
   return (
     <Modal open={open} onClose={handleClose}>
       <StyledModalCard>
-        <H2 mb={2}>Add Venue</H2>
+        <H2 mb={2}> {!isEdit ? 'Add Venue' : 'Edit Venue'}</H2>
         <Divider />
         <form onSubmit={handleSubmit}>
           <Grid mt={1} container spacing={3} columnSpacing={5} className="main-form">
@@ -107,8 +107,8 @@ const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
             <Grid item xs={12}>
               <H6 mb={1}>Description</H6>
               <DarkTextField
-              multiline
-              minRows={2}
+                multiline
+                minRows={2}
                 id="description"
                 name="description"
                 placeholder="Description"
@@ -143,7 +143,7 @@ const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}
-              loading={createVenueLoading}
+              loading={createUpdateLoading}
               sx={{ width: 124, fontSize: 12 }}
             >
               Save
@@ -155,4 +155,4 @@ const AddVenueModal: FC<Props> = ({ open, onClose, data }) => {
   );
 };
 
-export default observer(AddVenueModal);
+export default observer(VenueModal);

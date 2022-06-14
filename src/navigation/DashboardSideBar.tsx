@@ -34,7 +34,7 @@ const StyledListItemButton = styled(ListItemButton)(() => ({
 
 // root component
 const DashboardSideBar = () => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const history = useHistory();
   const { userStore } = useStore();
 
@@ -46,21 +46,28 @@ const DashboardSideBar = () => {
         </StyledListItemButton>
 
         <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>
-          {topMenuList.filter(item => !item.roles || item.roles.includes(userStore.currentUser?.roleId as RoleID)).map((nav, index) => (        
+          {topMenuList.filter(item => !item.roles || item.roles.includes(userStore.currentUser?.roleId as RoleID)).map((nav, index) => (
+            <>
+            {nav.topDivider && <Divider variant="middle" sx={{marginBottom: "15px"}}/>}
+            
             <Tooltip title={nav.title} placement="right" key={index}>
-              
+
               <StyledListItemButton
                 disableRipple
                 onClick={() => history.push(nav.path)}
               >
+                
                 <nav.Icon
                   sx={{
                     color:
                       nav.path === pathname ? "primary.main" : "secondary.400",
+                      //borderTop: "1px solid red"
                   }}
                 />
               </StyledListItemButton>
             </Tooltip>
+            </>
+            
           ))}
         </ScrollBar>
       </List>

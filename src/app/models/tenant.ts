@@ -1,19 +1,22 @@
 export interface Tenant {
     id: string;
-    key: string;
+    name: string;
     isActive: boolean;
 }
 
 
 export interface CreateTenantRequest {
-    key: string;
+    id: string;
+    name: string;
     adminEmail: string;
     password: string;
 }
 
-export interface UpdateTenantRequest {
-    isActive: boolean;
-}
+// export interface UpdateTenantRequest {
+//     id: string;
+//     isActive: boolean;
+//     name: string;
+// }
 
 
 

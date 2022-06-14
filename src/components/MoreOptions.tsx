@@ -28,8 +28,8 @@ const MoreOptions: FC<MoreOptionsProps> = ({ anchorEl, handleMoreClose, handleEd
       anchorEl={anchorEl}
       open={Boolean(anchorEl)}
       onClose={handleMoreClose}
-      anchorOrigin={{horizontal: 'left', vertical: 'center'}}
-      transformOrigin={{horizontal: 'left', vertical: 'center'}}
+      anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+      transformOrigin={{horizontal: 'left', vertical: 'top'}}
     >
       <MenuItem
         onClick={handleEditClick}

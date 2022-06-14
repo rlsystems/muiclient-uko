@@ -1,19 +1,33 @@
 import { useState } from "react";
 import { H6, Small } from "components/Typography";
 import EditIconButton from "components/EditIconButton";
+import EditTenantModal from "./EditTenantModal";
 
 const TenantColumnShape = [
   {
     Header: "Key",
-    accessor: "key",
-    minWidth: 200,
+    accessor: "id",
+    minWidth: 100,
     Cell: ({ row }: any) => {
 
-      const { key } = row.original;
+      const { id } = row.original;
+      return (
+        <H6 color="text.disabled"
+        >{id}</H6>
+      );
+    },
+  },
+  {
+    Header: "Name",
+    accessor: "name",
+    minWidth: 100,
+    Cell: ({ row }: any) => {
+
+      const { name } = row.original;
       return (
         <H6 color="text.primary"
-          sx={{textTransform: "capitalize"}}
-        >{key}</H6>
+          sx={{ textTransform: "capitalize" }}
+        >{name}</H6>
       );
     },
   },
@@ -25,11 +39,10 @@ const TenantColumnShape = [
     Cell: ({ value }: any) => (
       <Small
         sx={{
-          color: value.toString().toLowerCase() === "true" ? "" : "error.main",
+          color: value.toString().toLowerCase() === "true" ? "success.main" : "error.main",
           textTransform: "capitalize"
         }}
       >
-        {/* <CheckDoneIcon color="success" /> */}
         {value.toString() === "true" ? "Yes" : "No"}
       </Small>
     ),
@@ -38,10 +51,20 @@ const TenantColumnShape = [
   {
     Header: "Edit",
     accessor: "action",
-    Cell: () => {
-      const [, setOpenModal] = useState(false);
+    Cell: ({ row }: any) => {
+      const [openModal, setOpenModal] = useState(false);
+      const { id } = row.original;
       return (
-        <EditIconButton onClick={() => setOpenModal(true)} />
+        <>
+          {id != "root" && <EditIconButton onClick={() => setOpenModal(true)} />}
+          {id == "root" && <EditIconButton disabled />}
+
+          {openModal && <EditTenantModal
+            open={openModal}
+            data={row.original}
+            onClose={() => setOpenModal(false)}
+          />}
+        </>
       );
     },
   },

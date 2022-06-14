@@ -6,7 +6,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import MoreOptions from "components/MoreOptions";
 import { StyledDisabledBox } from "components/common";
 import { MoreVert } from "@mui/icons-material";
-import EditVenueModal from './EditVenueModal'
+import VenueModal from './VenueModal'
 import { Venue } from "app/models/venue";
 import { ColumnShape } from "components/ServerTable/ServerTable";
 
@@ -74,9 +74,11 @@ const VenueColumnShape: ColumnShape<Venue>[] = [
             handleMoreClose={handleMenuClose}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
+            
           />
-          <EditVenueModal
+          <VenueModal
             open={openModal}
+            isEdit={true}
             onClose={() => setOpenModal(false)}
             data={row}
           />

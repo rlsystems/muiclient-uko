@@ -80,6 +80,7 @@ const Login: FC = () => {
     populateField("email", "admin@root.com");
     populateField("password", "Password123!");
     populateField("tenant", "root");
+    //trigger change?
   }
 
   //To prepopulate a field it must be touched
@@ -241,8 +242,8 @@ const Login: FC = () => {
                     input={<StyledSelectInput />}
                   >
                     {tenantsSorted.map((item) => (
-                      <MenuItem value={item.key} sx={{ fontSize: 12, fontWeight: 500, textTransform: "capitalize" }}>
-                        {item.key}
+                      <MenuItem value={item.id} sx={{ fontSize: 12, fontWeight: 500, textTransform: "capitalize" }}>
+                        {item.name}
                       </MenuItem>
                     ))}
 

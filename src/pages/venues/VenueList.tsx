@@ -10,7 +10,7 @@ import LoadingScreen from "components/LoadingScreen";
 import { useStore } from 'app/stores/store';
 import VenueColumnShape from "./VenueColumnShape";
 import { RoleID } from "app/models/user";
-import AddVenueModal from "./AddVenueModal";
+import VenueModal from "./VenueModal";
 import { Venue } from "app/models/venue";
 import usePaginationMetaData, { TOTAL_PAGE_COUNT_CHANGED } from "app/hooks/usePaginationMetaData";
 import { H5 } from "components/Typography";
@@ -31,22 +31,10 @@ const VenueList = () => {
   const [openModal, setOpenModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredQuery, setFilteredQuery] = useState("");
-  const [state, dispatch] =
-    usePaginationMetaData(); //QUESTION! - what is the purpose of this
-  // const timeout = useRef()
+  const [state, dispatch] = usePaginationMetaData(); 
   const data: Venue[] = useMemo(() => venues, [venues]);
   const columns: ColumnShape<Venue>[] = useMemo(() => VenueColumnShape, [VenueColumnShape]);
 
-
-  // const handleSearchInputFieldDebounce = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  //   clearTimeout(timeout.current)
-  //   const {value} = evt.target
-
-  //   setSearchQuery(value)
-  //   timeout.current = setTimeout(() => {
-  //     loadVenues(queryPageIndex + 1, queryPageSize, value);
-  //   }, 600) as any
-  // }
 
   const handleSearchButton = () => {
     setFilteredQuery(searchQuery);
@@ -131,8 +119,9 @@ const VenueList = () => {
         </H5>
       </Box>)}
 
-      {openModal && (<AddVenueModal
+      {openModal && (<VenueModal
           open={openModal}
+          isEdit={false}
           data={null}
           onClose={() => setOpenModal(false)}
       />)}

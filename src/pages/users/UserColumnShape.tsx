@@ -63,7 +63,6 @@ const UserColumnShape = [
           textTransform: "capitalize"
         }}
       >
-        {/* <CheckDoneIcon color="success" /> */}
         {value.toString() =="true" ? "Yes" : "No"}
       </Small>
     ),

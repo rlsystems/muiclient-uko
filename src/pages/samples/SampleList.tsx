@@ -28,7 +28,7 @@ const UserList: FC = () => {
 
 
     useEffect(() => {
-        setTitle("Component Samples");
+        setTitle("UI Component Samples");
     }, [])
 
 

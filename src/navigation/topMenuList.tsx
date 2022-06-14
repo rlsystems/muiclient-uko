@@ -7,26 +7,29 @@ const menuList = [
     title: "UI Component Samples",
     Icon: Icons.PagesIcon,
     path: "/samples",
-    roles: null
+    roles: null,
+    topDivider: false
   },
   {
     title: "Venues",
     Icon: Icons.UserManagementIcon,
     path: "/venues",
-    roles: null
+    roles: null,
+    topDivider: true
   },
   {
     title: "Users",
     Icon: Icons.UserProfileIcon,
     path: "/users",
     roles: [RoleID.root, RoleID.admin],
-    divider: true
+    topDivider: true
   },
   {
     title: "Tenants",
     Icon: Icons.AccountSettingsIcon,
     path: "/tenants",
-    roles: [RoleID.root]
+    roles: [RoleID.root],
+    topDivider: false
   }
 
 ];

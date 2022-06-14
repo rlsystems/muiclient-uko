@@ -104,7 +104,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <StyledModalCard>
-        <H2 mb={2}>Add New User</H2>
+        <H2 mb={2}>Add User</H2>
         <Divider />
         <form onSubmit={handleSubmit}>
           <Grid mt={1} container spacing={3} columnSpacing={5} className="main-form">

@@ -1,10 +1,10 @@
 import { Badge, Box, ButtonBase, Divider, styled } from "@mui/material";
-import FlexBox from "../components/FlexBox";
-import { H6, Small, Tiny } from "../components/Typography";
-import NanoAvatar from "../components/NanoAvatar";
+import FlexBox from "../../components/FlexBox";
+import { H6, Small, Tiny } from "../../components/Typography";
+import NanoAvatar from "../../components/NanoAvatar";
 import { FC, Fragment, useRef, useState } from "react";
-import PopoverLayout from "./PopoverLayout";
-import { useStore } from "../app/stores/store";
+import ProfileMenu from "./ProfileMenu";
+import { useStore } from "../../app/stores/store";
 import { useHistory } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 // styled components
@@ -57,7 +57,7 @@ const ProfilePopover: FC = () => {
         </Badge>
       </ButtonBase>
 
-      <PopoverLayout
+      <ProfileMenu
         hiddenViewButton
         maxWidth={230}
         minWidth={200}
@@ -106,7 +106,7 @@ const ProfilePopover: FC = () => {
             Sign Out
           </StyledSmall>
         </Box>
-      </PopoverLayout>
+      </ProfileMenu>
     </Fragment>
   );
 };

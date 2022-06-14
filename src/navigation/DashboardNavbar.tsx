@@ -4,29 +4,16 @@ import {
   Box,
   IconButton,
   styled,
-  Theme,
   Toolbar,
-  useMediaQuery,
 } from "@mui/material";
-import FlexBox from "../components/FlexBox";
 import { H2 } from "../components/Typography";
-//import { SettingsContext } from "contexts/SettingsContext";
-//import { TitleContext } from "contexts/TitleContext";
-// import LTR from "icons/LTR";
-// import RtlIcon from "icons/RTL";
-// import ThemeIcon from "icons/ThemeIcon";
-import { FC, useContext } from "react";
-// import { useTranslation } from "react-i18next";
-// import { themeSettingsProps } from "theme";
-// import { THEMES } from "../../constants";
-// import ActivityPopover from "./popovers/ActivityPopover";
-// import LanguagePopover from "./popovers/LanguagePopover";
-// import NotificationsPopover from "./popovers/NotificationsPopover";
-import ProfilePopover from "./ProfilePopover";
+
+import { FC } from "react";
+
+import ProfileButton from "./profileMenu/ProfileButton";
 import { useStore } from "../app/stores/store";
 import { observer } from "mobx-react-lite";
 import ThemeIcon from "../icons/ThemeIcon";
-// import ServicePopover from "./popovers/ServicePopover";
 
 
 
@@ -101,7 +88,7 @@ const DashboardNavbar: FC = () => {
         )}
 
 
-        <ProfilePopover />
+        <ProfileButton />
       </StyledToolBar>
     </DashboardNavbarRoot>
   );

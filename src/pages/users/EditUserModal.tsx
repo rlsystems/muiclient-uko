@@ -107,7 +107,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     return (
         <Modal open={open} onClose={onClose}>
             <StyledModalCard>
-                <H2 mb={2}>Edit User | {data.firstName} {data.lastName}</H2>
+                <H2 mb={2}>Edit User</H2>
                 <Divider sx={{ marginBottom: 3 }} />
                 <form onSubmit={handleSubmit}>
 

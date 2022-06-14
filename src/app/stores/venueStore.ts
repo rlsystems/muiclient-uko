@@ -14,8 +14,7 @@ export default class VenueStore {
     editMode: boolean = false;
     loading: boolean = false;
     loadingInitial: boolean = false;
-    createVenueLoading: boolean = false;
-    updateVenueLoading: boolean = false;
+    createUpdateLoading: boolean = false;
 
 
     constructor() {
@@ -101,7 +100,7 @@ export default class VenueStore {
 
 
     createVenue = async (venue: Venue) => {
-        this.createVenueLoading = true;
+        this.createUpdateLoading = true;
 
         try {
             const venueRequestBody = {
@@ -115,19 +114,19 @@ export default class VenueStore {
 
                 this.selectedVenue = venue;
                 this.editMode = false;
-                this.createVenueLoading = false;
+                this.createUpdateLoading = false;
                 await this.loadVenues();
             })
         } catch (error) {
             console.log(error);
             runInAction(() => {
-                this.createVenueLoading = false;
+                this.createUpdateLoading = false;
             })
         }
     }
 
     updateVenue = async (venue: Venue) => {
-        this.updateVenueLoading = true;
+        this.createUpdateLoading = true;
 
         try {
             await agent.Venues.update(venue);
@@ -137,13 +136,13 @@ export default class VenueStore {
                 this.venueRegistry.set(venue.id, venue); //Map Object set will update if ID same
                 this.selectedVenue = venue;
                 this.editMode = false;
-                this.updateVenueLoading = false;
+                this.createUpdateLoading = false;
                 await this.loadVenues();
             })
         } catch (error) {
             console.log(error);
             runInAction(() => {
-                this.updateVenueLoading = false;
+                this.createUpdateLoading = false;
             })
         }
     }

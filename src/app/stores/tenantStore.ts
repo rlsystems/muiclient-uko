@@ -86,21 +86,19 @@ export default class TenantStore {
         try {
             let response = await agent.Tenants.create(createTenantRequest);
             runInAction(() => {
-                //tenant.id = String(response.data.id); //The GUID
 
                 if(response.succeeded){
 
                     var newtenant: Tenant = {
-                        id: createTenantRequest.key,
-                        key: createTenantRequest.key,
+                        id: createTenantRequest.id,
+                        name: createTenantRequest.name,
                         isActive: true
                     }
 
-                    this.tenantRegistry.set(newtenant.key, newtenant); //add an brand to the Map Object
+                    this.tenantRegistry.set(newtenant.id, newtenant); 
                     this.selectedTenant = newtenant;
 
                 }
-                //let newTenant: Tenant = response.data;
                           
                 this.editMode = false;
                 this.loading = false;
@@ -114,6 +112,37 @@ export default class TenantStore {
     }
 
 
+    updateTenant = async (tenant: Tenant) => {
+        this.loading = true;
+
+        try {
+            let response = await agent.Tenants.update(tenant);
+            
+            runInAction(() => {
+     
+                if(response.succeeded){
+
+                    var updatedTenant: Tenant = {
+                        id: tenant.id,
+                        name: tenant.name,
+                        isActive: tenant.isActive
+                    }
+
+                    this.tenantRegistry.set(updatedTenant.id, updatedTenant); 
+                    this.selectedTenant = updatedTenant;
+
+                }
+                          
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
 
 
 

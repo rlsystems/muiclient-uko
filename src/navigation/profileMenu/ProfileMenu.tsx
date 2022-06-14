@@ -1,9 +1,9 @@
 import { Box, ButtonBase, Divider, Popover } from "@mui/material";
-import { H4 } from "../components/Typography";
+import { H4 } from "../../components/Typography";
 import React, { FC } from "react";
 
 // component props interface
-interface PopoverLayoutProps {
+interface ProfileMenuProps {
   title?: string | JSX.Element;
   hiddenViewButton?: boolean;
   popoverOpen: boolean;
@@ -16,7 +16,7 @@ interface PopoverLayoutProps {
   noHeader?: boolean
 }
 
-const PopoverLayout: FC<PopoverLayoutProps> = (props) => {
+const ProfileMenu: FC<ProfileMenuProps> = (props) => {
   const {
     children,
     popoverClose,
@@ -43,10 +43,6 @@ const PopoverLayout: FC<PopoverLayoutProps> = (props) => {
         },
       }}
     >
-      {/*
-        Fragment added to avoid warning
-        Reference: https://medium.com/@david.zhao.blog/warning-failed-prop-type-invalid-prop-children-supplied-to-forwardref-expected-a-d73d6fda47f1
-      */}
       <React.Fragment>
         {noHeader ||
           <React.Fragment>
@@ -76,4 +72,4 @@ const PopoverLayout: FC<PopoverLayoutProps> = (props) => {
   );
 };
 
-export default PopoverLayout;
+export default ProfileMenu;

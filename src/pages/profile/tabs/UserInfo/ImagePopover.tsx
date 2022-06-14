@@ -1,7 +1,7 @@
 import { FC, Fragment, useRef, useState } from "react";
 import {  Box, IconButton, styled } from "@mui/material";
 import { Small} from "components/Typography";
-import PopoverLayout from "navigation/PopoverLayout";
+import ProfileMenu from "navigation/profileMenu/ProfileMenu";
 import { CameraAlt } from "@mui/icons-material";
 
 const StyledSmall = styled(Small)(({ theme }) => ({
@@ -45,7 +45,7 @@ const ImagePopover: FC<ImagePopoverProps> = (props) => {
           sx={{ fontSize: 16, color: "background.paper" }}
         />
       </IconButton>
-      <PopoverLayout
+      <ProfileMenu
         hiddenViewButton
         maxWidth={230}
         minWidth={200}
@@ -75,7 +75,7 @@ const ImagePopover: FC<ImagePopoverProps> = (props) => {
             Remove Picture
           </StyledSmall>
         </Box>
-      </PopoverLayout>
+      </ProfileMenu>
     </Fragment>
   );
 };

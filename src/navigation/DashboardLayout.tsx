@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
 import React from 'react'
-import DashboardNavbar from '../../navigation/DashboardNavbar';
-import DashboardSideBar from '../../navigation/DashboardSideBar';
+import DashboardNavbar from './DashboardNavbar';
+import DashboardSideBar from './DashboardSideBar';
 
 interface Props {
   children: React.ReactNode
