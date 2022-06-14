@@ -1,22 +1,20 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Card, FormHelperText, LinearProgress } from "@mui/material";
 import { useStore } from "app/stores/store";
+import checkPasswordStrength from "app/utils/checkPasswordStrength";
 import FlexBox from "components/FlexBox";
 import LightTextField from "components/LightTextField";
 import { H1, Small } from "components/Typography";
 import { useFormik } from "formik";
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 const ResetPassword: FC = () => {
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
     const { userStore, commonStore } = useStore();
-    const [strength, setStrength] = useState(10);
-
-
+    const [strength, setStrength] = useState(0);
 
     const initialValues = {
         email: "demo@example.com",
@@ -61,25 +59,14 @@ const ResetPassword: FC = () => {
 
     //repeated here and in user profile --- place in utility function??
     //Also, what type should 'e' be -- some key press event?
-    const checkStrength = (e: any) => {
+    const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         handleChange(e);
 
-        let calculatedStrength = 10;
-        let newPassword = e.target.value;
-
-        const checkLength = new RegExp('(?=.{8,})');
-        const checkLower = new RegExp('(?=.*[a-z])');
-        const checkUpper = new RegExp('(?=.*[A-Z])');
-        const checkNumber = new RegExp('(?=.*[0-9])');
-        const checkSpecial = new RegExp('(?=.*[^A-Za-z0-9])');
-
-        checkLower.test(newPassword) ? calculatedStrength += 15 : calculatedStrength;
-        checkUpper.test(newPassword) ? calculatedStrength += 15 : calculatedStrength;
-        checkLength.test(newPassword) ? calculatedStrength += 20 : calculatedStrength;
-        checkNumber.test(newPassword) ? calculatedStrength += 20 : calculatedStrength;
-        checkSpecial.test(newPassword) ? calculatedStrength += 20 : calculatedStrength;
-        setStrength(calculatedStrength);
-
+        const newPassword = e.target.value;
+        const passwordStrength = checkPasswordStrength(newPassword, {
+        checkFor: ['length', 'lowerCase', 'upperCase', 'number', 'specialCharacter']
+        }).strength
+        setStrength(passwordStrength);
     }
 
     return (
@@ -125,7 +112,7 @@ const ResetPassword: FC = () => {
                             type="password"
                             value={values.password}
                             onBlur={handleBlur}
-                            onChange={checkStrength}
+                            onChange={handleNewPasswordChange}
                             helperText={touched.password && errors.password}
                             error={Boolean(touched.password && errors.password)}
                             sx={{ mt: 2, mb: 1 }}
