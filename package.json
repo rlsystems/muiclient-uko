@@ -9,21 +9,19 @@
     "@mui/icons-material": "^5.2.5",
     "@mui/lab": "^5.0.0-alpha.61",
     "@mui/material": "^5.0.0-rc.1",
-    "@types/lodash": "^4.14.180",
-    "@types/lodash.merge": "^4.6.6",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "@types/react-router-dom": "^5.3.2",
-    "@types/react-table": "^7.7.10",
+    "@mui/x-date-pickers": "^5.0.0-alpha.6",
     "axios": "^0.24.0",
+    "date-fns": "^2.28.0",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "mobx": "^6.3.10",
     "mobx-react-lite": "^3.2.2",
     "nprogress": "^0.2.0",
+    "query-string": "^7.1.1",
     "react": "latest",
     "react-apexcharts": "^1.4.0",
     "react-dom": "latest",
+    "react-helmet": "^6.1.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "latest",
     "react-table": "^7.7.0",
@@ -52,6 +50,13 @@
     ]
   },
   "devDependencies": {
-    "@types/nprogress": "^0.2.0"
+    "@types/lodash": "^4.14.180",
+    "@types/lodash.merge": "^4.6.6",
+    "@types/nprogress": "^0.2.0",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/react-helmet": "^6.1.5",
+    "@types/react-router-dom": "^5.3.2",
+    "@types/react-table": "^7.7.10"
   }
 }

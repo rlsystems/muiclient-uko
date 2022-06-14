@@ -16,7 +16,9 @@ import Password from "./tabs/Password";
 
 import { useStore } from "../../app/stores/store";
 import SettingIcon from "../../icons/SettingIcon";
-
+import { useHistory, useLocation } from "react-router-dom";
+import React from "react";
+import queryString from "query-string";
 
 // styled component
 const StyledButton = styled(Button)(() => ({
@@ -30,6 +32,11 @@ const StyledButton = styled(Button)(() => ({
 const AccountSettings: FC = () => {
   const { commonStore } = useStore();
 
+  const location = useLocation();
+  const history = useHistory();
+
+
+
   // Below solves the console warning for DashboardNavbar
   // Should fix that warning, let me know if it pops up again
   useEffect(() => {
@@ -38,6 +45,16 @@ const AccountSettings: FC = () => {
 
   const theme = useTheme();
   const [active, setActive] = useState("user-info");
+
+
+
+  React.useEffect(() => {
+    if (!location.search) return
+    const parsedQuery = queryString.parse(location.search)
+    if (!parsedQuery.tab) return
+    setActive(parsedQuery.tab as string);
+    
+  }, [location])
 
   const style = {
     backgroundColor:
@@ -73,7 +90,10 @@ const AccountSettings: FC = () => {
                 <StyledButton
                   key={id}
                   startIcon={<Icon sx={{ color: "text.disabled" }} />}
-                  onClick={() => setActive(convertToSlug(name))}
+                  onClick={() => {
+                    setActive(convertToSlug(name));
+                    history.push("/profile?tab=" + convertToSlug(name));
+                  }}
                   sx={
                     active === convertToSlug(name)
                       ? style
@@ -112,7 +132,7 @@ const tabList = [
   },
   {
     id: 3,
-    name: "Password",
+    name: "Change Password",
     Icon: PasswordIcon,
   }
 ];

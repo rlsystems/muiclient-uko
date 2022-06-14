@@ -8,8 +8,9 @@ export default class CommonStore {
     tenant: string | null = '';
     hasSubdomain: boolean = false; //set upon application loading
     title: string | null = '';
-    darkMode = true;
-    appLoaded = false;
+    darkMode: boolean = true;
+    pageSizeDefault: number = 5;
+    appLoaded:boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -59,9 +60,9 @@ export default class CommonStore {
         })
     }
 
-    setDarkMode = () => {
+    setDarkTheme = (darkModeEnabled: boolean) => {
         runInAction(() => {
-            this.darkMode == false ? this.darkMode = true : this.darkMode = false;
+            this.darkMode = darkModeEnabled;
         })
     }
 

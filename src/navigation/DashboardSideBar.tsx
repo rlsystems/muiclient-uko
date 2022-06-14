@@ -12,6 +12,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../app/stores/store";
 import { RoleID } from "app/models/user";
+import { Fragment } from "react";
 
 // custom styled components
 const MainMenu = styled(Box)(({ theme }) => ({
@@ -47,27 +48,27 @@ const DashboardSideBar = () => {
 
         <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>
           {topMenuList.filter(item => !item.roles || item.roles.includes(userStore.currentUser?.roleId as RoleID)).map((nav, index) => (
-            <>
-            {nav.topDivider && <Divider variant="middle" sx={{marginBottom: "15px"}}/>}
-            
-            <Tooltip title={nav.title} placement="right" key={index}>
+            <Fragment key={index}>
+              {nav.topDivider && <Divider variant="middle" sx={{ marginBottom: "15px" }} />}
 
-              <StyledListItemButton
-                disableRipple
-                onClick={() => history.push(nav.path)}
-              >
-                
-                <nav.Icon
-                  sx={{
-                    color:
-                      nav.path === pathname ? "primary.main" : "secondary.400",
+              <Tooltip title={nav.title} placement="right" >
+
+                <StyledListItemButton
+                  disableRipple
+                  onClick={() => history.push(nav.path)}
+                >
+
+                  <nav.Icon
+                    sx={{
+                      color:
+                        nav.path === pathname ? "primary.main" : "secondary.400",
                       //borderTop: "1px solid red"
-                  }}
-                />
-              </StyledListItemButton>
-            </Tooltip>
-            </>
-            
+                    }}
+                  />
+                </StyledListItemButton>
+              </Tooltip>
+            </Fragment>
+
           ))}
         </ScrollBar>
       </List>

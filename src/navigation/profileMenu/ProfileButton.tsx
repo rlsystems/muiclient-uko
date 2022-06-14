@@ -84,14 +84,19 @@ const ProfilePopover: FC = () => {
 
 
           <StyledSmall
-            onClick={() => handleMenuItem("/profile")}
+            onClick={() => handleMenuItem("/profile?tab=user-info")}
           >
             Profile
           </StyledSmall>
           <StyledSmall
-            onClick={() => handleMenuItem("/profile")}
+            onClick={() => handleMenuItem("/profile?tab=preferences")}
           >
-            Settings
+            Preferences
+          </StyledSmall>
+          <StyledSmall
+            onClick={() => handleMenuItem("/profile?tab=change-password")}
+          >
+            Change Password
           </StyledSmall>
 
 

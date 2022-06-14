@@ -79,7 +79,7 @@ const requests = {
 const Account = {
     current: () => requests.get<Result<CurrentUser>>('/identity/profile'),
     login: (user: UserLogin) => requests.post<Result<TokenData>>(`/tokens`, user),
-    update: (user: UpdateProfileRequest) => requests.put<Result<User>>(`/identity/profile`, user),
+    update: (user: UpdateProfileRequest) => requests.put<Result<CurrentUser>>(`/identity/profile`, user),
 
     updateProfile: (user: UpdateProfileRequest) => {
         let formData = new FormData();
@@ -88,7 +88,7 @@ const Account = {
             formData.append(key, val);
         })
 
-        return requests.put<Result<User>>('/identity/profile', formData, {
+        return requests.put<Result<CurrentUser>>('/identity/profile', formData, {
             headers: { 'Content-type': 'multipart/form-data' }
         })
 

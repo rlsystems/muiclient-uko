@@ -11,7 +11,7 @@ export default class TenantStore {
 
     editMode: boolean = false;
     loading: boolean = false;
-    loadingInitial: boolean = false;
+    loadingInitial: boolean = false; //name loadTenants instead -- and combine
 
 
     constructor() {

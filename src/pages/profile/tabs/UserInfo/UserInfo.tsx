@@ -141,7 +141,7 @@ const UserInfo: FC = () => {
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}
-              loading={isUpdating} //ok to use local state?
+              loading={isUpdating} 
               sx={{ width: 124, fontSize: 12 }}
             >
               Save

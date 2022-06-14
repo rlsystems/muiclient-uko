@@ -6,7 +6,7 @@ export type CheckPasswordOptionsType = {
 }
 
 const validationOptions = {
-  length:  new RegExp('(?=.{8,})'),
+  length:  new RegExp('(?=.{6,})'),
   lowerCase: new RegExp('(?=.*[a-z])'),
   upperCase: new RegExp('(?=.*[A-Z])'),
   number:  new RegExp('(?=.*[0-9])'),

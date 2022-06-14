@@ -4,6 +4,7 @@ import { H6, Small, Tiny } from "components/Typography";
 import NanoAvatar from "components/NanoAvatar";
 import EditIconButton from "components/EditIconButton";
 import EditUserModal from "./EditUserModal";
+import { useStore } from "app/stores/store";
 
 
 const UserColumnShape = [
@@ -13,7 +14,7 @@ const UserColumnShape = [
     minWidth: 200,
     Cell: ({ row }: any) => {
 
-      const {  firstName, lastName, imageUrl } = row.original;
+      const { firstName, lastName, imageUrl } = row.original;
       return (
         <FlexBox alignItems="center">
           <NanoAvatar src={imageUrl || ""} />
@@ -63,7 +64,7 @@ const UserColumnShape = [
           textTransform: "capitalize"
         }}
       >
-        {value.toString() =="true" ? "Yes" : "No"}
+        {value.toString() == "true" ? "Yes" : "No"}
       </Small>
     ),
   },
@@ -71,11 +72,14 @@ const UserColumnShape = [
     Header: "Edit",
     accessor: "action",
     Cell: ({ row }: any) => {
-      const [openModal, setOpenModal] = useState(false);
+      const { userStore } = useStore();
+      const { currentUser } = userStore;
 
+      const [openModal, setOpenModal] = useState(false);
+      const { id } = row.original;
       return (
         <>
-          <EditIconButton onClick={() => setOpenModal(true)} />
+          <EditIconButton disabled={(id == currentUser?.id) ? true : false} onClick={() => setOpenModal(true)} />
           {openModal && <EditUserModal
             open={openModal}
             data={row.original}

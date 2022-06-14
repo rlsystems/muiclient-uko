@@ -108,7 +108,7 @@ const Password: FC = () => {
                 Ensure that these requirements are met:
               </Tiny>
               <ul>
-                <li>Minimum 8 characters long</li>
+                <li>Minimum 6 characters long</li>
                 <li>At least one lowercase character</li>
                 <li>At least one uppercase character</li>
                 <li>At least one number</li>

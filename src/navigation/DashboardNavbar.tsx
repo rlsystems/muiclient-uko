@@ -74,14 +74,14 @@ const DashboardNavbar: FC = () => {
         {mode === "light" ? (
           <StyledIconButton
             disableRipple
-            onClick={() => commonStore.setDarkMode()}
+            onClick={() => commonStore.setDarkTheme(true)}
           >
             <ThemeIcon />
           </StyledIconButton>
         ) : (
           <StyledIconButton
             disableRipple
-            onClick={() => commonStore.setDarkMode()}
+            onClick={() => commonStore.setDarkTheme(false)}
           >
             <Brightness4 />
           </StyledIconButton>

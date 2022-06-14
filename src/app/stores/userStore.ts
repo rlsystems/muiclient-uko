@@ -1,18 +1,22 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, User } from "../models/user";
+import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, CurrentUser } from "../models/user";
 import { UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
 
-import { store } from "./store";
+import { store, useStore } from "./store";
 import { history } from '../..';
 import { Venue } from "../models/venue";
+
+
+// const { commonStore } = useStore();
+// const { setDarkTheme } = commonStore;
 
 export default class UserStore {
 
     //User store is the personal store
     //-- contains current user, edit user profile and preferences
 
-    currentUser: User | null = null;
+    currentUser: CurrentUser | null = null;
     loadingInitial: boolean = false;
 
     constructor() {
@@ -33,11 +37,15 @@ export default class UserStore {
             const user = await agent.Account.current();
 
             runInAction(() => //timing issue with async operations
-                this.currentUser = user.data
+                this.currentUser = user.data          
             );
+            store.commonStore.darkMode = user.data.darkModeDefault;
+            store.commonStore.pageSizeDefault = user.data.pageSizeDefault;
+
+ 
+
             history.push('/venues');
-            //navigate("/dashboard", { replace: true });
-            store.modalStore.closeModal();
+            //store.modalStore.closeModal();
         } catch (error) {
             throw error;
         }
@@ -96,6 +104,10 @@ export default class UserStore {
     updatePreferences = async (updatePreferencesRequest: UpdatePreferencesRequest) => {
         try {
             const response = await agent.Account.updatePreferences(updatePreferencesRequest);
+
+            store.commonStore.darkMode = updatePreferencesRequest.darkModeDefault;
+            store.commonStore.pageSizeDefault = updatePreferencesRequest.pageSizeDefault;
+
             return response
         } catch (error) {
             console.log(error);

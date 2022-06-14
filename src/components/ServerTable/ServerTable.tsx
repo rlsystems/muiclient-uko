@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import ScrollBar from "simplebar-react";
 
-import {  StyledServerTableHeaderCell, StyledServerTableRow, StyledServerTableRowCell } from "./ServerTable.styled";
+import { StyledServerTableHeaderCell, StyledServerTableRow, StyledServerTableRowCell } from "./ServerTable.styled";
 import { PAGE_CHANGED, PAGE_SIZE_CHANGED, PaginationDispatchType, PaginationStateType } from "app/hooks/usePaginationMetaData";
 import { CustomSelectInput } from "components/common";
 import { StyledPagination } from "components/dataTable/DataTable.styled";
@@ -70,30 +70,33 @@ const ServerTable = <T extends Record<string, any>>({
           }}
         >
           <TableHead>
-            {columns.map(col =>
-                <StyledServerTableHeaderCell column={col}>
+            <TableRow>
+              {columns.map((col, index) =>
+                <StyledServerTableHeaderCell column={col} key={index}>
                   {col.header}
                 </StyledServerTableHeaderCell>
-            )}
+              )}
+            </TableRow>
+
           </TableHead>
 
           {!isLoading &&
             <TableBody>
-            {data.map((row: T, index) => {
-              return (
-                <StyledServerTableRow  key={index}>
-                  {columns.map((cell, index) => (
-                    <StyledServerTableRowCell key={index}>
-                      {cell.renderRow ? cell?.renderRow(row) : cell.accessor ? row[cell.accessor]: null}
-                    </StyledServerTableRowCell>
-                  ))}
-                </StyledServerTableRow>
-              );
-            })}
-          </TableBody>}
+              {data.map((row: T, index) => {
+                return (
+                  <StyledServerTableRow key={index}>
+                    {columns.map((cell, index) => (
+                      <StyledServerTableRowCell key={index}>
+                        {cell.renderRow ? cell?.renderRow(row) : cell.accessor ? row[cell.accessor] : null}
+                      </StyledServerTableRowCell>
+                    ))}
+                  </StyledServerTableRow>
+                );
+              })}
+            </TableBody>}
         </Table>
         {isLoading && (<Box my={6} width="100%" display="flex" justifyContent="center">
-              <CircularProgress/>
+          <CircularProgress />
         </Box>)}
       </ScrollBar>
 
@@ -105,9 +108,9 @@ const ServerTable = <T extends Record<string, any>>({
             input={<CustomSelectInput />}
           >
             {[5, 10, 15, 20, 25, 50].map(option =>
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
             )}
           </Select>
           <StyledPagination

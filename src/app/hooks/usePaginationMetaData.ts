@@ -1,8 +1,9 @@
+import { store } from 'app/stores/store';
 import React from 'react'
 
 export const paginationInitialState = {
   queryPageIndex: 0,
-  queryPageSize: 5,
+  queryPageSize: store.commonStore.pageSizeDefault,
   totalPageCount: 0,
 };
 

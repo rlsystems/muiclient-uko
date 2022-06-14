@@ -4,15 +4,12 @@ import {
   Box,
   Button,
   Card,
-  Chip,
+  CircularProgress,
   Divider,
   FormControlLabel,
   FormHelperText,
-  Grid,
-  InputBase,
   MenuItem,
   Select,
-  styled,
   Switch,
 } from "@mui/material";
 import {
@@ -23,8 +20,7 @@ import LightTextField from "../../components/LightTextField";
 import { H1, H3, Paragraph, Small, Tiny } from "../../components/Typography";
 import { useFormik } from "formik";
 
-import { FC, useState, useEffect } from "react";
-//import toast from "react-hot-toast";
+import { FC, useState, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
@@ -36,7 +32,7 @@ import { StyledSelectInput } from "components/StyledComponent";
 const Login: FC = () => {
   const [error, setError] = useState("");
   const { userStore, commonStore, tenantStore } = useStore();
-  const { loadTenants, tenantsSorted } = tenantStore;
+  const { loadTenants, tenantsSorted, loadingInitial } = tenantStore;
 
   const initialValues = {
     email: "",
@@ -62,6 +58,7 @@ const Login: FC = () => {
       initialValues,
       validationSchema,
       onSubmit: async (values) => {
+        console.log(values);
         try {
           await userStore.login(values);
           toast.success("Logged In Successfully!");
@@ -101,7 +98,8 @@ const Login: FC = () => {
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "center",
-        height: { sm: "100%" },
+        //height: { sm: "100%" },
+        paddingTop: { xs: "0px", sm: "50px" }
       }}
     >
       <Card sx={{ padding: 4, width: "100%", maxWidth: 600, boxShadow: 1 }}>
@@ -164,8 +162,7 @@ const Login: FC = () => {
               <FormControlLabel
                 control={
                   <Switch
-                    name="remember"
-                    checked
+                    name="remember"                
                   />
                 }
                 label="Remember Me"
@@ -216,7 +213,7 @@ const Login: FC = () => {
               </Tiny>
             </Box>
 
-            <Box sx={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", alignItems: {xs: "center", sm: "flex-end"}, justifyContent: "space-between", flexDirection: {xs: "column", sm: "row"}, paddingTop: {xs: "20px", sm: "0px"} }}>
               <Button
                 onClick={() => handleAdminCredentials()}
                 color="primary"
@@ -231,24 +228,35 @@ const Login: FC = () => {
                   <Paragraph fontWeight={600} mb={1} mt={3}>
                     Tenant
                   </Paragraph>
-                  <Select
-                    name="tenant"
-                    type="text"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.tenant || ""}
-                    error={Boolean(touched.tenant && errors.tenant)}
-                    IconComponent={() => <KeyboardArrowDown />}
-                    input={<StyledSelectInput />}
-                  >
-                    {tenantsSorted.map((item) => (
-                      <MenuItem value={item.id} sx={{ fontSize: 12, fontWeight: 500, textTransform: "capitalize" }}>
-                        {item.name}
-                      </MenuItem>
-                    ))}
+                  {loadingInitial &&
 
+                    <Box display="flex" alignItems={"center"} width="100%" height={"50px"}>
+                      <CircularProgress size={30}  />
+                    </Box>
+                  }
 
-                  </Select>
+                  {!loadingInitial &&
+                    <Select
+                      displayEmpty
+                      name="tenant"
+                      type="text"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.tenant || ""}
+                      error={Boolean(touched.tenant && errors.tenant)}
+                      IconComponent={() => loadingInitial ? <Fragment /> : <KeyboardArrowDown />}
+                      input={<StyledSelectInput />}
+                    >
+
+                      {tenantsSorted.map((item) => (
+                        <MenuItem value={item.id} sx={{ fontSize: 12, fontWeight: 500, textTransform: "capitalize" }}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+
+                  }
+
                 </TextFieldWrapper>
               )}
             </Box>
@@ -263,10 +271,8 @@ const Login: FC = () => {
         sx={{ marginTop: 2, padding: 2, width: "100%", maxWidth: 600, boxShadow: 1 }}
         severity="success"
         variant="outlined">
-          Root superadmin: admin@root.com<br/>
-          Beta admin: admin@beta.com <br/>
-          Default password: Password123!
-        </Alert>
+        Root credentials: admin@root.com / Password123!
+      </Alert>
     </FlexBox>
   );
 };
