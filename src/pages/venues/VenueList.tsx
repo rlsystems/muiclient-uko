@@ -37,6 +37,7 @@ const VenueList = () => {
 
 
   const handleSearchButton = () => {
+    setSearchQuery("")
     setFilteredQuery(searchQuery);
     loadVenues(state.queryPageIndex + 1, state.queryPageSize, searchQuery);
   }
