@@ -11,7 +11,7 @@ import { Venue } from "../models/venue";
 // const { commonStore } = useStore();
 // const { setDarkTheme } = commonStore;
 
-export default class UserStore {
+export default class UserStore { //---rename to profileStore or currentUserStore
 
     //User store is the personal store
     //-- contains current user, edit user profile and preferences

@@ -64,7 +64,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
         phoneNumber: data.phoneNumber,
         isActive: data.isActive,
         roleId: data.roleId,
-        imageUrl: ""
+        imageUrl: data.imageUrl
     });
 
     const validationSchema = Yup.object({
@@ -239,14 +239,14 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                                     width: 124,
                                     fontSize: 12,
                                     marginRight: 2,
-                                    color: (theme) =>
+                                    color: (theme: any) =>
                                         theme.palette.primary.red,
-                                    borderColor: (theme) =>
+                                    borderColor: (theme: any) =>
                                         theme.palette.primary.red,
                                     "&:hover": {
-                                        color: (theme) =>
+                                        color: (theme: any) =>
                                             theme.palette.primary.red,
-                                        borderColor: (theme) =>
+                                        borderColor: (theme: any) =>
                                             theme.palette.primary.red,
                                     },
                                 }}
