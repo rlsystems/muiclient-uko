@@ -86,6 +86,7 @@ const ReactTable: FC<ReactTableProps> = (props) => {
                   <StyledReactTableHeaderCell
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     column={column}
+                    sx={{minWidth: column.minWidth}}
                   >
                     <H6 color="text.primary" sx={{opacity: .7}} >{column.render("Header")}</H6>
                   </StyledReactTableHeaderCell>
@@ -120,7 +121,7 @@ const ReactTable: FC<ReactTableProps> = (props) => {
       </ScrollBar>
 
       {!hidePagination && (
-        <Stack alignItems="center" justifyContent="flex-end" marginY={1} direction="row">
+        <Stack alignItems={{xs: "flex-end", sm: "center"}} spacing={{xs: 1, sm: 0}} justifyContent={{xs: "flex-start", sm: "flex-end"}} marginY={1} direction={{xs: "column-reverse", sm: "row"}}>
           {/* make this select the same blue color, same size if possible, and position it to the left of the pagination*/}
           <Select
             value={pageSize}

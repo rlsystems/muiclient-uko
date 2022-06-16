@@ -28,13 +28,13 @@ const UserList: FC = () => {
 
 
     useEffect(() => {
-        setTitle("UI Component Samples");
+        setTitle("UI Samples");
     }, [])
 
 
     return (
 
-        <Grid container spacing={6} pt={2} pb={4}>
+        <Grid container spacing={{xs: 2, md: 6}} pt={2} pb={4}>
             <Grid item xs={12} md={6}>
                 <CheckBoxes />
             </Grid>

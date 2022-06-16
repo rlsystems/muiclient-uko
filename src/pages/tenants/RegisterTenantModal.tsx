@@ -24,6 +24,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { LoadingButton } from "@mui/lab";
 import { CreateTenantRequest } from "../../app/models/tenant";
+import StyledModalCard from "components/StyledModalCard";
 
 // component props interface
 interface ModalProps {
@@ -32,19 +33,6 @@ interface ModalProps {
   onClose: () => void;
 }
 
-// styled components
-const StyledModalCard = styled(Card)(({ theme }) => ({
-  top: "50%",
-  left: "50%",
-  maxWidth: 700,
-  minWidth: 300,
-  position: "absolute",
-  padding: "1.5rem",
-  boxShadow: theme.shadows[2],
-  transform: "translate(-50%, -50%)",
-  width: "100%",
-  outline: "none",
-}));
 
 const RegisterTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
   const { tenantStore } = useStore();

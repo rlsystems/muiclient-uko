@@ -7,22 +7,26 @@ interface Props {
   children: React.ReactNode
 }
 
-const Wrapper = styled(Box)(() => ({
+const ContentWrapper = styled(Box)(({theme}) => ({
     width: `calc(100% - 80px)`,
     paddingLeft: "3rem",
     paddingRight: "3rem",
     transition: "all 0.3s",
     marginLeft: 80,
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
+    },
   }));
 
 const DashboardLayout = (props: Props) => {
   return (
     <React.Fragment>
       <DashboardSideBar />
-      <Wrapper>
+      <ContentWrapper>
         <DashboardNavbar />
         {props.children}
-      </Wrapper>
+      </ContentWrapper>
     </React.Fragment>
   )
 }

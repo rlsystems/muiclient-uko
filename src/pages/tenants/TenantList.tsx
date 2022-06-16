@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { Box, Button, styled } from "@mui/material";
+import { Box, Button, Grid, styled } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { Add } from "@mui/icons-material";
 import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
@@ -15,13 +15,6 @@ import GlobalFilter from "components/GlobalFilter";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
 import { CustomTableOptions } from "app/models/reactTable";
 
-const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
-  justifyContent: "space-between",
-  alignItems: "center",
-  flexWrap: "wrap",
-  marginBottom: 20,
-
-}));
 
 const TenantList: FC = () => {
   const { tenantStore, commonStore } = useStore();
@@ -31,34 +24,34 @@ const TenantList: FC = () => {
   const columns: any = useMemo(() => TenantColumnShape, [TenantColumnShape]);
 
   const initialState = useMemo(() => ({
-      pageIndex: paginationInitialState.queryPageIndex,
-      pageSize: paginationInitialState.queryPageSize
+    pageIndex: paginationInitialState.queryPageIndex,
+    pageSize: paginationInitialState.queryPageSize
   }), [])
 
   const {
-  getTableProps,
-  getTableBodyProps,
-  headerGroups,
-  prepareRow,
-  page,
-  pageOptions,
-  setPageSize,
-  gotoPage,
-  preGlobalFilteredRows,
-  setGlobalFilter,
-  state,
-}: any = useTable(
-  {
-    columns,
-    data,
-    initialState
-  } as CustomTableOptions<Tenant>,
-  useFilters,
-  useGlobalFilter,
-  useSortBy,
-  useExpanded,
-  usePagination
-);
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    pageOptions,
+    setPageSize,
+    gotoPage,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state,
+  }: any = useTable(
+    {
+      columns,
+      data,
+      initialState
+    } as CustomTableOptions<Tenant>,
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    useExpanded,
+    usePagination
+  );
 
   useEffect(() => {
     setTitle("Tenants");
@@ -72,22 +65,26 @@ const TenantList: FC = () => {
 
   return (
     <Box pt={2} pb={4}>
-      <StyledFlexBox>
-        <GlobalFilter
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          setGlobalFilter={setGlobalFilter}
-          globalFilter={state.globalFilter}
-          inputProps={{
-            placeholder: 'Search tenants...'
-          }}
-        />
-        <Button
-          endIcon={<Add />}
-          variant="contained"
-          onClick={() => setOpenModal(true)}>
-          Add Tenant
-        </Button>
-      </StyledFlexBox>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <GlobalFilter
+            preGlobalFilteredRows={preGlobalFilteredRows}
+            setGlobalFilter={setGlobalFilter}
+            globalFilter={state.globalFilter}
+            inputProps={{
+              placeholder: 'Search tenants...'
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} md={6} display="flex" justifyContent={{ xs: "flex-start", md: "flex-end" }} >
+          <Button
+            endIcon={<Add />}
+            variant="contained"
+            onClick={() => setOpenModal(true)}>
+            Add Tenant
+          </Button>
+        </Grid>
+      </Grid>
 
       <RegisterTenantModal
         open={openModal}

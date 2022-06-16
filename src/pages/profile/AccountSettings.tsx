@@ -74,8 +74,8 @@ const AccountSettings: FC = () => {
 
   return (
     <Box pt={2} pb={4}>
-      <Grid container spacing={3}>
-        <Grid item lg={2} xs={3}>
+      <Grid container spacing={{xs: 2, lg: 3}}>
+        <Grid item xs={12} lg={2} >
           <Card sx={{ padding: "1.5rem 0" }}>
             <H3 mb="0.5rem" pl="1.5rem">
               User Profile
@@ -85,7 +85,6 @@ const AccountSettings: FC = () => {
             <FlexBox
               flexDirection="column"
             >
-
               {tabList.map(({ id, name, Icon }) => (
                 <StyledButton
                   key={id}
@@ -108,7 +107,7 @@ const AccountSettings: FC = () => {
         </Grid>
 
         {/* Tab Content */}
-        <Grid item lg={7} xs={9}>
+        <Grid item xs={12} lg={7} >
           {active === convertToSlug(tabList[0].name) && <UserInfo />}
           {active === convertToSlug(tabList[1].name) && <Preferences />}
           {active === convertToSlug(tabList[2].name) && <Password />}

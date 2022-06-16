@@ -4,7 +4,9 @@ import {
   Box,
   IconButton,
   styled,
+  Theme,
   Toolbar,
+  useMediaQuery,
 } from "@mui/material";
 import { H2 } from "../components/Typography";
 
@@ -14,6 +16,7 @@ import ProfileButton from "./profileMenu/ProfileButton";
 import { useStore } from "../app/stores/store";
 import { observer } from "mobx-react-lite";
 import ThemeIcon from "../icons/ThemeIcon";
+//
 
 
 
@@ -41,9 +44,11 @@ const StyledIconButton = styled(IconButton)(() => ({
 
 
 
+
 // root component
 const DashboardNavbar: FC = () => {
   const { commonStore } = useStore();
+  const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
 
   let mode = 'dark';
   if (commonStore.darkMode === true) {
@@ -56,7 +61,7 @@ const DashboardNavbar: FC = () => {
 
   return (
     <DashboardNavbarRoot position="sticky">
-      <StyledToolBar>     
+      <StyledToolBar>
 
         <H2
           fontSize={21}

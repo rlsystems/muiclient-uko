@@ -27,7 +27,7 @@ const DatePickerSample: FC = () => {
 
 
     return (
-        <Card sx={{ padding: 3, marginBottom: 6 }}>
+        <Card sx={{ padding: 3}}>
             <FlexBox justifyContent={"space-between"}>
                 <H5>Date & Time Picker</H5>
                 <NavLink to={{ pathname: "https://mui.com/x/react-date-pickers/getting-started/" }} target="_blank">

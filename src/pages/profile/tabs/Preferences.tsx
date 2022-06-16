@@ -94,15 +94,14 @@ const Preferences: FC = () => {
         </Grid>
         <FlexBox justifyContent={"flex-end"}>
           <LoadingButton
-            fullWidth
-            size="small"
+            
             type="submit"
             variant="contained"
             disabled={!dirty || !isValid || isSubmitting}
             loading={isUpdating}
-            sx={{ width: 124, fontSize: 12 }}
+          
           >
-            Save
+            Save Changes
           </LoadingButton>
         </FlexBox>
       </form>

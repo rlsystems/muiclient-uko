@@ -32,38 +32,38 @@ const Buttons: FC = () => {
             </Small>
 
             <Grid container spacing={3} mt={1}>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Button
                         variant="contained">
                         Contained Button
                     </Button>
                 </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Button>
                         Default Button
                     </Button>
                 </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Button
                         endIcon={<Add />}
                         variant="contained">
                         Icon Button
                     </Button>
                 </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Button
                         variant="outlined">
                         Outline Button
                     </Button>
                 </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Button
                         color="success"
                         variant="contained">
                         Success
                     </Button>
                 </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Button
                         disabled
                         variant="contained">

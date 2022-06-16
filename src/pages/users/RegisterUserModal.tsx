@@ -23,6 +23,7 @@ import { useStore } from "../../app/stores/store";
 import { RegisterUserRequest } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
+import StyledModalCard from "components/StyledModalCard";
 
 // component props interface
 interface Props {
@@ -31,21 +32,6 @@ interface Props {
   onClose: () => void;
 
 }
-
-// styled components
-const StyledModalCard = styled(Card)(({ theme }) => ({
-  top: "50%",
-  left: "50%",
-  maxWidth: 700,
-  minWidth: 300,
-  position: "absolute",
-  padding: "1.5rem",
-  boxShadow: theme.shadows[2],
-  transform: "translate(-50%, -50%)",
-  width: "100%",
-  outline: "none",
-}));
-
 
 const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   const { appUserStore } = useStore();
@@ -108,7 +94,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
         <Divider />
         <form onSubmit={handleSubmit}>
           <Grid mt={1} container spacing={3} columnSpacing={5} className="main-form">
-            <Grid item xs={6}>
+            <Grid item  xs={12} sm={6}>
               <H6 mb={1}>First Name</H6>
               <DarkTextField
                 id="firstName"
@@ -123,7 +109,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <H6 mb={1}>Last Name</H6>
               <DarkTextField
                 id="lastName"
@@ -138,7 +124,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <H6 mb={1}>Email</H6>
               <DarkTextField
                 id="email"
@@ -153,7 +139,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <H6 mb={1}>Phone Number</H6>
               <DarkTextField
                 id="phoneNumber"
@@ -168,7 +154,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <H6 mb={1}>Password</H6>
               <DarkTextField
                 id="password"
@@ -184,7 +170,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
               />
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <H6 mb={1}>Confirm Password</H6>
               <DarkTextField
                 id="confirmPassword"

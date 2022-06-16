@@ -25,6 +25,7 @@ import { useStore } from "../../app/stores/store";
 import { User } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
+import StyledModalCard from "components/StyledModalCard";
 
 
 // component props interface
@@ -33,20 +34,6 @@ interface ModalProps {
     open: boolean;
     onClose: () => void;
 }
-
-// styled components
-const StyledModalCard = styled(Card)(({ theme }) => ({
-    top: "50%",
-    left: "50%",
-    maxWidth: 700,
-    minWidth: 300,
-    position: "absolute",
-    padding: "1.5rem",
-    boxShadow: theme.shadows[2],
-    transform: "translate(-50%, -50%)",
-    width: "100%",
-    outline: "none",
-}));
 
 
 
@@ -80,8 +67,6 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
       initialValues: userFormValues,
       validationSchema: validationSchema,
       onSubmit: async (user: User, { resetForm }) => {
-        // TODO: Ask Ryan what the below line is for
-        // isRootUser ? user.roleId = "root" : "";
         await updateAppUser(user)
         toast.success("User Edited Successfully!")
         onClose()
@@ -90,15 +75,12 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     });
 
 
-    const handleDelete = (id: string) => {
-      deleteAppUser(id).then(() => onClose());
+    const handleDelete = async (id: string) => {
+      await deleteAppUser(id);
+      toast.success("User Deleted!")
+      onClose()
     }
 
-    ////--Alternative syntax
-    // const handleDelete = async (id: string) => {
-    //     await deleteAppUser(id);
-    //     onClose();
-    // }
 
     //to conditionally render form
     const isRootUser: boolean = values.roleId === 'root';
@@ -137,7 +119,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                             </Grid>
                         }
 
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <H6 mb={1}>First Name</H6>
                             <DarkTextField
                                 id="firstName"
@@ -152,7 +134,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                             />
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <H6 mb={1}>Last Name</H6>
                             <DarkTextField
                                 id="lastName"
@@ -167,7 +149,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                             />
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <H6 mb={1}>Email</H6>
                             <DarkTextField
                                 id="email"
@@ -182,7 +164,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                             />
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={12} sm={6}>
                             <H6 mb={1}>Phone Number</H6>
                             <DarkTextField
                                 id="phoneNumber"

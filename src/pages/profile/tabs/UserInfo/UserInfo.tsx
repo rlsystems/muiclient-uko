@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Grid,
+  Stack,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
 import LightTextField from "components/LightTextField";
@@ -123,33 +124,10 @@ const UserInfo: FC = () => {
             </Box>
           </FlexBox>
 
-          <FlexBox justifyContent="space-between" width={270}>
-            <Button
-              variant="outlined"
-              sx={{
-                width: 124,
-                color: "text.disabled",
-                borderColor: "text.disabled",
-              }}
-              fullWidth
-            >
-              Cancel
-            </Button>
-            <LoadingButton
-              fullWidth
-              size="small"
-              type="submit"
-              variant="contained"
-              disabled={!dirty || !isValid || isSubmitting}
-              loading={isUpdating} 
-              sx={{ width: 124, fontSize: 12 }}
-            >
-              Save
-            </LoadingButton>
-          </FlexBox>
+
         </FlexBox>
 
-        <Grid container spacing={4} mt={1} mb={1}>
+        <Grid container spacing={4} mt={1}>
           <Grid item xs={12} sm={6}>
             <LightTextField
               fullWidth
@@ -186,7 +164,7 @@ const UserInfo: FC = () => {
               error={Boolean(touched.email && errors.email)}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} >
             <LightTextField
               fullWidth
               name="phoneNumber"
@@ -198,8 +176,19 @@ const UserInfo: FC = () => {
               error={Boolean(touched.phoneNumber && errors.phoneNumber)}
             />
           </Grid>
-       
-          
+          <Grid item xs={12} display="flex" justifyContent="flex-end" mt={3}>
+            <LoadingButton 
+ 
+              type="submit"
+              variant="contained"
+              disabled={!dirty || !isValid || isSubmitting}
+              loading={isUpdating}
+
+            >
+              Save Changes
+            </LoadingButton>
+          </Grid>
+
 
         </Grid>
       </form>

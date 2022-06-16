@@ -72,7 +72,7 @@ const ServerTable = <T extends Record<string, any>>({
           <TableHead>
             <TableRow>
               {columns.map((col, index) =>
-                <StyledServerTableHeaderCell column={col} key={index}>
+                <StyledServerTableHeaderCell sx={{minWidth: col.minWidth}}  column={col} key={index}>
                   {col.header}
                 </StyledServerTableHeaderCell>
               )}
@@ -101,8 +101,8 @@ const ServerTable = <T extends Record<string, any>>({
       </ScrollBar>
 
       {!hidePagination && (
-        <Stack alignItems="center" justifyContent="flex-end" marginY={1} direction="row">
-          <Select
+        <Stack alignItems={{xs: "flex-end", sm: "center"}} spacing={{xs: 1, sm: 0}} justifyContent={{xs: "flex-start", sm: "flex-end"}} marginY={1} direction={{xs: "column-reverse", sm: "row"}}>
+        <Select
             value={paginationState?.queryPageSize || 0}
             onChange={handleChangeRowsPerPage}
             input={<CustomSelectInput />}
@@ -113,7 +113,7 @@ const ServerTable = <T extends Record<string, any>>({
               </MenuItem>
             )}
           </Select>
-          <StyledPagination
+          <StyledPagination 
             count={paginationState?.totalPageCount || 0}
             shape="rounded"
             onChange={handleChangePage}

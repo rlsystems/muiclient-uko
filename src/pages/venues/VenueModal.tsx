@@ -22,6 +22,7 @@ import { useStore } from "../../app/stores/store";
 import { Venue } from "../../app/models/venue";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
+import StyledModalCard from "components/StyledModalCard";
 
 interface Props {
   data?: any;
@@ -29,19 +30,6 @@ interface Props {
   isEdit: boolean;
   onClose: () => void;
 }
-
-const StyledModalCard = styled(Card)(({ theme }) => ({
-  top: "50%",
-  left: "50%",
-  maxWidth: 700,
-  minWidth: 300,
-  position: "absolute",
-  padding: "1.5rem",
-  boxShadow: theme.shadows[2],
-  transform: "translate(-50%, -50%)",
-  width: "100%",
-  outline: "none",
-}));
 
 
 const VenueModal: FC<Props> = ({ open, onClose, isEdit, data }) => {
@@ -90,7 +78,7 @@ const VenueModal: FC<Props> = ({ open, onClose, isEdit, data }) => {
         <Divider />
         <form onSubmit={handleSubmit}>
           <Grid mt={1} container spacing={3} columnSpacing={5} className="main-form">
-            <Grid item xs={8}>
+            <Grid item xs={12} sm={8}>
               <H6 mb={1}>Name</H6>
               <DarkTextField
                 id="name"

@@ -33,7 +33,7 @@ const VenueColumnShape: ColumnShape<Venue>[] = [
   {
     header: "Guid",
     accessor: "id",
-    minWidth: 150,
+    minWidth: 250,
   },
   {
     header: "Actions",

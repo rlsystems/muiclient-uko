@@ -1,4 +1,4 @@
-import { Box, Button, Card, LinearProgress } from "@mui/material";
+import { Box, Button, Card, Grid, LinearProgress } from "@mui/material";
 import LightTextField from "../../../components/LightTextField";
 import { H5, H6, Tiny } from "../../../components/Typography";
 import React, { FC, useState } from "react";
@@ -74,8 +74,9 @@ const Password: FC = () => {
     >
       <H5>Change Your Password</H5>
       <form onSubmit={handleSubmit}>
-        <FlexBox flexWrap="wrap">
-          <Box width={"50%"} paddingRight={8}>
+
+        <Grid container columnSpacing={6}>
+          <Grid item xs={12} md={6}>
             <LightTextField
               fullWidth
               name="newPassword"
@@ -89,6 +90,8 @@ const Password: FC = () => {
               placeholder="Enter new password"
             />
             <LinearProgress variant="determinate" value={strength} />
+          </Grid>
+          <Grid item xs={12} md={6}>
             <LightTextField
               fullWidth
               name="confirmNewPassword"
@@ -101,29 +104,8 @@ const Password: FC = () => {
               sx={{ mt: 2 }}
               placeholder="Confirm new password"
             />
-
-            <Box my={3}>
-              <H6>Password requirements:</H6>
-              <Tiny fontWeight={500} color="text.disabled">
-                Ensure that these requirements are met:
-              </Tiny>
-              <ul>
-                <li>Minimum 6 characters long</li>
-                <li>At least one lowercase character</li>
-                <li>At least one uppercase character</li>
-                <li>At least one number</li>
-              </ul>
-            </Box>
-
-            <LoadingButton
-              variant="contained"
-              disabled={!dirty || !isValid || isSubmitting}
-              loading={isSubmitting}
-              type="submit">
-              Save Changes
-            </LoadingButton>
-          </Box>
-          <Box width={"50%"} paddingRight={8}>
+          </Grid>
+          <Grid item xs={12} md={6}>
             <LightTextField
               fullWidth
               name="password"
@@ -136,8 +118,34 @@ const Password: FC = () => {
               sx={{ mt: 2 }}
               placeholder="Enter current password"
             />
-          </Box>
-        </FlexBox>
+          </Grid>
+          <Grid item xs={12}>
+            <Box paddingTop={3}>
+              <H6>Password requirements:</H6>
+              <Tiny fontWeight={500} color="text.disabled">
+                Ensure that these requirements are met:
+              </Tiny>
+              <ul>
+                <li>Minimum 6 characters long</li>
+                <li>At least one lowercase character</li>
+                <li>At least one uppercase character</li>
+                <li>At least one number</li>
+              </ul>
+
+            </Box>
+
+          </Grid>
+          <Grid item xs={12} display="flex" justifyContent="flex-end">
+            <LoadingButton
+              variant="contained"
+              disabled={!dirty || !isValid || isSubmitting}
+              loading={isSubmitting}
+              type="submit">
+              Save Changes
+            </LoadingButton>
+          </Grid>
+        </Grid>
+
 
       </form>
 

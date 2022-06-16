@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { Box, Button, styled } from "@mui/material";
+import { Box, Button, Grid, styled } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
 import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
@@ -14,12 +14,6 @@ import UserColumnShape from "./UserColumnShape";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
 import { CustomTableOptions } from "app/models/reactTable";
 
-const StyledFlexBox = styled(FlexBox)(({ theme }) => ({
-  justifyContent: "space-between",
-  alignItems: "center",
-  flexWrap: "wrap",
-  marginBottom: 20,
-}));
 
 const UserList: FC = () => {
   const { appUserStore, commonStore } = useStore();
@@ -31,8 +25,8 @@ const UserList: FC = () => {
   const columns: any = useMemo(() => UserColumnShape, [UserColumnShape]);
 
   const initialState = useMemo(() => ({
-      pageIndex: paginationInitialState.queryPageIndex,
-      pageSize: paginationInitialState.queryPageSize
+    pageIndex: paginationInitialState.queryPageIndex,
+    pageSize: paginationInitialState.queryPageSize
   }), [])
 
   const {
@@ -72,7 +66,9 @@ const UserList: FC = () => {
 
   return (
     <Box pt={2} pb={4}>
-      <StyledFlexBox>
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
           <GlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
             setGlobalFilter={setGlobalFilter}
@@ -81,14 +77,17 @@ const UserList: FC = () => {
               placeholder: "Search users...",
             }}
           />
+        </Grid>
+        <Grid item xs={12} md={6} display="flex" justifyContent={{xs:"flex-start", md:"flex-end"}} >
+          <Button
+            endIcon={<Add />}
+            variant="contained"
+            onClick={() => setOpenModal(true)}>
+            Add User
+          </Button>
+        </Grid>
+      </Grid>
 
-        <Button
-          endIcon={<Add />}
-          variant="contained"
-          onClick={() => setOpenModal(true)}>
-          Add User
-        </Button>
-      </StyledFlexBox>
 
       {openModal && <RegisterUserModal
         open={openModal}

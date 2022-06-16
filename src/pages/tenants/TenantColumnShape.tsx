@@ -7,7 +7,7 @@ const TenantColumnShape = [
   {
     Header: "Key",
     accessor: "id",
-    minWidth: 100,
+    minWidth: 150,
     Cell: ({ row }: any) => {
 
       const { id } = row.original;
@@ -20,7 +20,7 @@ const TenantColumnShape = [
   {
     Header: "Name",
     accessor: "name",
-    minWidth: 100,
+    minWidth: 250,
     Cell: ({ row }: any) => {
 
       const { name } = row.original;

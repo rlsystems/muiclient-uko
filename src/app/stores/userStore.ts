@@ -1,11 +1,12 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, CurrentUser } from "../models/user";
+import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, CurrentUser, User } from "../models/user";
 import { UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
 
 import { store, useStore } from "./store";
 import { history } from '../..';
 import { Venue } from "../models/venue";
+import { Tenant } from "app/models/tenant";
 
 
 // const { commonStore } = useStore();
@@ -56,6 +57,12 @@ export default class UserStore { //---rename to profileStore or currentUserStore
         store.commonStore.setToken(null);
         store.venueStore.selectedVenue = undefined; //hack to set blank
         store.venueStore.venueRegistry = new Map<string, Venue>(); //hack to set blank
+
+        store.appUserStore.selectedAppUser = undefined; //hack to set blank
+        store.appUserStore.appUserRegistry = new Map<string, User>(); //hack to set blank
+
+        store.tenantStore.selectedTenant = undefined; //hack to set blank
+        store.tenantStore.tenantRegistry = new Map<string, Tenant>(); //hack to set blank
 
         window.localStorage.removeItem('jwt');
         this.currentUser = null;
