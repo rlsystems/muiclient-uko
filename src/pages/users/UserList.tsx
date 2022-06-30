@@ -13,6 +13,7 @@ import RegisterUserModal from "./RegisterUserModal";
 import UserColumnShape from "./UserColumnShape";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
 import { CustomTableOptions } from "app/models/reactTable";
+import { H5, H6 } from "components/Typography";
 
 
 const UserList: FC = () => {
@@ -108,6 +109,7 @@ const UserList: FC = () => {
         gotoPage={gotoPage}
         isLoading={loadingInitial}
       />
+      <H6 sx={{fontSize: "12px", fontWeight: "300", color: "#94A4C4"}}>Client-side pagination with ReactTable example</H6>
 
     </Box>
   );

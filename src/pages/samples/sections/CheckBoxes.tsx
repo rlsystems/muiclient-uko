@@ -34,7 +34,7 @@ const CheckBoxes: FC = () => {
 
             <Box marginTop={2}>
 
-                {["Cats", "Dogs", "Turtles"].map((item) => (
+                {["One", "Two", "Three", "Four"].map((item) => (
                     <StyledFormControl
                         key={item}
                         value={item}

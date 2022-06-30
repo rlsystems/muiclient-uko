@@ -39,7 +39,7 @@ const UserColumnShape = [
           borderRadius: 10,
           padding: ".2rem 1rem",
           color: "background.paper",
-          backgroundColor: value.toLowerCase() === "root" ? "success.main" : "info.main",
+          backgroundColor: value.toLowerCase() === "root" ? "success.main" : (value.toLowerCase() === "admin" ? "info.alternate" : "info.main"),
           textTransform: "capitalize"
         }}
       >

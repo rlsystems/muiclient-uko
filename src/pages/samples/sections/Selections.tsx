@@ -16,7 +16,7 @@ import { NavLink } from "react-router-dom";
 const Selections: FC = () => {
     const [language, setLanguage] = useState("english");
     const [status, setStatus] = useState("available");
-    const [region, setRegion] = useState("north");
+    const [region, setRegion] = useState("pending");
 
     return (
         <Card sx={{ padding: 3 }}>
@@ -39,14 +39,14 @@ const Selections: FC = () => {
                         IconComponent={() => <KeyboardArrowDown />}
                         input={<InputBase />}
                     >
-                        <MenuItem value="north" sx={{ fontSize: 12, fontWeight: 500 }}>
-                            North
+                        <MenuItem value="pending" sx={{ fontSize: 12, fontWeight: 500 }}>
+                            Pending
                         </MenuItem>
-                        <MenuItem value="south" sx={{ fontSize: 12, fontWeight: 500 }}>
-                            South
+                        <MenuItem value="processing" sx={{ fontSize: 12, fontWeight: 500 }}>
+                            Processing
                         </MenuItem>
-                        <MenuItem value="east" sx={{ fontSize: 12, fontWeight: 500 }}>
-                            East
+                        <MenuItem value="delivered" sx={{ fontSize: 12, fontWeight: 500 }}>
+                            Delivered
                         </MenuItem>
                     </Select>
                 </Grid>
@@ -79,7 +79,6 @@ const Selections: FC = () => {
                         <DarkMenuItem value="available">Available</DarkMenuItem>
                         <DarkMenuItem value="closed">Closed</DarkMenuItem>
                         <DarkMenuItem value="disabled">Disabled</DarkMenuItem>
-                        <DarkMenuItem value="pending">Pending</DarkMenuItem>
                     </Select>
                 </Grid>
             </Grid>

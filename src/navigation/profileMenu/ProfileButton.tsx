@@ -51,7 +51,7 @@ const ProfilePopover: FC = () => {
           }}
         >
           <NanoAvatar
-            src={currentUser?.imageUrl || "/static/001-man.svg"}
+            src={currentUser?.imageUrl || ""}
             sx={{ width: 30, height: 30, ml: 1 }}
           />
         </Badge>
@@ -67,7 +67,7 @@ const ProfilePopover: FC = () => {
         title={
           <FlexBox alignItems="center">
             <NanoAvatar
-              src={currentUser?.imageUrl || "/static/001-man.svg"}
+              src={currentUser?.imageUrl || ""}
               sx={{ width: 35, height: 35 }}
             />
 

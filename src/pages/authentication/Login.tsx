@@ -273,6 +273,12 @@ const Login: FC = () => {
         variant="outlined">
         Root credentials: admin@root.com / Password123!
       </Alert>
+      <Alert
+        sx={{ marginTop: 2, padding: 2, width: "100%", maxWidth: 600, boxShadow: 1 }}
+        severity="info"
+        variant="outlined">
+        Sample data will reset every 6 hours
+      </Alert>
     </FlexBox>
   );
 };

@@ -11,7 +11,7 @@ import { RoleID } from "app/models/user";
 import VenueModal from "./VenueModal";
 import { Venue } from "app/models/venue";
 import usePaginationMetaData, { TOTAL_PAGE_COUNT_CHANGED } from "app/hooks/usePaginationMetaData";
-import { H5 } from "components/Typography";
+import { H5, H6 } from "components/Typography";
 import { StyledLink } from "components/common";
 import ServerTable, { ColumnShape } from "components/ServerTable/ServerTable";
 
@@ -86,7 +86,7 @@ const VenueList = () => {
             </Button>)}
           </Stack>
         </Grid>
-        <Grid item xs={12} md={6} display="flex" justifyContent={{xs:"flex-start", md:"flex-end"}} >
+        <Grid item xs={12} md={6} display="flex" justifyContent={{ xs: "flex-start", md: "flex-end" }} >
           {userStore.currentUser?.roleId !== RoleID.basic ? (<Button
             endIcon={<Add />}
             variant="contained"
@@ -134,7 +134,7 @@ const VenueList = () => {
         paginationDispatch={dispatch}
         isLoading={loadingInitial || loading}
       />
-
+      <H6 sx={{ fontSize: "12px", fontWeight: "300", color: "#94A4C4" }}>Server-side pagaination example</H6>
     </Box>
   );
 };

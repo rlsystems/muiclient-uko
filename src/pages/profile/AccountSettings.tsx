@@ -1,9 +1,8 @@
-import { Instagram, NotificationsNone } from "@mui/icons-material";
 import { Box, Button, Card, Grid, styled, useTheme } from "@mui/material";
 
 
 import { FC, useEffect, useState } from "react";
-import { H3, H6, Tiny } from "../../components/Typography";
+import { H3 } from "../../components/Typography";
 import convertToSlug from "../../app/utils/convertSlug";
 import FlexBox from "../../components/FlexBox";
 
@@ -36,11 +35,8 @@ const AccountSettings: FC = () => {
   const history = useHistory();
 
 
-
-  // Below solves the console warning for DashboardNavbar
-  // Should fix that warning, let me know if it pops up again
   useEffect(() => {
-    commonStore.setTitle("Account Settings");
+    commonStore.setTitle("Profile");
   }, [])
 
   const theme = useTheme();

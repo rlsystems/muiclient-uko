@@ -20,8 +20,7 @@ export const primary = {
   main: "#2499EF",
   light: "#D3F5FE",
   dark: "#1A77CD",
-  // main: "#3f51b5",
-  // light: "#757de8",
+
 
   red: "#FF6B93",
   purple: "#A798FF",
@@ -56,7 +55,9 @@ export const warning = {
 
 export const info = {
   main: "#A798FF",
+  alternate: "#5F98F5",
 };
+
 
 export const text = {
   primary: secondary[500],
