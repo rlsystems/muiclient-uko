@@ -7,7 +7,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import ScrollBar from "simplebar-react";
-import topMenuList from "./topMenuList";
+import sideBarNavList from "./sideBarNavList";
 import { useHistory, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../app/stores/store";
@@ -34,10 +34,10 @@ const StyledListItemButton = styled(ListItemButton)(() => ({
 }));
 
 // root component
-const DashboardSideBar = () => {
+const SideBar = () => {
   const { pathname } = useLocation();
   const history = useHistory();
-  const { userStore } = useStore();
+  const { currentUserStore } = useStore();
 
   return (
     <MainMenu>
@@ -47,7 +47,7 @@ const DashboardSideBar = () => {
         </StyledListItemButton>
 
         <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>
-          {topMenuList.filter(item => !item.roles || item.roles.includes(userStore.currentUser?.roleId as RoleID)).map((nav, index) => (
+          {sideBarNavList.filter(item => !item.roles || item.roles.includes(currentUserStore.currentUser?.roleId as RoleID)).map((nav, index) => (
             <Fragment key={index}>
               {nav.topDivider && <Divider variant="middle" sx={{ marginBottom: "15px" }} />}
 
@@ -77,4 +77,4 @@ const DashboardSideBar = () => {
 };
 
 
-export default observer(DashboardSideBar);
+export default observer(SideBar);

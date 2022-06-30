@@ -4,12 +4,12 @@ import AppUserStore from "./appUserStore";
 import CommonStore from "./commonStore";
 import ModalStore from "./modalStore";
 import TenantStore from "./tenantStore";
-import UserStore from "./userStore";
+import CurrentUserStore from "./currentUserStore";
 import VenueStore from "./venueStore";
 
 interface Store {
     commonStore: CommonStore;
-    userStore: UserStore;
+    currentUserStore: CurrentUserStore;
     modalStore: ModalStore;
     appUserStore: AppUserStore;
     tenantStore: TenantStore;
@@ -18,7 +18,7 @@ interface Store {
 
 export const store: Store = {
     commonStore: new CommonStore(),
-    userStore: new UserStore(),
+    currentUserStore: new CurrentUserStore(),
     modalStore: new ModalStore(),
     appUserStore: new AppUserStore(),
     tenantStore: new TenantStore(),

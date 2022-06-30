@@ -18,7 +18,7 @@ import { useStore } from '../../app/stores/store';
 
 
 export default observer(function HomePage() {
-    const { userStore, modalStore } = useStore();
+    const { currentUserStore, modalStore } = useStore();
     return (
         <Container component="main" maxWidth="xs">
             <Box
@@ -36,7 +36,7 @@ export default observer(function HomePage() {
                     Welcome to the App
                 </Typography>
 
-                {userStore.isLoggedIn ? (
+                {currentUserStore.isLoggedIn ? (
                     <>
                         <Button component={Link} to="/dashboard" variant="contained" >
                             Go to Dashboard

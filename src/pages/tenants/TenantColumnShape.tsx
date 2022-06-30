@@ -2,6 +2,7 @@ import { useState } from "react";
 import { H6, Small } from "components/Typography";
 import EditIconButton from "components/EditIconButton";
 import EditTenantModal from "./EditTenantModal";
+import { Box } from "@mui/material";
 
 const TenantColumnShape = [
   {
@@ -57,7 +58,7 @@ const TenantColumnShape = [
       return (
         <>
           {id != "root" && <EditIconButton onClick={() => setOpenModal(true)} />}
-          {id == "root" && <EditIconButton disabled />}
+          {id == "root" && <Box sx={{height: "36px"}}/>}
 
           {openModal && <EditTenantModal
             open={openModal}

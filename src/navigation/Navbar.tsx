@@ -12,7 +12,7 @@ import { H2 } from "../components/Typography";
 
 import { FC } from "react";
 
-import ProfileButton from "./profileMenu/ProfileButton";
+import ProfileButton from "./profileButton/ProfileButton";
 import { useStore } from "../app/stores/store";
 import { observer } from "mobx-react-lite";
 import ThemeIcon from "../icons/ThemeIcon";
@@ -21,7 +21,7 @@ import ThemeIcon from "../icons/ThemeIcon";
 
 
 // custom styled components
-const DashboardNavbarRoot = styled(AppBar)(() => ({
+const StyledNavbar = styled(AppBar)(() => ({
   zIndex: 11,
   boxShadow: "none",
   paddingTop: "1rem",
@@ -46,7 +46,7 @@ const StyledIconButton = styled(IconButton)(() => ({
 
 
 // root component
-const DashboardNavbar: FC = () => {
+const Navbar: FC = () => {
   const { commonStore } = useStore();
   const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
 
@@ -60,7 +60,7 @@ const DashboardNavbar: FC = () => {
 
 
   return (
-    <DashboardNavbarRoot position="sticky">
+    <StyledNavbar position="sticky">
       <StyledToolBar>
 
         <H2
@@ -95,8 +95,8 @@ const DashboardNavbar: FC = () => {
 
         <ProfileButton />
       </StyledToolBar>
-    </DashboardNavbarRoot>
+    </StyledNavbar>
   );
 };
 
-export default observer(DashboardNavbar);
+export default observer(Navbar);

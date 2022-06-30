@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 
 const Preferences: FC = () => {
-  const { userStore } = useStore();
-  const { currentUser, updatePreferences, getCurrentUser } = userStore;
+  const { currentUserStore } = useStore();
+  const { currentUser, updatePreferences, getCurrentUser } = currentUserStore;
 
   // const defaultPageSize = currentUser ? currentUser?.pageSizeDefault : "10";
   const darkModeDefault = currentUser ? currentUser?.darkModeDefault : true;

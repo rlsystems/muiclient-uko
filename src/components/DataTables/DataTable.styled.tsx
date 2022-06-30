@@ -1,10 +1,12 @@
-import { alpha, InputBase, Pagination, styled as muiStyled, TableRow, TableCell } from "@mui/material";
-import SearchIcon from "icons/SearchIcon";
+import { alpha, Pagination, styled as muiStyled, TableRow, TableCell } from "@mui/material";
 import styled from "@emotion/styled";
-import { ColumnShape } from "./ServerTable";
 
-//EMOTION ENGINE  -- https://mui.com/material-ui/guides/interoperability/#styled-components  -- https://mui.com/material-ui/guides/interoperability/#emotion
-export const StyledServerTableHeaderCell = styled(TableCell, {shouldForwardProp: prop => prop !== 'column'})<{column: ColumnShape<any>}>`
+
+
+// Shared styles for both Server Table and React Table
+
+
+export const StyledTableHeaderCell = styled(TableCell, {shouldForwardProp: prop => prop !== 'column'})<{column: any}>`
   padding-top: 0;
   padding-bottom: 0;
   font-size: ${({theme}) => theme.typography.pxToRem(13)};
@@ -20,7 +22,7 @@ export const StyledServerTableHeaderCell = styled(TableCell, {shouldForwardProp:
   }
 `
 
-export const StyledServerTableRow = styled(TableRow, { shouldForwardProp: p => p !== 'rowClick' })<{rowClick?: boolean}>`
+export const StyledTableRow = styled(TableRow, { shouldForwardProp: p => p !== 'rowClick' })<{rowClick?: boolean}>`
   background-color: ${({theme}) => theme.palette.background.paper};
   cursor: ${p => p.rowClick ? "pointer" : "unset"};
 
@@ -53,7 +55,7 @@ export const StyledServerTableRow = styled(TableRow, { shouldForwardProp: p => p
   }
 `
 
-export const StyledServerTableRowCell = styled(TableCell)`
+export const StyledTableRowCell = styled(TableCell)`
   font-size: ${({theme}) => theme.typography.pxToRem(13)};
   font-weight: 500;
   color: ${({theme}) => theme.palette.text.disabled};
@@ -112,21 +114,3 @@ export const StyledPagination = muiStyled(Pagination)(({ theme }) => ({
   },
 }));
 
-export const StyledSearchInput = muiStyled(InputBase)(({ theme }) => ({
-  height: 40,
-  fontSize: 12,
-  maxWidth: 450,
-  width: "100%",
-  fontWeight: 500,
-  padding: "0.5rem",
-  borderRadius: "4px",
-  backgroundColor: "white",
-  color: theme.palette.text.primary,
-}));
-
-export const StyledSearchIcon = muiStyled(SearchIcon)(({ theme }) => ({
-  fontSize: 16,
-  marginLeft: "0.5rem",
-  marginRight: "0.5rem",
-  color: theme.palette.primary.main,
-}));

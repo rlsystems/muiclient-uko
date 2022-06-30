@@ -7,7 +7,7 @@ interface GuestGuardProps {
 }
 
 const GuestGuard = ({ children }: GuestGuardProps) => {
-  const { userStore: {isLoggedIn} } = useStore();
+  const { currentUserStore: {isLoggedIn} } = useStore();
 
   if (isLoggedIn) return <Redirect to="/venues" />;
 

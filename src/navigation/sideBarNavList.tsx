@@ -1,7 +1,7 @@
 import { RoleID } from "app/models/user";
 import Icons from "../icons/sidebar";
 
-const menuList = [
+const sideBarNavList = [
 
   {
     title: "UI Component Samples",
@@ -34,4 +34,4 @@ const menuList = [
 
 ];
 
-export default menuList;
+export default sideBarNavList;

@@ -13,7 +13,7 @@ import * as Yup from "yup";
 
 const ResetPassword: FC = () => {
     const [error, setError] = useState("");
-    const { userStore, commonStore } = useStore();
+    const { currentUserStore, commonStore } = useStore();
     const [strength, setStrength] = useState(0);
 
     const initialValues = {
@@ -46,7 +46,7 @@ const ResetPassword: FC = () => {
             validationSchema,
             onSubmit: async (values) => {
 
-                const result = await userStore.resetPassword(values);
+                const result = await currentUserStore.resetPassword(values);
                 if (result?.succeeded === true) {
                     toast.success("Password reset successfully");
                 } else {

@@ -21,10 +21,9 @@ import {
 import ScrollBar from "simplebar-react";
 
 import { CustomSelectInput } from "components/common";
-import { StyledPagination } from "components/dataTable/DataTable.styled";
 import FlexBox from "components/FlexBox";
 import { H6, H5 } from "components/Typography";
-import { StyledReactTableHeaderCell, StyledReactTableRow, StyledReactTableRowCell } from "./ReactTable.styled";
+import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/DataTables/DataTable.styled";
 
 interface ReactTableProps {
   getTableProps: () => TableProps,
@@ -83,13 +82,13 @@ const ReactTable: FC<ReactTableProps> = (props) => {
             {headerGroups.map((headerGroup: any) => (
               <TableRow {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column: any) => (
-                  <StyledReactTableHeaderCell
+                  <StyledTableHeaderCell
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     column={column}
                     sx={{minWidth: column.minWidth}}
                   >
                     <H6 color="text.primary" sx={{opacity: .7}} >{column.render("Header")}</H6>
-                  </StyledReactTableHeaderCell>
+                  </StyledTableHeaderCell>
                 ))}
               </TableRow>
             ))}
@@ -100,17 +99,17 @@ const ReactTable: FC<ReactTableProps> = (props) => {
             {page.map((row: any) => {
               prepareRow(row);
               return (
-                <StyledReactTableRow
+                <StyledTableRow
                   {...row.getRowProps()}
                   onClick={rowClick && rowClick(row.original)}
                   rowClick={Boolean(rowClick)}
                 >
                   {row.cells.map((cell: any) => (
-                    <StyledReactTableRowCell {...cell.getCellProps()}>
+                    <StyledTableRowCell {...cell.getCellProps()}>
                       {cell.render("Cell")}
-                    </StyledReactTableRowCell>
+                    </StyledTableRowCell>
                   ))}
-                </StyledReactTableRow>
+                </StyledTableRow>
               );
             })}
           </TableBody>}
@@ -161,5 +160,5 @@ const ReactTable: FC<ReactTableProps> = (props) => {
     </Box>
   );
 };
-
+ 
 export default ReactTable;

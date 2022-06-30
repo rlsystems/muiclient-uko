@@ -31,7 +31,7 @@ import { StyledSelectInput } from "components/StyledComponent";
 
 const Login: FC = () => {
   const [error, setError] = useState("");
-  const { userStore, commonStore, tenantStore } = useStore();
+  const { currentUserStore, commonStore, tenantStore } = useStore();
   const { loadTenants, tenantsSorted, loadingInitial } = tenantStore;
 
   const initialValues = {
@@ -60,7 +60,7 @@ const Login: FC = () => {
       onSubmit: async (values) => {
         console.log(values);
         try {
-          await userStore.login(values);
+          await currentUserStore.login(values);
           toast.success("Logged In Successfully!");
         } catch (error) {
           const message = (error as Error)?.message || "Login failed";

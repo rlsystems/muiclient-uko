@@ -23,7 +23,7 @@ import { StyledBadge } from "components/StyledComponent";
 
 const UserInfo: FC = () => {
   const {
-    userStore: {
+    currentUserStore: {
       currentUser, updateCurrentUser, getCurrentUser
     }
   } = useStore();

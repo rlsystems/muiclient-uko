@@ -1,11 +1,10 @@
 import { Box, ButtonBase, Divider, Popover } from "@mui/material";
-import { H4 } from "../../components/Typography";
+import { H4 } from "./Typography";
 import React, { FC } from "react";
 
 // component props interface
-interface ProfileMenuProps {
+interface PopoverMenuProps {
   title?: string | JSX.Element;
-  hiddenViewButton?: boolean;
   popoverOpen: boolean;
   popoverClose: () => void;
   children: React.ReactNode;
@@ -16,14 +15,13 @@ interface ProfileMenuProps {
   noHeader?: boolean
 }
 
-const ProfileMenu: FC<ProfileMenuProps> = (props) => {
+const PopoverMenu: FC<PopoverMenuProps> = (props) => {
   const {
     children,
     popoverClose,
     popoverOpen,
     anchorRef,
     title,
-    hiddenViewButton,
     minWidth,
     maxWidth,
     noHeader
@@ -53,23 +51,10 @@ const ProfileMenu: FC<ProfileMenuProps> = (props) => {
           </React.Fragment>
         }
         {children}
-        {!hiddenViewButton && (
-          <Box p={2}>
-            <ButtonBase
-              disableRipple
-              sx={{
-                margin: "auto",
-                display: "block",
-                color: "primary.main",
-              }}
-              >
-              View all Notifications
-            </ButtonBase>
-          </Box>
-        )}
+      
       </React.Fragment>
     </Popover>
   );
 };
 
-export default ProfileMenu;
+export default PopoverMenu;

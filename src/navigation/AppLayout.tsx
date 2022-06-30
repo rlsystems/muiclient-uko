@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
 import React from 'react'
-import DashboardNavbar from './DashboardNavbar';
-import DashboardSideBar from './DashboardSideBar';
+import Navbar from './Navbar';
+import SideBar from './SideBar';
 
 interface Props {
   children: React.ReactNode
@@ -19,16 +19,16 @@ const ContentWrapper = styled(Box)(({theme}) => ({
     },
   }));
 
-const DashboardLayout = (props: Props) => {
+const AppLayout = (props: Props) => {
   return (
     <React.Fragment>
-      <DashboardSideBar />
+      <SideBar />
       <ContentWrapper>
-        <DashboardNavbar />
+        <Navbar />
         {props.children}
       </ContentWrapper>
     </React.Fragment>
   )
 }
 
-export default DashboardLayout
+export default AppLayout

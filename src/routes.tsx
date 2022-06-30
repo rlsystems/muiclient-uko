@@ -3,7 +3,7 @@ import React, { Suspense, Fragment, lazy, LazyExoticComponent, FC } from 'react'
 import { Switch, Redirect, Route } from 'react-router-dom';
 import AuthGuard from './components/authentication/AuthGuard';
 import GuestGuard from './components/authentication/GuestGuard';
-import DashboardLayout from './navigation/DashboardLayout';
+import AppLayout from './navigation/AppLayout';
 import LoadingScreen from './components/LoadingScreen';
 import {Helmet} from "react-helmet";
 
@@ -126,7 +126,7 @@ const routes: RouteType[] = [
   },
   {
     path: '/',
-    layout: DashboardLayout,
+    layout: AppLayout,
     routes: [
       {
         exact: true,

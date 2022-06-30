@@ -8,7 +8,7 @@ import { StyledDisabledBox } from "components/common";
 import { MoreVert } from "@mui/icons-material";
 import VenueModal from './VenueModal'
 import { Venue } from "app/models/venue";
-import { ColumnShape } from "components/ServerTable/ServerTable";
+import { ColumnShape } from "components/DataTables/ServerTable/ServerTable";
 
 const VenueColumnShape: ColumnShape<Venue>[] = [
   {
@@ -40,7 +40,7 @@ const VenueColumnShape: ColumnShape<Venue>[] = [
     accessor: null,
     minWidth: 80,
     renderRow: (row: Venue) => {
-      const { userStore, venueStore} = useStore();
+      const { currentUserStore, venueStore} = useStore();
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
       const [openModal, setOpenModal] = useState(false);
 
@@ -60,7 +60,7 @@ const VenueColumnShape: ColumnShape<Venue>[] = [
       }
 
       return <React.Fragment>
-        {userStore.currentUser?.roleId !== RoleID.basic
+        {currentUserStore.currentUser?.roleId !== RoleID.basic
           ? <IconButton onClick={handleMenuOpen}>
             <MoreVert  />
           </IconButton>

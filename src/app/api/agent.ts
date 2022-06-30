@@ -52,7 +52,7 @@ axios.interceptors.response.use(async response => {
             break;
         case 401:
             // toast.error('unauthorized');
-            store.userStore.logout();
+            store.currentUserStore.logout();
             break;
         case 404:
             //history.push('/not-found')

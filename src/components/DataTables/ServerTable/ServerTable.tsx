@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   Box,
   CircularProgress,
@@ -13,10 +12,9 @@ import {
 } from "@mui/material";
 import ScrollBar from "simplebar-react";
 
-import { StyledServerTableHeaderCell, StyledServerTableRow, StyledServerTableRowCell } from "./ServerTable.styled";
 import { PAGE_CHANGED, PAGE_SIZE_CHANGED, PaginationDispatchType, PaginationStateType } from "app/hooks/usePaginationMetaData";
 import { CustomSelectInput } from "components/common";
-import { StyledPagination } from "components/dataTable/DataTable.styled";
+import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/DataTables/DataTable.styled";
 
 export interface ColumnShape<T> {
   header: string
@@ -72,9 +70,9 @@ const ServerTable = <T extends Record<string, any>>({
           <TableHead>
             <TableRow>
               {columns.map((col, index) =>
-                <StyledServerTableHeaderCell sx={{minWidth: col.minWidth}}  column={col} key={index}>
+                <StyledTableHeaderCell sx={{minWidth: col.minWidth}}  column={col} key={index}>
                   {col.header}
-                </StyledServerTableHeaderCell>
+                </StyledTableHeaderCell>
               )}
             </TableRow>
 
@@ -84,13 +82,13 @@ const ServerTable = <T extends Record<string, any>>({
             <TableBody>
               {data.map((row: T, index) => {
                 return (
-                  <StyledServerTableRow key={index}>
+                  <StyledTableRow key={index}>
                     {columns.map((cell, index) => (
-                      <StyledServerTableRowCell key={index}>
+                      <StyledTableRowCell key={index}>
                         {cell.renderRow ? cell?.renderRow(row) : cell.accessor ? row[cell.accessor] : null}
-                      </StyledServerTableRowCell>
+                      </StyledTableRowCell>
                     ))}
-                  </StyledServerTableRow>
+                  </StyledTableRow>
                 );
               })}
             </TableBody>}

@@ -13,7 +13,7 @@ import * as Yup from "yup";
 const ForgotPassword: FC = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { userStore, commonStore } = useStore();
+  const { currentUserStore, commonStore } = useStore();
 
   const initialValues = {
     email: "demo@example.com",
@@ -35,7 +35,7 @@ const ForgotPassword: FC = () => {
       validationSchema,
       onSubmit: async (values) => {
 
-        const result = await userStore.forgotPassword(values);
+        const result = await currentUserStore.forgotPassword(values);
         if (result?.succeeded === true) {
           toast.success("Password reset email sent");
         } else {

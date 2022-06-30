@@ -3,7 +3,7 @@ import FlexBox from "../../components/FlexBox";
 import { H6, Small, Tiny } from "../../components/Typography";
 import NanoAvatar from "../../components/NanoAvatar";
 import { FC, Fragment, useRef, useState } from "react";
-import ProfileMenu from "./ProfileMenu";
+import PopoverMenu from "../../components/PopoverMenu";
 import { useStore } from "../../app/stores/store";
 import { useHistory } from "react-router-dom";
 import { observer } from "mobx-react-lite";
@@ -25,7 +25,7 @@ const StyledSmall = styled(Small)(({ theme }) => ({
 const ProfilePopover: FC = () => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const { userStore: { currentUser, logout } } = useStore();
+  const { currentUserStore: { currentUser, logout } } = useStore();
   const history = useHistory();
   const handleMenuItem = (path: string) => {
     history.push(path);
@@ -57,8 +57,7 @@ const ProfilePopover: FC = () => {
         </Badge>
       </ButtonBase>
 
-      <ProfileMenu
-        hiddenViewButton
+      <PopoverMenu
         maxWidth={230}
         minWidth={200}
         popoverOpen={open}
@@ -105,13 +104,12 @@ const ProfilePopover: FC = () => {
           <StyledSmall
             onClick={() => {
               logout();
-              //toast.error("You Logout Successfully");
             }}
           >
             Sign Out
           </StyledSmall>
         </Box>
-      </ProfileMenu>
+      </PopoverMenu>
     </Fragment>
   );
 };

@@ -13,12 +13,12 @@ import { Venue } from "app/models/venue";
 import usePaginationMetaData, { TOTAL_PAGE_COUNT_CHANGED } from "app/hooks/usePaginationMetaData";
 import { H5, H6 } from "components/Typography";
 import { StyledLink } from "components/common";
-import ServerTable, { ColumnShape } from "components/ServerTable/ServerTable";
+import ServerTable, { ColumnShape } from "components/DataTables/ServerTable/ServerTable";
 
 
 
 const VenueList = () => {
-  const { venueStore, commonStore, userStore } = useStore();
+  const { venueStore, commonStore, currentUserStore } = useStore();
   const { loadVenues, venues, venueMetaData, loadingInitial, loading } = venueStore;
   const { setTitle } = commonStore;
   const [openModal, setOpenModal] = useState(false);
@@ -63,7 +63,7 @@ const VenueList = () => {
 
   return (
     <Box pt={2} pb={4}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mb={2}>
         <Grid item xs={12} md={6}>
           <Stack direction="row" alignItems="stretch">
             <SearchInput
@@ -87,7 +87,7 @@ const VenueList = () => {
           </Stack>
         </Grid>
         <Grid item xs={12} md={6} display="flex" justifyContent={{ xs: "flex-start", md: "flex-end" }} >
-          {userStore.currentUser?.roleId !== RoleID.basic ? (<Button
+          {currentUserStore.currentUser?.roleId !== RoleID.basic ? (<Button
             endIcon={<Add />}
             variant="contained"
             onClick={() => setOpenModal(true)}

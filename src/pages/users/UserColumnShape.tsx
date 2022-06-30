@@ -13,13 +13,21 @@ const UserColumnShape = [
     accessor: (row: any) => row.firstName + " " + row.lastName,
     minWidth: 200,
     Cell: ({ row }: any) => {
+      const { currentUserStore } = useStore();
+      const { currentUser } = currentUserStore;
+      const { firstName, lastName, imageUrl, id } = row.original;
 
-      const { firstName, lastName, imageUrl } = row.original;
       return (
         <FlexBox alignItems="center">
           <NanoAvatar src={imageUrl || ""} />
           <FlexBox flexDirection="column" ml={2}>
-            <H6 color="text.primary">{firstName + " " + lastName}</H6>
+            <H6 color="text.primary">{firstName + " " + lastName} {id == currentUser?.id && <Small
+              sx={{
+                color: "info.alternate",
+              }}
+            >
+              (You)
+            </Small>}</H6>
 
           </FlexBox>
         </FlexBox>
@@ -72,19 +80,28 @@ const UserColumnShape = [
     Header: "Edit",
     accessor: "action",
     Cell: ({ row }: any) => {
-      const { userStore } = useStore();
-      const { currentUser } = userStore;
+      const { currentUserStore } = useStore();
+      const { currentUser } = currentUserStore;
 
       const [openModal, setOpenModal] = useState(false);
       const { id } = row.original;
+
+
+
       return (
+
         <>
-          <EditIconButton disabled={(id == currentUser?.id) ? true : false} onClick={() => setOpenModal(true)} />
+
+          {id != currentUser?.id &&
+            <EditIconButton onClick={() => setOpenModal(true)} />
+          }
+
           {openModal && <EditUserModal
             open={openModal}
             data={row.original}
             onClose={() => setOpenModal(false)}
           />}
+
         </>
       );
     },

@@ -9,9 +9,9 @@ import { useStore } from 'app/stores/store';
 import FlexBox from "components/FlexBox";
 import TenantColumnShape from "./TenantColumnShape";
 import RegisterTenantModal from "./RegisterTenantModal";
-import ReactTable from "components/ReactTable";
+import ReactTable from "components/DataTables/ReactTable/ReactTable";
 import { Tenant } from "app/models/tenant";
-import GlobalFilter from "components/GlobalFilter";
+import GlobalFilter from "components/GlobalFilter/GlobalFilter";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
 import { CustomTableOptions } from "app/models/reactTable";
 
@@ -65,7 +65,7 @@ const TenantList: FC = () => {
 
   return (
     <Box pt={2} pb={4}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mb={2}>
         <Grid item xs={12} md={6}>
           <GlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}

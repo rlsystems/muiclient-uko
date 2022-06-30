@@ -12,8 +12,8 @@ import FlexBox from "components/FlexBox";
 import checkPasswordStrength from "app/utils/checkPasswordStrength";
 
 const Password: FC = () => {
-  const { userStore, commonStore } = useStore();
-  const { changePassword } = userStore;
+  const { currentUserStore, commonStore } = useStore();
+  const { changePassword } = currentUserStore;
 
   const [strength, setStrength] = useState(0);
 

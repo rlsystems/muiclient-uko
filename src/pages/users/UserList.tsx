@@ -7,8 +7,8 @@ import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, use
 import { useStore } from 'app/stores/store';
 import LoadingScreen from "components/LoadingScreen";
 import FlexBox from "components/FlexBox";
-import ReactTable from "components/ReactTable";
-import GlobalFilter from "components/GlobalFilter";
+import ReactTable from "components/DataTables/ReactTable/ReactTable";
+import GlobalFilter from "components/GlobalFilter/GlobalFilter";
 import RegisterUserModal from "./RegisterUserModal";
 import UserColumnShape from "./UserColumnShape";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
@@ -68,8 +68,8 @@ const UserList: FC = () => {
   return (
     <Box pt={2} pb={4}>
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={2} mb={2}>
+        <Grid item xs={12} md={6} >
           <GlobalFilter
             preGlobalFilteredRows={preGlobalFilteredRows}
             setGlobalFilter={setGlobalFilter}

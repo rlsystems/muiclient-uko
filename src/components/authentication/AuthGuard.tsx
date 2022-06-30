@@ -9,7 +9,7 @@ interface AuthGuardProps {
 }
 
 const AuthGuard = ({ children, roles }: AuthGuardProps) => {
-  const { userStore: {isLoggedIn, currentUser} } = useStore();
+  const { currentUserStore: {isLoggedIn, currentUser} } = useStore();
 
   if (!isLoggedIn) return <Redirect to="/login" />;
   if (roles && !roles.includes(currentUser?.roleId as RoleID)) return <Redirect to="/403" />;

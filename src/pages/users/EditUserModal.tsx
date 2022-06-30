@@ -38,9 +38,9 @@ interface ModalProps {
 
 
 const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
-    const { appUserStore, userStore } = useStore();
+    const { appUserStore, currentUserStore } = useStore();
     const { updateAppUser, deleteAppUserLoading, updateAppUserLoading, loadingInitial, deleteAppUser } = appUserStore;
-    const { currentUser } = userStore;
+    const { currentUser } = currentUserStore;
 
 
     const [userFormValues, setUserFormValues] = useState<User>({ //Local State
