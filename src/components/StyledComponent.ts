@@ -1,5 +1,6 @@
 import {
   Badge,
+  Box,
   Chip,
   FormControlLabel,
   InputBase,
@@ -7,9 +8,11 @@ import {
   styled,
 } from "@mui/material";
 
+
+//--- Organize this ---
+
 export const StyledInput = styled(InputBase)(({ theme }) => ({
   height: 52,
-  //   fontSize: 12,
   fontWeight: 500,
   borderRadius: "8px",
   border: "2px solid",
@@ -21,7 +24,6 @@ export const StyledInput = styled(InputBase)(({ theme }) => ({
       ? theme.palette.secondary[300]
       : theme.palette.divider,
 }));
-
 
 
 export const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -53,8 +55,8 @@ export const StyledChip = styled(Chip)(({ theme }) => ({
 }));
 
 
-//Select Input -----------------
-//Light
+// Select Input 
+// --Light
 export const StyledSelectInput = styled(InputBase)(({ theme }) => ({
   height: 50,
   fontSize: 12,
@@ -72,14 +74,14 @@ export const StyledSelectInput = styled(InputBase)(({ theme }) => ({
   "& > .MuiSelect-select": { paddingRight: "0 !important" },
 }));
 
-
-//Dark
+// Select Input 
+// --Dark
 export const DarkMenuItem = styled(MenuItem)(({ theme }) => ({
   fontSize: 12,
   fontWeight: 500,
   color: theme.palette.text.disabled,
 }));
-
+ 
 export const DarkStyledSelectInput = styled(InputBase)(({ theme }) => ({
   height: 35,
   fontSize: 12,
@@ -90,6 +92,15 @@ export const DarkStyledSelectInput = styled(InputBase)(({ theme }) => ({
       theme.palette.mode === "light"
           ? theme.palette.secondary[300]
           : theme.palette.divider,
-
   "& .MuiSvgIcon-root": { color: theme.palette.text.disabled },
+}));
+
+
+//Login page
+export const TextFieldWrapper = styled(Box)(({ theme }) => ({
+  width: "48%",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    marginTop: "0.5rem",
+  },
 }));

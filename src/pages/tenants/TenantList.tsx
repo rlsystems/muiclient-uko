@@ -14,6 +14,7 @@ import { Tenant } from "app/models/tenant";
 import GlobalFilter from "components/GlobalFilter/GlobalFilter";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
 import { CustomTableOptions } from "app/models/reactTable";
+import { H6 } from "components/Typography";
 
 
 const TenantList: FC = () => {
@@ -105,7 +106,7 @@ const TenantList: FC = () => {
         gotoPage={gotoPage}
         isLoading={loadingInitial}
       />
-
+      <H6 sx={{fontSize: "12px", fontWeight: "300", color: "#94A4C4"}}>Demo Tip: To see multitenancy in action, try logging in as other tenants. Default password for all users is Password123!</H6>
     </Box>
   );
 };

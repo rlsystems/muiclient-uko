@@ -8,14 +8,14 @@ import {
   Toolbar,
   useMediaQuery,
 } from "@mui/material";
-import { H2 } from "../components/Typography";
+import { H2 } from "../../components/Typography";
 
 import { FC } from "react";
 
 import ProfileButton from "./profileButton/ProfileButton";
-import { useStore } from "../app/stores/store";
+import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import ThemeIcon from "../icons/ThemeIcon";
+import ThemeIcon from "../../icons/ThemeIcon";
 //
 
 

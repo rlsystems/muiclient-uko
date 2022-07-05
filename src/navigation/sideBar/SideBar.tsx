@@ -7,10 +7,10 @@ import {
   Tooltip,
 } from "@mui/material";
 import ScrollBar from "simplebar-react";
-import sideBarNavList from "./sideBarNavList";
+import navList from "./navList";
 import { useHistory, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../app/stores/store";
+import { useStore } from "../../app/stores/store";
 import { RoleID } from "app/models/user";
 import { Fragment } from "react";
 
@@ -47,7 +47,7 @@ const SideBar = () => {
         </StyledListItemButton>
 
         <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>
-          {sideBarNavList.filter(item => !item.roles || item.roles.includes(currentUserStore.currentUser?.roleId as RoleID)).map((nav, index) => (
+          {navList.filter(item => !item.roles || item.roles.includes(currentUserStore.currentUser?.roleId as RoleID)).map((nav, index) => (
             <Fragment key={index}>
               {nav.topDivider && <Divider variant="middle" sx={{ marginBottom: "15px" }} />}
 

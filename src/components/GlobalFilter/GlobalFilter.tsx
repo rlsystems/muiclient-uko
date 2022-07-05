@@ -11,6 +11,10 @@ export interface GlobalFilterProps {
   inputProps?: InputProps
 }
 
+
+//Table filter?
+
+
 const GlobalFilter: React.FC<GlobalFilterProps> = ({
   preGlobalFilteredRows,
   globalFilter,
@@ -18,9 +22,12 @@ const GlobalFilter: React.FC<GlobalFilterProps> = ({
   inputProps
 }) => {
   const [value, setValue] = React.useState(globalFilter)
-  const onChange = useAsyncDebounce(value => { //QUESTION! -what is async debounce
+  const onChange = useAsyncDebounce(value => { 
     setGlobalFilter(value || undefined)
-  }, 200) //QUESTION! - is 200 a delay from the typing input? thats cool...
+  }, 200) 
+  
+  //-is 200 a delay for the typing input?
+  //-what is async debounce
 
   return (
     <SearchInput

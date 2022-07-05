@@ -77,8 +77,13 @@ export default class CurrentUserStore {
         try {
             const result = await agent.Account.current();
             runInAction(() => 
-                this.currentUser = result.data
+                this.currentUser = result.data          
             );
+
+            //store.commonStore.setPageSize(result.data.pageSizeDefault); //this doesnt trigger the change?
+            //store.commonStore.pageSizeDefault = result.data.pageSizeDefault; //why doesnt this work?
+            //store.commonStore.darkMode = result.data.darkModeDefault;
+
             return this.currentUser;
         } catch (error) {
             console.log(error);
@@ -107,8 +112,8 @@ export default class CurrentUserStore {
         try {
             const response = await agent.Account.updatePreferences(updatePreferencesRequest);
 
-            store.commonStore.darkMode = updatePreferencesRequest.darkModeDefault;
-            store.commonStore.pageSizeDefault = updatePreferencesRequest.pageSizeDefault;
+            store.commonStore.darkMode = updatePreferencesRequest.darkModeDefault; //this works
+            store.commonStore.pageSizeDefault = updatePreferencesRequest.pageSizeDefault; //this doesnt
 
             return response
         } catch (error) {

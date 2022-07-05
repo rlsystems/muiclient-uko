@@ -1,7 +1,7 @@
 import { RoleID } from "app/models/user";
-import Icons from "../icons/sidebar";
+import Icons from "../../icons/sidebar";
 
-const sideBarNavList = [
+const navList = [
 
   {
     title: "UI Component Samples",
@@ -34,4 +34,4 @@ const sideBarNavList = [
 
 ];
 
-export default sideBarNavList;
+export default navList;

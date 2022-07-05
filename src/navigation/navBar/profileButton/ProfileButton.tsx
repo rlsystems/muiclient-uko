@@ -1,10 +1,10 @@
 import { Badge, Box, ButtonBase, Divider, styled } from "@mui/material";
-import FlexBox from "../../components/FlexBox";
-import { H6, Small, Tiny } from "../../components/Typography";
-import NanoAvatar from "../../components/NanoAvatar";
+import FlexBox from "../../../components/FlexBox";
+import { H6, Small, Tiny } from "../../../components/Typography";
+import NanoAvatar from "../../../components/NanoAvatar";
 import { FC, Fragment, useRef, useState } from "react";
-import PopoverMenu from "../../components/PopoverMenu";
-import { useStore } from "../../app/stores/store";
+import PopoverMenu from "../../../components/PopoverMenu";
+import { useStore } from "../../../app/stores/store";
 import { useHistory } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 // styled components

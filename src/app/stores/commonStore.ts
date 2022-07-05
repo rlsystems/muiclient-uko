@@ -1,6 +1,7 @@
 import { Tenant } from "app/models/tenant";
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { ServerError } from "../models/serverError";
+import { store } from "./store";
 
 export default class CommonStore {
     error: ServerError | null = null;
@@ -9,8 +10,10 @@ export default class CommonStore {
     hasSubdomain: boolean = false; //set upon application loading
     title: string | null = '';
     darkMode: boolean = true;
-    pageSizeDefault: number = 5;
+    pageSizeDefault: number = 10;
     appLoaded:boolean = false;
+    //store.currentUserStore.currentUser?.pageSizeDefault || 5
+
 
     constructor() {
         makeAutoObservable(this);
@@ -57,6 +60,12 @@ export default class CommonStore {
     setAppLoaded = () => {
         runInAction(() => {
             this.appLoaded = true;
+        })
+    }
+
+    setPageSize = (size: number) => {
+        runInAction(() => {
+            this.pageSizeDefault = size;
         })
     }
 

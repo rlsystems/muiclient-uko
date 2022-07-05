@@ -14,7 +14,13 @@ const TenantColumnShape = [
       const { id } = row.original;
       return (
         <H6 color="text.disabled"
-        >{id}</H6>
+        >{id} {id == "root" && <Small
+          sx={{
+            color: "info.alternate",
+          }}
+        >
+          (You)
+        </Small>}</H6>
       );
     },
   },
@@ -24,11 +30,11 @@ const TenantColumnShape = [
     minWidth: 250,
     Cell: ({ row }: any) => {
 
-      const { name } = row.original;
+      const { name, id } = row.original;
       return (
         <H6 color="text.primary"
           sx={{ textTransform: "capitalize" }}
-        >{name}</H6>
+        >{name} </H6>
       );
     },
   },
@@ -58,7 +64,7 @@ const TenantColumnShape = [
       return (
         <>
           {id != "root" && <EditIconButton onClick={() => setOpenModal(true)} />}
-          {id == "root" && <Box sx={{height: "36px"}}/>}
+          {id == "root" && <Box sx={{ height: "36px" }} />}
 
           {openModal && <EditTenantModal
             open={openModal}

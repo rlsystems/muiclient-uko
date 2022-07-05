@@ -12,9 +12,7 @@ import {
   Select,
   Switch,
 } from "@mui/material";
-import {
-  TextFieldWrapper,
-} from "./StyledComponents";
+
 import FlexBox from "../../components/FlexBox";
 import LightTextField from "../../components/LightTextField";
 import { H1, H3, Paragraph, Small, Tiny } from "../../components/Typography";
@@ -27,7 +25,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { toast } from "react-toastify";
 import { KeyboardArrowDown } from "@mui/icons-material";
-import { StyledSelectInput } from "components/StyledComponent";
+import { StyledSelectInput, TextFieldWrapper } from "components/StyledComponent";
 
 const Login: FC = () => {
   const [error, setError] = useState("");
@@ -209,7 +207,7 @@ const Login: FC = () => {
             </Divider>
             <Box sx={{ mt: 1 }}>
               <Tiny display="block" color="text.disabled" fontWeight={500} textAlign="center">
-                In this demo, specify the tenant with the dropdown selection. You can use the Admin Credentials button to quickly populate the fields.
+                For the demo, specify the tenant with the dropdown. ASP Nano can resolve tenants by subdomain in real deployments. Click the Admin Credentials to quickly populate fields.
               </Tiny>
             </Box>
 
@@ -271,13 +269,13 @@ const Login: FC = () => {
         sx={{ marginTop: 2, padding: 2, width: "100%", maxWidth: 600, boxShadow: 1 }}
         severity="success"
         variant="outlined">
-        Root credentials: admin@root.com / Password123!
+        Root user: admin@root.com / Password123! (default password for all)
       </Alert>
       <Alert
         sx={{ marginTop: 2, padding: 2, width: "100%", maxWidth: 600, boxShadow: 1 }}
         severity="info"
         variant="outlined">
-        Sample data will reset every 6 hours
+        Sample data resets every 6 hours
       </Alert>
     </FlexBox>
   );

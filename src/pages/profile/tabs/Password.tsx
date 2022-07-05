@@ -54,7 +54,7 @@ const Password: FC = () => {
     handleChange(e);
     const newPassword = e.target.value;
     const passwordStrength = checkPasswordStrength(newPassword, {
-      checkFor: ['length', 'lowerCase', 'upperCase', 'number', 'specialCharacter']
+      checkFor: ['length', 'lowerCase', 'upperCase', 'number']
     }).strength
     setStrength(passwordStrength);
   }
@@ -89,7 +89,7 @@ const Password: FC = () => {
               sx={{ mt: 2, mb: 1 }}
               placeholder="Enter new password"
             />
-            <LinearProgress variant="determinate" value={strength} />
+            <LinearProgress variant="determinate" value={strength} color={ strength === 100 ? "success" : "error" } />
           </Grid>
           <Grid item xs={12} md={6}>
             <LightTextField
