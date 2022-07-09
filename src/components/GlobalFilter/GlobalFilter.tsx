@@ -12,7 +12,7 @@ export interface GlobalFilterProps {
 }
 
 
-//Table filter?
+//Move to react table folder 
 
 
 const GlobalFilter: React.FC<GlobalFilterProps> = ({
@@ -24,11 +24,9 @@ const GlobalFilter: React.FC<GlobalFilterProps> = ({
   const [value, setValue] = React.useState(globalFilter)
   const onChange = useAsyncDebounce(value => { 
     setGlobalFilter(value || undefined)
-  }, 200) 
+  }, 200) // 200 is the delay for the user input
   
-  //-is 200 a delay for the typing input?
-  //-what is async debounce
-
+  
   return (
     <SearchInput
       value={value || ''}

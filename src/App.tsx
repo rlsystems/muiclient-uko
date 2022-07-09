@@ -29,7 +29,8 @@ function App() {
   //Get the current user (otherwise reloading browser will clear mobx)
   useEffect(() => {
     if (commonStore.token) {
-      currentUserStore.getCurrentUser().finally(() => commonStore.setAppLoaded())
+      currentUserStore.getCurrentUser().finally(() => commonStore.setAppLoaded());
+
     } else {
       commonStore.setAppLoaded();
     }

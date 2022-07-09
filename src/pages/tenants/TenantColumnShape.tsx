@@ -61,10 +61,10 @@ const TenantColumnShape = [
     Cell: ({ row }: any) => {
       const [openModal, setOpenModal] = useState(false);
       const { id } = row.original;
+
       return (
         <>
-          {id != "root" && <EditIconButton onClick={() => setOpenModal(true)} />}
-          {id == "root" && <Box sx={{ height: "36px" }} />}
+          {id != "root" ? <EditIconButton onClick={() => setOpenModal(true)} /> : <Box sx={{ height: "36px" }} />}
 
           {openModal && <EditTenantModal
             open={openModal}

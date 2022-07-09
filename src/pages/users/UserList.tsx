@@ -19,7 +19,7 @@ import { H5, H6 } from "components/Typography";
 const UserList: FC = () => {
   const { appUserStore, commonStore } = useStore();
   const { loadAppUsers, appUserRegistry, appUsersSorted, loadingInitial } = appUserStore;
-  const { setTitle } = commonStore;
+  const { setTitle, pageSizeDefault } = commonStore;
   const [openModal, setOpenModal] = useState(false);
 
   const data: any = useMemo(() => appUsersSorted, [appUsersSorted]);
@@ -27,7 +27,7 @@ const UserList: FC = () => {
 
   const initialState = useMemo(() => ({
     pageIndex: paginationInitialState.queryPageIndex,
-    pageSize: paginationInitialState.queryPageSize
+    pageSize: pageSizeDefault
   }), [])
 
   const {

@@ -17,7 +17,7 @@ export default class CommonStore {
 
     constructor() {
         makeAutoObservable(this);
-
+        
         reaction( //Reaction -- > doesnt run when store is initialized, only runs when there is a change to 'token'
             () => this.token,
             token => {

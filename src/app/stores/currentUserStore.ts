@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import agent from "../api/agent";
 import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, CurrentUser, User } from "../models/user";
 import { UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
@@ -18,7 +18,15 @@ export default class CurrentUserStore {
     loadingInitial: boolean = false;
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
+
+        reaction(() => this.currentUser, (currentUser) => {
+            if(currentUser) {
+                store.commonStore.setPageSize(currentUser.pageSizeDefault);
+                store.commonStore.setDarkTheme(currentUser.darkModeDefault);
+            }      
+        });
+
     }
 
     get isLoggedIn() {
@@ -28,6 +36,7 @@ export default class CurrentUserStore {
     login = async (creds: UserLogin) => {
 
         store.commonStore.setTenant(creds.tenant);
+
         try {
             const response = await agent.Account.login(creds);
             if(!response.succeeded) throw new Error(response.messages[0]);
@@ -80,9 +89,7 @@ export default class CurrentUserStore {
                 this.currentUser = result.data          
             );
 
-            //store.commonStore.setPageSize(result.data.pageSizeDefault); //this doesnt trigger the change?
-            //store.commonStore.pageSizeDefault = result.data.pageSizeDefault; //why doesnt this work?
-            //store.commonStore.darkMode = result.data.darkModeDefault;
+            //this will trigger the reactions
 
             return this.currentUser;
         } catch (error) {

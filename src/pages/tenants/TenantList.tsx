@@ -20,13 +20,13 @@ import { H6 } from "components/Typography";
 const TenantList: FC = () => {
   const { tenantStore, commonStore } = useStore();
   const { loadTenants, tenantRegistry, tenantsSorted, loadingInitial } = tenantStore;
-  const { setTitle } = commonStore;
+  const { setTitle, pageSizeDefault } = commonStore;
   const data: Tenant[] = useMemo(() => tenantsSorted, [tenantsSorted]);
   const columns: any = useMemo(() => TenantColumnShape, [TenantColumnShape]);
 
   const initialState = useMemo(() => ({
     pageIndex: paginationInitialState.queryPageIndex,
-    pageSize: paginationInitialState.queryPageSize
+    pageSize: pageSizeDefault
   }), [])
 
   const {

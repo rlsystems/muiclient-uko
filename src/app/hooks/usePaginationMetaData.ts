@@ -3,9 +3,13 @@ import React from 'react'
 
 export const paginationInitialState = {
   queryPageIndex: 0,
-  queryPageSize: store.commonStore.pageSizeDefault,
+  queryPageSize: 10,
   totalPageCount: 0,
 };
+
+//This is like a mobx mini-store
+//mobx stores are global, and singleton
+//this store is like transient or scoped everytime a table is instantiated. 
 
 export type PaginationStateType = typeof paginationInitialState;
 export type PaginationDispatchType = React.Dispatch<{
@@ -44,9 +48,9 @@ const reducer = (state: PaginationStateType, { type, payload }: {
   }
 };
 
-const usePaginationMetaData = (): [PaginationStateType, PaginationDispatchType] => {
+const usePaginationMetaData = (pageSizeDefault: number = 10): [PaginationStateType, PaginationDispatchType] => {
   return (
-    React.useReducer(reducer, paginationInitialState)
+    React.useReducer(reducer, {...paginationInitialState, queryPageSize: pageSizeDefault}) //reducer hook
   )
 }
 
