@@ -58,7 +58,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
         firstName: Yup.string().required('The first name is required'),
         lastName: Yup.string().required('The last name is required'),
         email: Yup.string().required().email(),
-        phoneNumber: Yup.string().notRequired()
+        //phoneNumber: Yup.string().notRequired()
     })
 
 

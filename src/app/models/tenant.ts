@@ -12,18 +12,3 @@ export interface CreateTenantRequest {
     password: string;
 }
 
-// export interface UpdateTenantRequest {
-//     id: string;
-//     isActive: boolean;
-//     name: string;
-// }
-
-
-
-// export interface RegisterTenantFormValues {
-//     id: string;
-//     name: string;
-//     key: string;
-//     adminEmail: string;
-//     connectionString: string;
-// }

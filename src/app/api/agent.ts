@@ -124,7 +124,6 @@ const Tenants = {
     details: (id: string) => requests.get<Result<Tenant>>(`/tenants/${id}`),
     create: (tenant: CreateTenantRequest) => requests.post<Result<Tenant>>(`/tenants`, tenant),
     update: (tenant: Tenant) => requests.put<Result<Tenant>>(`/tenants/`, tenant), //include id in body
-
 }
 
 const agent = {

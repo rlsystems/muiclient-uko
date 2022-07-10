@@ -34,8 +34,8 @@ type ServerTableProps<T> = {
   isLoading?: boolean
 }
 
-//Record is a utility type in TS
-//reading generics 
+// Record is a generic utility type in TS
+
 const ServerTable = <T extends Record<string, any>>({
   data,
   columns,
@@ -48,9 +48,7 @@ const ServerTable = <T extends Record<string, any>>({
     paginationDispatch({ type: PAGE_CHANGED, payload: newPage - 1 }); //build in dispatch - this is a hook
   }
 
-  //this could be a mobx store
-  //-- challenge
-
+  
   const handleChangeRowsPerPage = async (event: SelectChangeEvent<number>) => {
     if (!paginationDispatch) return
     const newPageSize = Number(event.target.value)
@@ -80,8 +78,8 @@ const ServerTable = <T extends Record<string, any>>({
 
           {!isLoading &&
             <TableBody>
-              {data.map((row: T, index) => {
-                return (
+              {data.map((row: T, index) => {               
+                return (          
                   <StyledTableRow key={index}>
                     {columns.map((cell, index) => (
                       <StyledTableRowCell key={index}>

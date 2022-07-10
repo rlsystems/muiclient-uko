@@ -92,8 +92,10 @@ const UserColumnShape = [
 
         <>
 
-          {id != currentUser?.id &&
+          {id != currentUser?.id ?
             <EditIconButton onClick={() => setOpenModal(true)} />
+            :
+            "N/A"
           }
 
           {openModal && <EditUserModal

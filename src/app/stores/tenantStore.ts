@@ -90,9 +90,9 @@ export default class TenantStore {
                 if(response.succeeded){
 
                     var newtenant: Tenant = {
-                        id: createTenantRequest.id,
-                        name: createTenantRequest.name,
-                        isActive: true
+                        id: response.data.id,
+                        name: response.data.name,
+                        isActive: true,
                     }
 
                     this.tenantRegistry.set(newtenant.id, newtenant); 
@@ -125,7 +125,7 @@ export default class TenantStore {
                     var updatedTenant: Tenant = {
                         id: tenant.id,
                         name: tenant.name,
-                        isActive: tenant.isActive
+                        isActive: tenant.isActive,
                     }
 
                     this.tenantRegistry.set(updatedTenant.id, updatedTenant); 
@@ -144,6 +144,6 @@ export default class TenantStore {
         }
     }
 
-
+   
 
 }

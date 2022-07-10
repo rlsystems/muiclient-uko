@@ -72,10 +72,9 @@ const Login: FC = () => {
 
   //Admin Credentials button
   const handleAdminCredentials = () => {
-    populateField("email", "admin@root.com");
+    populateField("email", "admin@email.com");
     populateField("password", "Password123!");
     populateField("tenant", "root");
-    //trigger change?
   }
 
   //To prepopulate a field it must be touched
@@ -160,7 +159,7 @@ const Login: FC = () => {
               <FormControlLabel
                 control={
                   <Switch
-                    name="remember"                
+                    name="remember"
                   />
                 }
                 label="Remember Me"
@@ -211,7 +210,7 @@ const Login: FC = () => {
               </Tiny>
             </Box>
 
-            <Box sx={{ display: "flex", alignItems: {xs: "center", sm: "flex-end"}, justifyContent: "space-between", flexDirection: {xs: "column", sm: "row"}, paddingTop: {xs: "20px", sm: "0px"} }}>
+            <Box sx={{ display: "flex", alignItems: { xs: "center", sm: "flex-end" }, justifyContent: "space-between", flexDirection: { xs: "column", sm: "row" }, paddingTop: { xs: "20px", sm: "0px" } }}>
               <Button
                 onClick={() => handleAdminCredentials()}
                 color="primary"
@@ -229,7 +228,7 @@ const Login: FC = () => {
                   {loadingInitial &&
 
                     <Box display="flex" alignItems={"center"} width="100%" height={"50px"}>
-                      <CircularProgress size={30}  />
+                      <CircularProgress size={30} />
                     </Box>
                   }
 
@@ -269,7 +268,7 @@ const Login: FC = () => {
         sx={{ marginTop: 2, padding: 2, width: "100%", maxWidth: 600, boxShadow: 1 }}
         severity="success"
         variant="outlined">
-        Root user: admin@root.com / Password123! (default password for all)
+        Default credentials: admin@email.com / Password123!
       </Alert>
       <Alert
         sx={{ marginTop: 2, padding: 2, width: "100%", maxWidth: 600, boxShadow: 1 }}

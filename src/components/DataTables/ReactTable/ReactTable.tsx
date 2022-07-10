@@ -98,6 +98,7 @@ const ReactTable: FC<ReactTableProps> = (props) => {
             <TableBody {...getTableBodyProps()}>
             {page.map((row: any) => {
               prepareRow(row);
+              
               return (
                 <StyledTableRow
                   {...row.getRowProps()}

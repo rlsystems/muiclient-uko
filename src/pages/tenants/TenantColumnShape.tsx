@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { H6, Small } from "components/Typography";
 import EditIconButton from "components/EditIconButton";
+
 import EditTenantModal from "./EditTenantModal";
 import { Box } from "@mui/material";
+import LoginIconButton from "components/LoginIconButton";
+import FlexBox from "components/FlexBox";
 
 const TenantColumnShape = [
   {
@@ -62,10 +65,11 @@ const TenantColumnShape = [
       const [openModal, setOpenModal] = useState(false);
       const { id } = row.original;
 
+
       return (
         <>
-          {id != "root" ? <EditIconButton onClick={() => setOpenModal(true)} /> : <Box sx={{ height: "36px" }} />}
-
+          {id != "root" ?<EditIconButton onClick={() => setOpenModal(true)} /> : <Box display={'flex'} justifyContent={'center'} alignItems={'center'} sx={{ height: "36px" }}>N/A</Box>}
+          
           {openModal && <EditTenantModal
             open={openModal}
             data={row.original}
