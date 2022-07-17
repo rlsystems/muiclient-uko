@@ -33,7 +33,8 @@ export default class CurrentUserStore {
         try {
             const response = await agent.Account.login(creds);
             if(!response.succeeded) throw new Error(response.messages[0]);
-            store.commonStore.setToken(response.data.token);
+
+            store.commonStore.setToken(response.data.token); 
             const user = await agent.Account.current();
             runInAction(() => 
                 this.currentUser = user.data          
@@ -68,6 +69,7 @@ export default class CurrentUserStore {
     getCurrentUser = async () => {
         try {
             const result = await agent.Account.current();
+            
             runInAction(() => 
                 this.currentUser = result.data          
             );

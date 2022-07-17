@@ -88,14 +88,12 @@ const Login: FC = () => {
   }, [loadTenants])
 
 
-
   return (
     <FlexBox
       sx={{
         alignItems: "center",
         flexDirection: "column",
         justifyContent: "center",
-        //height: { sm: "100%" },
         paddingTop: { xs: "0px", sm: "50px" }
       }}
     >
