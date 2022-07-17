@@ -1,4 +1,4 @@
-import { RoleID } from "app/models/user";
+import { Roles } from "app/models/roles";
 import Icons from "../../icons/sidebar";
 
 const navList = [
@@ -21,14 +21,14 @@ const navList = [
     title: "Users",
     Icon: Icons.UserProfileIcon,
     path: "/users",
-    roles: [RoleID.root, RoleID.admin],
+    roles: [Roles.root, Roles.admin],
     topDivider: true
   },
   {
     title: "Tenants",
     Icon: Icons.AccountSettingsIcon,
     path: "/tenants",
-    roles: [RoleID.root],
+    roles: [Roles.root],
     topDivider: false
   }
 

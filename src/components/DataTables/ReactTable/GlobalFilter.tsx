@@ -1,7 +1,7 @@
 import React from "react";
 import { useAsyncDebounce, UseGlobalFiltersInstanceProps, UseGlobalFiltersState } from "react-table"
 
-import SearchInput from "components/SearchInput";
+import SearchInput from "components/formInput/SearchInput";
 import { InputProps } from "@mui/material";
 
 export interface GlobalFilterProps {
@@ -12,11 +12,7 @@ export interface GlobalFilterProps {
 }
 
 
-//Move to react table folder 
-
-
 const GlobalFilter: React.FC<GlobalFilterProps> = ({
-  preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
   inputProps

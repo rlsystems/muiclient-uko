@@ -4,8 +4,7 @@ import EditIconButton from "components/EditIconButton";
 
 import EditTenantModal from "./EditTenantModal";
 import { Box } from "@mui/material";
-import LoginIconButton from "components/LoginIconButton";
-import FlexBox from "components/FlexBox";
+
 
 const TenantColumnShape = [
   {

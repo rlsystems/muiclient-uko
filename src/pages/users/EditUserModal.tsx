@@ -11,7 +11,7 @@ import {
     RadioGroup,
     styled,
 } from "@mui/material";
-import DarkTextField from "../../components/DarkTextField";
+import {DarkTextField} from "../../components/formInput/InputsDark";
 import FlexBox from "../../components/FlexBox";
 import { H2, H6 } from "../../components/Typography";
 import { useFormik } from "formik";
@@ -58,7 +58,6 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
         firstName: Yup.string().required('The first name is required'),
         lastName: Yup.string().required('The last name is required'),
         email: Yup.string().required().email(),
-        //phoneNumber: Yup.string().notRequired()
     })
 
 

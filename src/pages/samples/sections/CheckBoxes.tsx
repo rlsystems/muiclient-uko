@@ -2,21 +2,15 @@ import {
     Box,
     Card,
     Checkbox,
-    FormControlLabel,
-    styled,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
+import StyledFormControlLabel from "components/StyledFormControlLabel";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
 
 
-const StyledFormControl = styled(FormControlLabel)(() => ({
-    "& .MuiTypography-root": {
-        fontWeight: 600,
-    },
-}));
 
 const CheckBoxes: FC = () => {
     return (
@@ -35,8 +29,8 @@ const CheckBoxes: FC = () => {
             <Box marginTop={2}>
 
                 {["One", "Two", "Three", "Four"].map((item) => (
-                    <StyledFormControl
-                        key={item}
+                    <StyledFormControlLabel
+                        key={item}                    
                         value={item}
                         label={item}
                         control={<Checkbox />}

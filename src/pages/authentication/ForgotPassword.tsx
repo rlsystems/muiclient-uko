@@ -1,8 +1,8 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Card, FormHelperText } from "@mui/material";
+import { Box, Card, FormHelperText } from "@mui/material";
 import { useStore } from "app/stores/store";
 import FlexBox from "components/FlexBox";
-import LightTextField from "components/LightTextField";
+import { LightTextField } from "components/formInput/InputsLight";
 import { H1, Small } from "components/Typography";
 import { useFormik } from "formik";
 import { FC, useState } from "react";

@@ -20,10 +20,10 @@ import {
 } from "react-table";
 import ScrollBar from "simplebar-react";
 
-import { CustomSelectInput } from "components/common";
+import { PaginationSelectInput } from "components/formInput/InputsLight";
 import FlexBox from "components/FlexBox";
 import { H6, H5 } from "components/Typography";
-import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/DataTables/DataTable.styled";
+import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/dataTables/DataTable.styled";
 
 interface ReactTableProps {
   getTableProps: () => TableProps,
@@ -126,7 +126,7 @@ const ReactTable: FC<ReactTableProps> = (props) => {
           <Select
             value={pageSize}
             onChange={handleChangeRowsPerPage}
-            input={<CustomSelectInput />}
+            input={<PaginationSelectInput />}
           >
             {[5, 10, 15, 20, 25, 50].map(option =>
                 <MenuItem key={option} value={option}>

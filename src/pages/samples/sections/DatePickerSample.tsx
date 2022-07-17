@@ -1,19 +1,17 @@
+import React from "react";
+import { FC } from "react";
+import { NavLink } from "react-router-dom";
 import {
     Card,
     Grid,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
-import FlexBox from "components/FlexBox";
-import LightTextField from "components/LightTextField";
-import { H5, Small } from "components/Typography";
-import React from "react";
-import { FC } from "react";
-import { NavLink } from "react-router-dom";
-
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import DarkTextField from "components/DarkTextField";
 
-
+import FlexBox from "components/FlexBox";
+import { H5, Small } from "components/Typography";
+import {DarkTextField} from "components/formInput/InputsDark";
+import {LightTextField} from "components/formInput/InputsLight";
 
 
 const DatePickerSample: FC = () => {
@@ -24,7 +22,6 @@ const DatePickerSample: FC = () => {
     const handleChange = (newValue: Date | null) => {
         setValue(newValue);
     };
-
 
     return (
         <Card sx={{ padding: 3}}>
@@ -37,8 +34,6 @@ const DatePickerSample: FC = () => {
             <Small color="text.disabled">
                 Full feature date picker for desktop and mobile, with time and date range selection
             </Small>
-
-
 
             <Grid container spacing={4} marginTop={.5}>
                 <Grid item xs={12} sm={4}>
@@ -79,11 +74,6 @@ const DatePickerSample: FC = () => {
 
                 </Grid>
             </Grid>
-
-
-
-
-
         </Card >
     );
 };

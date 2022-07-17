@@ -1,14 +1,13 @@
-import { Box, Button, Card, Grid, LinearProgress } from "@mui/material";
-import LightTextField from "../../../components/LightTextField";
+import { Box, Card, Grid, LinearProgress } from "@mui/material";
+import { LightTextField } from "../../../components/formInput/InputsLight";
 import { H5, H6, Tiny } from "../../../components/Typography";
 import React, { FC, useState } from "react";
 import { useStore } from "app/stores/store";
-import { ChangePasswordRequest } from "app/models/user";
+import { ChangePasswordRequest } from "app/models/currentUser";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
-import FlexBox from "components/FlexBox";
 import checkPasswordStrength from "app/utils/checkPasswordStrength";
 
 const Password: FC = () => {

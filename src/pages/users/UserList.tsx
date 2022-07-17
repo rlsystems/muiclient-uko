@@ -5,10 +5,8 @@ import { observer } from "mobx-react-lite";
 import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
 
 import { useStore } from 'app/stores/store';
-import LoadingScreen from "components/LoadingScreen";
-import FlexBox from "components/FlexBox";
-import ReactTable from "components/DataTables/ReactTable/ReactTable";
-import GlobalFilter from "components/GlobalFilter/GlobalFilter";
+import ReactTable from "components/dataTables/reactTable/ReactTable";
+import GlobalFilter from "components/dataTables/reactTable/GlobalFilter";
 import RegisterUserModal from "./RegisterUserModal";
 import UserColumnShape from "./UserColumnShape";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";

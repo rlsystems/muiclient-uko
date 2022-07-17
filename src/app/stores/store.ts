@@ -2,7 +2,6 @@ import { createContext, useContext } from "react";
 
 import AppUserStore from "./appUserStore";
 import CommonStore from "./commonStore";
-import ModalStore from "./modalStore";
 import TenantStore from "./tenantStore";
 import CurrentUserStore from "./currentUserStore";
 import VenueStore from "./venueStore";
@@ -10,7 +9,6 @@ import VenueStore from "./venueStore";
 interface Store {
     commonStore: CommonStore;
     currentUserStore: CurrentUserStore;
-    modalStore: ModalStore;
     appUserStore: AppUserStore;
     tenantStore: TenantStore;
     venueStore: VenueStore
@@ -19,7 +17,6 @@ interface Store {
 export const store: Store = {
     commonStore: new CommonStore(),
     currentUserStore: new CurrentUserStore(),
-    modalStore: new ModalStore(),
     appUserStore: new AppUserStore(),
     tenantStore: new TenantStore(),
     venueStore: new VenueStore()

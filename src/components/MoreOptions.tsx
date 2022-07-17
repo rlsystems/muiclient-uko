@@ -4,6 +4,8 @@ import DeleteIcon from "icons/DeleteIcon";
 import PencilIcon from "icons/PencilIcon";
 import { Small } from "./Typography";
 
+// ie - Edit, Delete menu
+
 interface MoreOptionsProps {
   open?: boolean;
   anchorEl: HTMLElement | null;

@@ -11,7 +11,7 @@ import navList from "./navList";
 import { useHistory, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
-import { RoleID } from "app/models/user";
+import { Roles } from "app/models/roles";
 import { Fragment } from "react";
 
 // custom styled components
@@ -47,7 +47,7 @@ const SideBar = () => {
         </StyledListItemButton>
 
         <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>
-          {navList.filter(item => !item.roles || item.roles.includes(currentUserStore.currentUser?.roleId as RoleID)).map((nav, index) => (
+          {navList.filter(item => !item.roles || item.roles.includes(currentUserStore.currentUser?.roleId as Roles)).map((nav, index) => (
             <Fragment key={index}>
               {nav.topDivider && <Divider variant="middle" sx={{ marginBottom: "15px" }} />}
 

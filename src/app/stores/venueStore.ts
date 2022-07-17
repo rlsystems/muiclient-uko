@@ -2,7 +2,7 @@ import { action, makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Venue } from "../models/venue";
 import { SearchParams } from "../models/searchParams";
-import { PaginatedResult } from '../models/paginatedResult';
+import { PaginatedResult } from '../models/responseWrappers';
 
 export default class VenueStore {
 
@@ -18,7 +18,7 @@ export default class VenueStore {
 
 
     constructor() {
-        makeAutoObservable(this) //Mobx will do the above code by inference
+        makeAutoObservable(this) 
     }
 
 
@@ -29,13 +29,11 @@ export default class VenueStore {
     ) => {
         this.setLoadingInitial(true);
         try {
-
             const params: SearchParams = {
                 pageNumber,
                 pageSize,
                 keyword
             }
-            console.log('loading venues');
             const {data, ...metaData} = await agent.Venues.search(params); //get list of venues
             runInAction(() => {
                 this.venues = data;
@@ -52,7 +50,6 @@ export default class VenueStore {
     }
 
     loadVenue = async (id: string) => {
-        console.log('load venue')
         let venue = this.getVenue(id);
         if(venue) {
             this.selectedVenue = venue;
@@ -73,17 +70,17 @@ export default class VenueStore {
     }
 
 
-    //computed Property
+    // computed Property
     get venuesSorted() {
         return Array.from(this.venueRegistry.values());
     }
 
-    //helper methods -----------------
+    // helper methods -----------------
     private getVenue = (id: string) => {
         return this.venueRegistry.get(id);
     }
 
-    private setVenue = (venue: Venue) => { //this handles date formatting (for each object)
+    private setVenue = (venue: Venue) => { // here you can set formatting if necessary
         this.venueRegistry.set(venue.id, venue);
     }
 
@@ -97,8 +94,6 @@ export default class VenueStore {
     //---------------------------------
 
 
-
-
     createVenue = async (venue: Venue) => {
         this.createUpdateLoading = true;
 
@@ -109,8 +104,8 @@ export default class VenueStore {
             }
             let response = await agent.Venues.create(venueRequestBody);
             runInAction(async () => {
-                venue.id = String(response.data); //The GUID
-                this.venueRegistry.set(venue.id, venue); //add an brand to the Map Object
+                venue.id = String(response.data); // The GUID
+                this.venueRegistry.set(venue.id, venue); // add object in venue registy
 
                 this.selectedVenue = venue;
                 this.editMode = false;
@@ -131,9 +126,7 @@ export default class VenueStore {
         try {
             await agent.Venues.update(venue);
             runInAction(async () => {
-                //this.activities = this.activities.filter(a => a.id !== activity.id); //creates a new array excluding the selected one
-                //this.activities.push(activity) //add the updated activity in
-                this.venueRegistry.set(venue.id, venue); //Map Object set will update if ID same
+                this.venueRegistry.set(venue.id, venue); // update object in venue registy
                 this.selectedVenue = venue;
                 this.editMode = false;
                 this.createUpdateLoading = false;
@@ -152,9 +145,9 @@ export default class VenueStore {
         this.loading = true;
 
         try {
-            await agent.Venues.delete(id); //delete from DB
+            await agent.Venues.delete(id); // delete from database
             runInAction(async () => {
-                this.venueRegistry.delete(id); //delete from local memory
+                this.venueRegistry.delete(id); // delete from local memory
                 await this.loadVenues();
                 this.loading = false;
             })

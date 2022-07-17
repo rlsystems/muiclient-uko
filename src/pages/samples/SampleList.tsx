@@ -1,8 +1,8 @@
 import { FC, useEffect } from "react";
-import { Grid } from "@mui/material";
 import { observer } from "mobx-react-lite";
-
 import { useStore } from 'app/stores/store';
+import { Grid } from "@mui/material";
+
 import CheckBoxes from "./sections/CheckBoxes";
 import RadioButtons from "./sections/RadioButtons";
 import Buttons from "./sections/Buttons";

@@ -1,26 +1,28 @@
-//for login
+// Login
 export interface UserLogin {
     email: string;
     password: string;
-    tenant: string; //in production, would come from domain
+    tenant: string; // in production, would come from subdomain
 }
 
+//Token Response
 export interface TokenData {
     token: string;
     refreshToken: string;
     refreshTokenExpiryTime: string;
 }
 
-
+// Forgot Password
 export interface ForgotPasswordRequest {
     email: string;
-    tenant: string; //in production, would come from domain
+    tenant: string; 
 }
 
+// Reset Password
 export interface ResetPasswordRequest {
     email: string;
     token: string;
     password: string;
     confirmPassword: string;
-    tenant: string; //in production, would come from domain
+    tenant: string; 
 }

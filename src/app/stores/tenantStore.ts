@@ -1,6 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { SearchParams } from "../models/searchParams";
 import { CreateTenantRequest, Tenant } from "../models/tenant";
 
 
@@ -11,11 +10,11 @@ export default class TenantStore {
 
     editMode: boolean = false;
     loading: boolean = false;
-    loadingInitial: boolean = false; //name loadTenants instead -- and combine
+    loadingInitial: boolean = false; 
 
 
     constructor() {
-        makeAutoObservable(this) //Mobx will do the above code by inference
+        makeAutoObservable(this) 
     }
 
 
@@ -30,13 +29,11 @@ export default class TenantStore {
             })
             this.setLoadingInitial(false);
         } catch (error) {
-            console.log(error);
             this.setLoadingInitial(false);
         }
     }
 
     loadTenant = async (id: string) => {
-        console.log('load tenant')
         let tenant = this.getTenant(id);
         if(tenant) {
             this.selectedTenant = tenant;
@@ -58,12 +55,12 @@ export default class TenantStore {
 
    
 
-    //computed Property
+    // computed Property
     get tenantsSorted() {
         return Array.from(this.tenantRegistry.values());
     }
 
-    //helper methods -----------------
+    // helper methods -----------------
     private getTenant = (id: string) => {
         return this.tenantRegistry.get(id);
     }
@@ -76,7 +73,6 @@ export default class TenantStore {
         this.loadingInitial = state;
     }
     //---------------------------------
-
 
 
     

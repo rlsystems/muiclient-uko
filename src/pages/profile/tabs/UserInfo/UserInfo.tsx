@@ -1,25 +1,24 @@
 import { FC, useState } from "react";
 import {
+  Badge,
   Box,
-  Button,
   Card,
   Grid,
-  Stack,
+  styled,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
-import LightTextField from "components/LightTextField";
+import {LightTextField} from "components/formInput/InputsLight";
 import { H5, Tiny } from "components/Typography";
 import NanoAvatar from "components/NanoAvatar";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useStore } from "app/stores/store";
 import { observer } from "mobx-react-lite";
-import { UpdateProfileRequest } from "app/models/user";
+import { UpdateProfileRequest } from "app/models/currentUser";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
 import getBase64 from "app/utils/getBase64";
 import ImagePopover from "./ImagePopover";
-import { StyledBadge } from "components/StyledComponent";
 
 const UserInfo: FC = () => {
   const {
@@ -56,25 +55,11 @@ const UserInfo: FC = () => {
     onSubmit: async (values) => {
       setIsUpdating(true);
       await updateCurrentUser(values);
-      toast.success("Profile Updated"); //how does it know if updateCurrentUser is success or failure?
-      // The above toast is only called if updateCurrentUser runs without fail
-      // the await keyword runs the promise there, and terminates the whole async function if the promise doesn't get resolved
-      resetForm(); // is this how we make the save button go back to being disabled? (make the form untouched again), strange that isSubmitting doesnt work
-      // It's working now actually, you can check again if I'm missing something
+      toast.success("Profile Updated"); 
+      resetForm(); 
       setIsUpdating(false);
-
-      // Performing both the below operations right now, will move to more optimized way to doing it after looking into the problem a little
-      // First one updates the field for the current page
-      // Second one updates currentUser with the latest data on Mobx store
-      setUserFormValues(values); //full page pattern?
+      setUserFormValues(values); 
       await getCurrentUser();
-
-
-      //after selecting an image, the image should display in the UI (like even before its uploaded)
-      //check this link: https://medium.com/geekculture/how-to-upload-and-preview-images-in-react-js-4e22a903f3db
-
-      //create the popover for Add / Delete
-      //to handle delete, send deleteCurrentImage = true (this is already working on API)
 
     },
   });
@@ -90,6 +75,17 @@ const UserInfo: FC = () => {
     await updateCurrentUser({ ...values, deleteCurrentImage: true });
     setTempImage("");
   }
+
+
+ const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      width: 25,
+      height: 25,
+      borderRadius: "50%",
+      backgroundColor: theme.palette.primary.main,
+      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    },
+  }));
 
   return (
     <Card sx={{ padding: "1.5rem", pb: "4rem" }}>

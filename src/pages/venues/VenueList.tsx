@@ -1,20 +1,19 @@
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { Box, Button, Grid, Stack, styled, Tooltip } from "@mui/material";
+import { Box, Button, Grid, Stack, Tooltip } from "@mui/material";
 import { Add, Search } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
-
-
-import SearchInput from "components/SearchInput";
 import { useStore } from 'app/stores/store';
-import VenueColumnShape from "./VenueColumnShape";
-import { RoleID } from "app/models/user";
-import VenueModal from "./VenueModal";
-import { Venue } from "app/models/venue";
 import usePaginationMetaData, { TOTAL_PAGE_COUNT_CHANGED } from "app/hooks/usePaginationMetaData";
-import { H5, H6 } from "components/Typography";
-import { StyledLink } from "components/common";
-import ServerTable, { ColumnShape } from "components/DataTables/ServerTable/ServerTable";
 
+import { Roles } from "app/models/roles";
+import { Venue } from "app/models/venue";
+import { H5, H6 } from "components/Typography";
+
+import ServerTable, { ColumnShape } from "components/dataTables/serverTable/ServerTable";
+import ResultText from "components/dataTables/serverTable/ResultText";
+import SearchInput from "components/formInput/SearchInput";
+import VenueColumnShape from "./VenueColumnShape";
+import VenueModal from "./VenueModal";
 
 
 const VenueList = () => {
@@ -86,7 +85,7 @@ const VenueList = () => {
           </Stack>
         </Grid>
         <Grid item xs={12} md={6} display="flex" justifyContent={{ xs: "flex-start", md: "flex-end" }} >
-          {currentUserStore.currentUser?.roleId !== RoleID.basic ? (<Button
+          {currentUserStore.currentUser?.roleId !== Roles.basic ? (<Button
             endIcon={<Add />}
             variant="contained"
             onClick={() => setOpenModal(true)}
@@ -109,12 +108,12 @@ const VenueList = () => {
 
       {filteredQuery && (<Box my={2}>
         <H5 sx={{ color: "text.primary" }}>
-          Showing results for <strong>"{filteredQuery}"</strong>, <StyledLink
+          Showing results for <strong>"{filteredQuery}"</strong>, <ResultText
             italic
             color="#fff"
             onClick={handleClearFiltersButton}>
             Clear?
-          </StyledLink>
+          </ResultText>
         </H5>
       </Box>)}
 

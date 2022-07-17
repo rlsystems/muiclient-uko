@@ -13,8 +13,8 @@ import {
 import ScrollBar from "simplebar-react";
 
 import { PAGE_CHANGED, PAGE_SIZE_CHANGED, PaginationDispatchType, PaginationStateType } from "app/hooks/usePaginationMetaData";
-import { CustomSelectInput } from "components/common";
-import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/DataTables/DataTable.styled";
+import { PaginationSelectInput } from "components/formInput/InputsLight";
+import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/dataTables/DataTable.styled";
 
 export interface ColumnShape<T> {
   header: string
@@ -101,7 +101,7 @@ const ServerTable = <T extends Record<string, any>>({
         <Select
             value={paginationState?.queryPageSize || 0}
             onChange={handleChangeRowsPerPage}
-            input={<CustomSelectInput />}
+            input={<PaginationSelectInput />}
           >
             {[5, 10, 15, 20, 25, 50].map(option =>
               <MenuItem key={option} value={option}>

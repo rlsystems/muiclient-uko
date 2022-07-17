@@ -2,7 +2,7 @@ import {
     Card,
     Grid,
 } from "@mui/material";
-import DarkTextField from "components/DarkTextField";
+import {DarkTextField} from "components/formInput/InputsDark";
 import FlexBox from "components/FlexBox";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";

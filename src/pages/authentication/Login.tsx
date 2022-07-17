@@ -10,11 +10,12 @@ import {
   FormHelperText,
   MenuItem,
   Select,
+  styled,
   Switch,
 } from "@mui/material";
 
 import FlexBox from "../../components/FlexBox";
-import LightTextField from "../../components/LightTextField";
+import { StyledSelectInput, LightTextField } from "../../components/formInput/InputsLight";
 import { H1, H3, Paragraph, Small, Tiny } from "../../components/Typography";
 import { useFormik } from "formik";
 
@@ -25,7 +26,6 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { toast } from "react-toastify";
 import { KeyboardArrowDown } from "@mui/icons-material";
-import { StyledSelectInput, TextFieldWrapper } from "components/StyledComponent";
 
 const Login: FC = () => {
   const [error, setError] = useState("");
@@ -281,3 +281,13 @@ const Login: FC = () => {
 };
 
 export default observer(Login);
+
+
+//Input fields layout
+const TextFieldWrapper = styled(Box)(({ theme }) => ({
+  width: "48%",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    marginTop: "0.5rem",
+  },
+}));

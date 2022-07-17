@@ -1,10 +1,10 @@
 import {
     Card,
-    FormControlLabel,
     Grid,
     Switch,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
+import StyledFormControlLabel from "components/StyledFormControlLabel";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
@@ -25,19 +25,19 @@ const Switches: FC = () => {
 
             <Grid container spacing={3} mt={1}>
                 <Grid item xs={12} sm={4}>
-                    <FormControlLabel
+                    <StyledFormControlLabel
                         label="Early release"
                         control={<Switch defaultChecked />}
                     />
                 </Grid>    
                 <Grid item xs={12} sm={4}>
-                    <FormControlLabel
+                    <StyledFormControlLabel
                         label="Bypass cache"
                         control={<Switch  defaultChecked={false} />}
                     />
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                    <FormControlLabel
+                    <StyledFormControlLabel
                         label="Notifications"
                         control={<Switch defaultChecked={true} />}
                         sx={{

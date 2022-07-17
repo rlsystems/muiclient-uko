@@ -1,9 +1,9 @@
 import { InputBase, InputBaseProps, styled } from "@mui/material";
-import SearchIcon from "../icons/SearchIcon";
+import SearchIcon from "../../icons/SearchIcon";
 import { FC } from "react";
 
-// styled component
-const StyledInputBase = styled(InputBase)(({ theme }) => ({ //QUESTION! - what is input base its different than a regular input?
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({ 
   height: 45,
   fontSize: 13,
   width: "100%",
@@ -26,7 +26,7 @@ const SearchInput: FC<InputBaseProps> = (props) => {
   return (
     <StyledInputBase
       {...props} 
-      startAdornment={ //icon and start or end of input (MUI) 
+      startAdornment={ // start input with icon
         <SearchIcon
           sx={{
             fontSize: 16,

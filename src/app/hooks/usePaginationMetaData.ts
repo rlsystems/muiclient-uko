@@ -9,7 +9,7 @@ export const paginationInitialState = {
 
 //This is like a mobx mini-store
 //mobx stores are global, and singleton
-//this store is like transient or scoped everytime a table is instantiated. 
+//this store is like a transient or scoped class that any table can use. 
 
 export type PaginationStateType = typeof paginationInitialState;
 export type PaginationDispatchType = React.Dispatch<{
@@ -50,7 +50,7 @@ const reducer = (state: PaginationStateType, { type, payload }: {
 
 const usePaginationMetaData = (pageSizeDefault: number = 10): [PaginationStateType, PaginationDispatchType] => {
   return (
-    React.useReducer(reducer, {...paginationInitialState, queryPageSize: pageSizeDefault}) //reducer hook
+    React.useReducer(reducer, {...paginationInitialState, queryPageSize: pageSizeDefault}) // reducer hook
   )
 }
 

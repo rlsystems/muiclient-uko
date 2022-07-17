@@ -1,21 +1,12 @@
 import {
-    Box,
     Card,
-    Checkbox,
-    Divider,
-    FormControlLabel,
     Grid,
-    styled,
-    Switch,
-} from "@mui/material";
+} from "@mui/material"; 
 import FlexBox from "components/FlexBox";
-import LightTextField from "components/LightTextField";
-import { StyledFormControlLabel } from "components/StyledComponent";
+import {LightTextField} from "components/formInput/InputsLight";
 import { H5, Small } from "components/Typography";
-import { values } from "lodash";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
-import { Label } from "recharts";
 
 
 

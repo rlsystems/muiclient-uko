@@ -1,8 +1,8 @@
-import { RoleID } from 'app/models/user';
+import { Roles } from 'app/models/roles';
 import React, { Suspense, Fragment, lazy, LazyExoticComponent, FC } from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
-import AuthGuard from './components/authentication/AuthGuard';
-import GuestGuard from './components/authentication/GuestGuard';
+import AuthGuard from './components/authGuards/AuthGuard';
+import GuestGuard from './components/authGuards/GuestGuard';
 import AppLayout from './navigation/AppLayout';
 import LoadingScreen from './components/LoadingScreen';
 import {Helmet} from "react-helmet";
@@ -14,7 +14,7 @@ interface RouteType {
   routes?: RouteType[];
   exact?: boolean;
   path?: string;
-  roles?: RoleID[];
+  roles?: Roles[];
   title?: string;
 }
 
@@ -155,7 +155,7 @@ const routes: RouteType[] = [
         path: '/users',
         component: UserListPage,
         guard: AuthGuard,
-        roles: [RoleID.root, RoleID.admin],
+        roles: [Roles.root, Roles.admin],
         title: `${appName} | User Administration`
       },
       {
@@ -163,7 +163,7 @@ const routes: RouteType[] = [
         path: '/tenants',
         component: TenantListPage,
         guard: AuthGuard,
-        roles: [RoleID.root],
+        roles: [Roles.root],
         title: `${appName} | Tenant Administration`
       },
       {

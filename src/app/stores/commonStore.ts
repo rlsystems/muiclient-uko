@@ -1,24 +1,21 @@
-import { Tenant } from "app/models/tenant";
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { ServerError } from "../models/serverError";
-import { store } from "./store";
 
 export default class CommonStore {
     error: ServerError | null = null;
     token: string | null = window.localStorage.getItem('jwt');
     tenant: string | null = '';
-    hasSubdomain: boolean = false; //set upon application loading
+    hasSubdomain: boolean = false; // set upon application loading
     title: string | null = '';
     darkMode: boolean = true;
     pageSizeDefault: number = 10;
     appLoaded:boolean = false;
-    //store.currentUserStore.currentUser?.pageSizeDefault || 5
 
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this); // let MobX auto create interfaces
         
-        reaction( //Reaction -- > doesnt run when store is initialized, only runs when there is a change to 'token'
+        reaction( // reaction doesnt run when store is initialized, only runs when there is a change to 'token'
             () => this.token,
             token => {
                 if(token){
@@ -36,10 +33,7 @@ export default class CommonStore {
         })
     }
 
-
-
-    setToken = (token: string | null) => {
-        //if(token) window.localStorage.setItem('jwt', token); //set to browser local storage --> now taken care of by the reaction
+    setToken = (token: string | null) => {      
         runInAction(() => {
             this.token = token;
         })

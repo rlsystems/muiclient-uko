@@ -7,7 +7,9 @@ import {
     Select,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
-import { DarkMenuItem, DarkStyledSelectInput, StyledSelectInput } from "components/StyledComponent";
+import { StyledSelectInput } from "components/formInput/InputsLight";
+import { DarkMenuItem, DarkStyledSelectInput } from "components/formInput/InputsDark";
+
 import { H5, Small } from "components/Typography";
 import { FC, useState } from "react";
 import { NavLink } from "react-router-dom";

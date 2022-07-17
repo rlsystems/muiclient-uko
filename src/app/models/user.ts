@@ -1,26 +1,4 @@
-export enum RoleID  {
-    basic = "basic",
-    editor = "editor",
-    admin = "admin",
-    root = "root"
-}
-
-
-//Profile 
-export interface CurrentUser {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    isActive: boolean; //remove
-    roleId: string;
-    imageUrl: string;
-    darkModeDefault: boolean;
-    pageSizeDefault: number;
-}
-
-//AppUser share this class
+// User
 export interface User {
     id: string;
     firstName: string;
@@ -32,7 +10,7 @@ export interface User {
     imageUrl: string;
 }
 
-//Admin Create New User
+// Create new user
 export interface RegisterUserRequest {
     id: string;
     firstName: string;
@@ -42,30 +20,5 @@ export interface RegisterUserRequest {
     confirmPassword: string;
     phoneNumber: string;
     roleId: string;
-}
-
-//Update your own profile (includes image upload, excludes role and active)
-export interface UpdateProfileRequest {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    imageFile?: Blob;
-    imageUrl: string;
-    deleteCurrentImage: boolean;
-}
-
-//Update your own preferences
-export interface UpdatePreferencesRequest {
-    darkModeDefault: boolean;
-    pageSizeDefault: number;
-}
-
-//Update your own password
-export interface ChangePasswordRequest {
-    password: string;
-    newPassword: string;
-    confirmNewPassword: string;
 }
 

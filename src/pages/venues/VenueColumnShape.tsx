@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { H6 } from "components/Typography";
 import { useStore } from "app/stores/store";
-import { RoleID } from "app/models/user";
+import { Roles } from "app/models/roles";
 import { IconButton, Tooltip } from "@mui/material";
 import MoreOptions from "components/MoreOptions";
-import { StyledDisabledBox } from "components/common";
 import { MoreVert } from "@mui/icons-material";
 import VenueModal from './VenueModal'
 import { Venue } from "app/models/venue";
-import { ColumnShape } from "components/DataTables/ServerTable/ServerTable";
+import { ColumnShape } from "components/dataTables/serverTable/ServerTable";
 
 const VenueColumnShape: ColumnShape<Venue>[] = [
   {
@@ -60,14 +59,14 @@ const VenueColumnShape: ColumnShape<Venue>[] = [
       }
 
       return <React.Fragment>
-        {currentUserStore.currentUser?.roleId !== RoleID.basic
+        {currentUserStore.currentUser?.roleId !== Roles.basic
           ? <IconButton onClick={handleMenuOpen}>
             <MoreVert  />
           </IconButton>
           : <Tooltip title="Basic user cannot use this feature">
-            <StyledDisabledBox>
+            <IconButton disabled>
               <MoreVert color="disabled" />
-            </StyledDisabledBox>
+            </IconButton>
           </Tooltip>}
           <MoreOptions
             anchorEl={anchorEl}

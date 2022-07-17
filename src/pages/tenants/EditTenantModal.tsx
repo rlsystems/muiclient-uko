@@ -9,7 +9,7 @@ import {
     Modal,
     styled,
 } from "@mui/material";
-import DarkTextField from "../../components/DarkTextField";
+import {DarkTextField} from "../../components/formInput/InputsDark";
 import FlexBox from "../../components/FlexBox";
 import { H2, H6 } from "../../components/Typography";
 import { useFormik } from "formik";

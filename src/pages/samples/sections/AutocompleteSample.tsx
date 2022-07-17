@@ -1,18 +1,30 @@
-import { Clear, KeyboardArrowDown } from "@mui/icons-material";
+import { Clear } from "@mui/icons-material";
 import {
     Autocomplete,
     Card,
+    Chip,
     Grid,
-
+    styled,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
-import LightTextField from "components/LightTextField";
-import { StyledChip } from "components/StyledComponent";
+import { LightTextField } from "components/formInput/InputsLight";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
 
+
+const StyledChip = styled(Chip)(({ theme }) => ({
+    fontSize: 12,
+    fontWeight: 500,
+    color: theme.palette.text.disabled,
+    backgroundColor:
+      theme.palette.mode === "light"
+        ? theme.palette.text.secondary
+        : theme.palette.divider,
+    "& .MuiSvgIcon-root": { fontSize: 18 },
+  }));
+  
 
 
 const AutocompleteSample: FC = () => {

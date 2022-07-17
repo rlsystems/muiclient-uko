@@ -1,23 +1,17 @@
 import {
     Box,
     Card,
-
-    FormControlLabel,
     Radio,
     RadioGroup,
-    styled,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
+import StyledFormControlLabel from "components/StyledFormControlLabel";
 import { H5, Small } from "components/Typography";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
 
-const StyledFormControl = styled(FormControlLabel)(() => ({
-    "& .MuiTypography-root": {
-        fontWeight: 600,
-    },
-}));
+
 
 
 const RadioButtons: FC = () => {
@@ -40,7 +34,7 @@ const RadioButtons: FC = () => {
 
                 >
                     {["Pending", "Processing", "Delivered"].map((item) => (
-                        <StyledFormControl
+                        <StyledFormControlLabel
                             key={item}
                             value={item}
                             label={item}

@@ -1,9 +1,9 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Card, FormHelperText, LinearProgress } from "@mui/material";
+import { Box, Card, FormHelperText, LinearProgress } from "@mui/material";
 import { useStore } from "app/stores/store";
 import checkPasswordStrength from "app/utils/checkPasswordStrength";
 import FlexBox from "components/FlexBox";
-import LightTextField from "components/LightTextField";
+import {LightTextField} from "components/formInput/InputsLight";
 import { H1, Small } from "components/Typography";
 import { useFormik } from "formik";
 import React, { FC, useState } from "react";

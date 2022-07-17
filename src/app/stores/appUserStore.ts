@@ -1,4 +1,3 @@
-import { SearchParams } from "app/models/searchParams";
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { RegisterUserRequest, User } from "../models/user";
@@ -18,17 +17,15 @@ export default class AppUserStore {
     
 
     constructor() {
-        makeAutoObservable(this) //Let Mobx auto create the interface for this class
+        makeAutoObservable(this) // Let Mobx auto create the interface for this class
     }
 
-
     
-    loadAppUsers = async () => { //triggered by dashboard load
+    loadAppUsers = async () => { // triggered by visiting user management view
         this.setLoadingInitial(true);
         try {
 
-
-            const result = await agent.Users.list(); //get list of app users
+            const result = await agent.Users.list(); // get list of app users
             
             result.data.forEach(user => {
                 this.setAppUser(user);
@@ -43,11 +40,11 @@ export default class AppUserStore {
     loadAppUser = async (id: string) => {
         
         let appUser = this.getAppUser(id);
-        if(appUser) { //if already in memory (registry)
+        if(appUser) { // if already in memory (registry)
             this.selectedAppUser = appUser;         
             return appUser;
         } 
-        else { //if reloading page (no memory/registry)
+        else { // if reloading page or first time loading user management view
             this.loadingInitial = true;
             try {
                 const result = await agent.Users.details(id);
@@ -64,12 +61,12 @@ export default class AppUserStore {
 
 
 
-    //computed Property
+    // computed Property
     get appUsersSorted() {
         return Array.from(this.appUserRegistry.values());
     }
 
-    //helper methods -----------------
+    // helper methods -----------------
     public getAppUser = (id: string) => {
         return this.appUserRegistry.get(id);
     }
@@ -83,14 +80,14 @@ export default class AppUserStore {
     }
     //---------------------------------
 
-    //register a new user
+    // register a new user
     createAppUser = async (appUser: RegisterUserRequest) => {
         this.createAppUserLoading = true;
 
         try {
             let response = await agent.Users.create(appUser);
             runInAction(() => {
-                appUser.id = String(response.data); //The GUID
+                appUser.id = String(response.data); // the GUID
 
                 var newuser: User = {
                     id: appUser.id,
@@ -103,7 +100,7 @@ export default class AppUserStore {
                     isActive: true
                 }
                 
-                this.appUserRegistry.set(appUser.id, newuser); //add to memory list
+                this.appUserRegistry.set(appUser.id, newuser); // add to registry list (local memory)
 
                 this.selectedAppUser = newuser;
                 this.editMode = false;
@@ -125,7 +122,7 @@ export default class AppUserStore {
         try {
             await agent.Users.update(user);
             runInAction(() => {
-                this.appUserRegistry.set(user.id, user); //Map Object set will update if ID same
+                this.appUserRegistry.set(user.id, user); // update app user in registry
                 this.editMode = false;
                 this.updateAppUserLoading = false;
             })
@@ -141,9 +138,9 @@ export default class AppUserStore {
         this.deleteAppUserLoading = true;
 
         try {
-            await agent.Users.delete(id); //delete from DB
+            await agent.Users.delete(id); // delete from database
             runInAction(() => {
-                this.appUserRegistry.delete(id); //delete from local memory
+                this.appUserRegistry.delete(id); // delete from registry (local)
                 this.deleteAppUserLoading = false;
             })
         } catch (error) {
