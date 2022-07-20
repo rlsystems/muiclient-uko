@@ -8,7 +8,7 @@ import FlexBox from "components/FlexBox";
 import { useStore } from "app/stores/store";
 import { UpdatePreferencesRequest } from "app/models/currentUser";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import { LoadingButton } from "@mui/lab";
 
 const Preferences: FC = () => {
@@ -38,7 +38,7 @@ const Preferences: FC = () => {
     onSubmit: async (values) => {
       setIsUpdating(true);
       await updatePreferences(values);
-      toast.success("Preferences Updated"); 
+      toast.dark("Preferences Updated"); 
     
       resetForm(); 
       setIsUpdating(false);

@@ -7,7 +7,7 @@ import { ChangePasswordRequest } from "app/models/currentUser";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import checkPasswordStrength from "app/utils/checkPasswordStrength";
 
 const Password: FC = () => {
@@ -40,7 +40,7 @@ const Password: FC = () => {
 
       const result = await changePassword(values);
       if (result?.succeeded === true) {
-        toast.success("Password updated");
+        toast.dark("Password updated");
       } else {
         toast.error("Problem updating password");
       }

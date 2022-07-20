@@ -16,7 +16,7 @@ import { useStore } from "app/stores/store";
 import { observer } from "mobx-react-lite";
 import { UpdateProfileRequest } from "app/models/currentUser";
 import { LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import getBase64 from "app/utils/getBase64";
 import ImagePopover from "./ImagePopover";
 
@@ -55,7 +55,7 @@ const UserInfo: FC = () => {
     onSubmit: async (values) => {
       setIsUpdating(true);
       await updateCurrentUser(values);
-      toast.success("Profile Updated"); 
+      toast.dark("Profile Updated"); 
       resetForm(); 
       setIsUpdating(false);
       setUserFormValues(values); 

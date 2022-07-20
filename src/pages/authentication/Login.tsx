@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import { KeyboardArrowDown } from "@mui/icons-material";
 
 const Login: FC = () => {
@@ -59,7 +59,7 @@ const Login: FC = () => {
         console.log(values);
         try {
           await currentUserStore.login(values);
-          toast.success("Logged In Successfully!");
+          toast.dark("Logged In Successfully!");
         } catch (error) {
           const message = (error as Error)?.message || "Login failed";
           toast.error(message);

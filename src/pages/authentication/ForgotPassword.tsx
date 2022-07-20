@@ -7,7 +7,7 @@ import { H1, Small } from "components/Typography";
 import { useFormik } from "formik";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import * as Yup from "yup";
 
 const ForgotPassword: FC = () => {
@@ -37,7 +37,7 @@ const ForgotPassword: FC = () => {
 
         const result = await currentUserStore.forgotPassword(values);
         if (result?.succeeded === true) {
-          toast.success("Password reset email sent");
+          toast.dark("Password reset email sent");
         } else {
           toast.error("Could not send email");
         }

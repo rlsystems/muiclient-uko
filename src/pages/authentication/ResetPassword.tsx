@@ -8,7 +8,7 @@ import { H1, Small } from "components/Typography";
 import { useFormik } from "formik";
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import * as Yup from "yup";
 
 const ResetPassword: FC = () => {
@@ -48,7 +48,7 @@ const ResetPassword: FC = () => {
 
                 const result = await currentUserStore.resetPassword(values);
                 if (result?.succeeded === true) {
-                    toast.success("Password reset successfully");
+                    toast.dark("Password reset successfully");
                 } else {
                     toast.error("Problem resetting password");
                 }

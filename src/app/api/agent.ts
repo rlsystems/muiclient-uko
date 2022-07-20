@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { toast } from 'react-toastify';
+import { toast } from 'material-react-toastify';
 
 import { store } from '../stores/store';
 import { TokenData, UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
@@ -32,36 +32,18 @@ axios.interceptors.response.use(async response => {
     if (process.env.NODE_ENV === 'development') await sleep(1000); // Artifical delay for development
     return response;
 }, (error: AxiosError) => {
-    const { data, status, config } = error.response!;
+    const { data, status } = error.response!;
     switch (status) {
         case 400:
-            if (typeof data === 'string') {
-                toast.error(data);
-            }
-            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
-                //history.push('/not-found');
-            }
-            if (data.errors){
-                const modalStateErrors = [];
-                for (const key in data.errors){
-                    if(data.errors[key]){
-                        modalStateErrors.push(data.errors[key])
-                    }
-                }
-                throw modalStateErrors.flat();
-            }
-
+            toast.error('Error code 400: bad request');
             break;
         case 401:
-            // toast.error('unauthorized');
+            toast.error('Error code 401: unauthorized');
             store.currentUserStore.logout();
             break;
-        case 404:
-            //history.push('/not-found')
-            break;
         case 500:
-            store.commonStore.setServerError(data);
-            //history.push('/server-error');
+            toast.error('Error code 500: internal server error');
+            console.log(data);
             break;
     }
     return Promise.reject(error);

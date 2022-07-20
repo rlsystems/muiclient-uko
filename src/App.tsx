@@ -5,15 +5,14 @@ import { useEffect } from 'react';
 import { StyledEngineProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
-import {ThemeProvider} from "@emotion/react"
+import { ThemeProvider } from "@emotion/react"
 import { nanoTheme } from "./theme";
 import { observer } from 'mobx-react-lite';
 import { useLocation } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'material-react-toastify';
 import { useStore } from './app/stores/store'; //main mobx store
 import LoadingScreen from './components/LoadingScreen';
 import routes, { renderRoutes } from './routes';
-
 
 function App() {
   const location = useLocation(); // returns location object from router, useful for the key
@@ -24,6 +23,8 @@ function App() {
   //Get the current user (otherwise reloading browser will clear mobx)
   useEffect(() => {
     if (commonStore.token) {
+      
+      if (currentUserStore.currentUser) return
       currentUserStore.getCurrentUser().finally(() => commonStore.setAppLoaded());
 
     } else {
@@ -56,7 +57,7 @@ function App() {
       <MuiThemeProvider theme={appTheme}>
         <ThemeProvider theme={appTheme}>
           <CssBaseline />
-          <ToastContainer position='top-center' theme="dark" hideProgressBar draggable autoClose={3000} />
+          <ToastContainer position='bottom-left' hideProgressBar draggable autoClose={3000} />
           {renderRoutes(routes)}
         </ThemeProvider>
       </MuiThemeProvider>

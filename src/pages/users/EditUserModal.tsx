@@ -24,7 +24,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { User } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import StyledModalCard from "components/StyledModalCard";
 
 
@@ -67,7 +67,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
       validationSchema: validationSchema,
       onSubmit: async (user: User, { resetForm }) => {
         await updateAppUser(user)
-        toast.success("User Edited Successfully!")
+        toast.dark("User Edited Successfully!")
         onClose()
         resetForm()
       }
@@ -76,7 +76,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
 
     const handleDelete = async (id: string) => {
       await deleteAppUser(id);
-      toast.success("User Deleted!")
+      toast.dark("User Deleted!")
       onClose()
     }
 

@@ -22,7 +22,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { RegisterUserRequest } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import StyledModalCard from "components/StyledModalCard";
 
 // component props interface
@@ -65,7 +65,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
     validationSchema: validationSchema,
     onSubmit: async (registerUser: RegisterUserRequest) => {
       await createAppUser(registerUser)
-      toast.success("User Added Successfully!")
+      toast.dark("User Added Successfully!")
       handleClose()
     }
 

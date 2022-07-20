@@ -16,7 +16,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { Venue } from "../../app/models/venue";
 import { LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import StyledModalCard from "components/StyledModalCard";
 
 interface Props {
@@ -51,10 +51,10 @@ const VenueModal: FC<Props> = ({ open, onClose, isEdit, data }) => {
     onSubmit: async (addVenue: Venue) => {
       if (!isEdit) {
         await createVenue(addVenue)
-        toast.success("Venue Added!")
+        toast.dark("Venue Added!")
       } else {
         await updateVenue(addVenue)
-        toast.success("Venue Updated!")
+        toast.dark("Venue Updated!")
       }
       handleClose()
     }

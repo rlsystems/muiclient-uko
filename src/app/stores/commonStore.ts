@@ -27,11 +27,6 @@ export default class CommonStore {
         )
     }
 
-    setServerError = (error: ServerError) => {
-        runInAction(() => {
-            this.error = error;
-        })
-    }
 
     setToken = (token: string | null) => {      
         runInAction(() => {

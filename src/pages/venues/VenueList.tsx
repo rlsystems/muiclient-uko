@@ -59,6 +59,7 @@ const VenueList = () => {
     setFilteredQuery("")
   }, [loadVenues, state.queryPageSize, state.queryPageIndex])
 
+  
   return (
     <Box pt={2} pb={4}>
       <Grid container spacing={2} mb={2}>

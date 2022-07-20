@@ -3,6 +3,9 @@ import agent from "../api/agent";
 import { Venue } from "../models/venue";
 import { SearchParams } from "../models/searchParams";
 import { PaginatedResult } from '../models/responseWrappers';
+import usePaginationMetaData, { TOTAL_PAGE_COUNT_CHANGED } from "app/hooks/usePaginationMetaData";
+import commonStore from "./commonStore";
+import { store } from "./store";
 
 export default class VenueStore {
 
@@ -15,6 +18,7 @@ export default class VenueStore {
     loading: boolean = false;
     loadingInitial: boolean = false;
     createUpdateLoading: boolean = false;
+    
 
 
     constructor() {
@@ -93,7 +97,8 @@ export default class VenueStore {
     })
     //---------------------------------
 
-
+    //pass in pagination state to createVenue?
+    //--why dont we need to do this for reactTable?
     createVenue = async (venue: Venue) => {
         this.createUpdateLoading = true;
 
@@ -102,15 +107,16 @@ export default class VenueStore {
                 Name: venue.name,
                 Description: venue.description,
             }
+            //const [state, dispatch] = usePaginationMetaData(store.commonStore.pageSizeDefault); <--- this doesnt work 
             let response = await agent.Venues.create(venueRequestBody);
             runInAction(async () => {
-                venue.id = String(response.data); // The GUID
-                this.venueRegistry.set(venue.id, venue); // add object in venue registy
-
+                venue.id = String(response.data); 
+                this.venueRegistry.set(venue.id, venue);
+                
                 this.selectedVenue = venue;
                 this.editMode = false;
                 this.createUpdateLoading = false;
-                await this.loadVenues();
+                await this.loadVenues(); //pass pagination state to this?
             })
         } catch (error) {
             console.log(error);

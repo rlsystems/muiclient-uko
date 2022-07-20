@@ -81,7 +81,7 @@ export const renderRoutes = (routes: RouteType[] = []) => (
   </Switch>
 );
 
-const appName = "AspNano"
+const appName = "ASP Nano Demo"
 
 const routes: RouteType[] = [
   {
