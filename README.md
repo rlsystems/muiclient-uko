@@ -1,7 +1,8 @@
 
-React Client for Asp Nano
+React Client for ASP Nano .Net Web API
 
-Typescript/ Mobx / MUI / Axios / Formik 
+
+-- Typescript / Mobx / MUI / Axios / Formik -- 
 
 
 To install

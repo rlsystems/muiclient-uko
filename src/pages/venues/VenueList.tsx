@@ -18,13 +18,12 @@ import VenueModal from "./VenueModal";
 
 const VenueList = () => {
   const { venueStore, commonStore, currentUserStore } = useStore();
-  const { loadVenues, venues, venueMetaData, loadingInitial, loading } = venueStore;
+  const { loadVenues, venues, venueMetaData, loadingInitial, venuesSorted, loading } = venueStore;
   const { setTitle } = commonStore;
   const [openModal, setOpenModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredQuery, setFilteredQuery] = useState("");
   const [state, dispatch] = usePaginationMetaData(commonStore.pageSizeDefault);
-  const data: Venue[] = useMemo(() => venues, [venues]);
   const columns: ColumnShape<Venue>[] = useMemo(() => VenueColumnShape, [VenueColumnShape]);
 
   const handleSearchButton = () => {
@@ -127,7 +126,7 @@ const VenueList = () => {
 
 
       <ServerTable
-        data={data}
+        data={venuesSorted}
         columns={columns}
         paginationState={state}
         paginationDispatch={dispatch}

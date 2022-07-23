@@ -107,7 +107,6 @@ export default class VenueStore {
                 Name: venue.name,
                 Description: venue.description,
             }
-            //const [state, dispatch] = usePaginationMetaData(store.commonStore.pageSizeDefault); <--- this doesnt work 
             let response = await agent.Venues.create(venueRequestBody);
             runInAction(async () => {
                 venue.id = String(response.data); 
@@ -116,7 +115,6 @@ export default class VenueStore {
                 this.selectedVenue = venue;
                 this.editMode = false;
                 this.createUpdateLoading = false;
-                await this.loadVenues(); //pass pagination state to this?
             })
         } catch (error) {
             console.log(error);
@@ -136,7 +134,6 @@ export default class VenueStore {
                 this.selectedVenue = venue;
                 this.editMode = false;
                 this.createUpdateLoading = false;
-                await this.loadVenues();
             })
         } catch (error) {
             console.log(error);
@@ -154,7 +151,6 @@ export default class VenueStore {
             await agent.Venues.delete(id); // delete from database
             runInAction(async () => {
                 this.venueRegistry.delete(id); // delete from local memory
-                await this.loadVenues();
                 this.loading = false;
             })
         } catch (error) {

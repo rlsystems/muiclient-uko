@@ -64,9 +64,15 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
     initialValues: newUserFormValues,
     validationSchema: validationSchema,
     onSubmit: async (registerUser: RegisterUserRequest) => {
-      await createAppUser(registerUser)
-      toast.dark("User Added Successfully!")
-      handleClose()
+      try {
+        await createAppUser(registerUser);
+        toast.dark("User Added Successfully!");
+        handleClose();
+      } catch (error) {
+        toast.error("Unable to create user");
+        console.log(error);
+      }
+      
     }
 
   });
