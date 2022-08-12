@@ -25,7 +25,7 @@ import { useStore } from "../../app/stores/store";
 import { LoadingButton } from "@mui/lab";
 import { CreateTenantRequest } from "../../app/models/tenant";
 import StyledModalCard from "components/StyledModalCard";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 
 // component props interface
 interface ModalProps {
@@ -71,7 +71,7 @@ const RegisterTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
       if (!response) return
       resetForm()
       onClose()
-      toast.success('Tenant created successfully')
+      toast.dark('Tenant created successfully')
     }
   });
 

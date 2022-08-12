@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 import agent from "../api/agent";
 import { CreateTenantRequest, Tenant } from "../models/tenant";
 

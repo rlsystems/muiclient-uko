@@ -20,7 +20,7 @@ import { useStore } from "../../app/stores/store";
 import { LoadingButton } from "@mui/lab";
 import { Tenant } from "../../app/models/tenant";
 import StyledModalCard from "components/StyledModalCard";
-import { toast } from "react-toastify";
+import { toast } from "material-react-toastify";
 
 
 // component props interface
@@ -60,7 +60,7 @@ const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
             if (!response) return
             onClose()
             resetForm()
-            toast.success('Tenant created successfully')
+            toast.dark('Tenant created successfully')
         }
     });
 
