@@ -23,7 +23,7 @@ import ScrollBar from "simplebar-react";
 import { PaginationSelectInput } from "components/formInput/InputsLight";
 import FlexBox from "components/FlexBox";
 import { H6, H5 } from "components/Typography";
-import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/dataTables/DataTable.styled";
+import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/DataTables/DataTable.styled";
 
 interface ReactTableProps {
   getTableProps: () => TableProps,
@@ -98,7 +98,7 @@ const ReactTable: FC<ReactTableProps> = (props) => {
             <TableBody {...getTableBodyProps()}>
             {page.map((row: any) => {
               prepareRow(row);
-              
+
               return (
                 <StyledTableRow
                   {...row.getRowProps()}
@@ -161,5 +161,5 @@ const ReactTable: FC<ReactTableProps> = (props) => {
     </Box>
   );
 };
- 
+
 export default ReactTable;

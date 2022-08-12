@@ -1,13 +1,11 @@
 import {
     Button,
-    Card,
     Checkbox,
     Divider,
     FormControlLabel,
     FormGroup,
     Grid,
     Modal,
-    styled,
 } from "@mui/material";
 import {DarkTextField} from "../../components/formInput/InputsDark";
 import FlexBox from "../../components/FlexBox";
@@ -22,6 +20,7 @@ import { useStore } from "../../app/stores/store";
 import { LoadingButton } from "@mui/lab";
 import { Tenant } from "../../app/models/tenant";
 import StyledModalCard from "components/StyledModalCard";
+import { toast } from "react-toastify";
 
 
 // component props interface
@@ -34,9 +33,9 @@ interface ModalProps {
 
 const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
     const { tenantStore } = useStore();
-    const { updateTenant } = tenantStore;
+    const { updateTenant, loading } = tenantStore;
 
-    const [tenantFormValues, setTenantFormValues] = useState<Tenant>({ //Local State
+    const [tenantFormValues] = useState<Tenant>({ //Local State
         id: data.id,
         name: data.name,
         isActive: data.isActive,
@@ -50,16 +49,18 @@ const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
     //gets passed to formik
     const validationSchema = Yup.object({
         name: Yup.string().required('Tenant name is required'),
-       
     })
 
     const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid, resetForm } = useFormik({
         initialValues: tenantFormValues,
         validationSchema: validationSchema,
         enableReinitialize: true,
-        onSubmit: (tenant: Tenant, { resetForm }) => {
-            updateTenant(tenant).then(() => onClose())
-                .then(() => resetForm())
+        onSubmit: async (tenant: Tenant, { resetForm }) => {
+            const response = await updateTenant(tenant)
+            if (!response) return
+            onClose()
+            resetForm()
+            toast.success('Tenant created successfully')
         }
     });
 
@@ -70,7 +71,6 @@ const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
                 <Divider />
                 <form onSubmit={handleSubmit}>
                     <Grid mt={1} container spacing={3} columnSpacing={5} className="main-form">
-
                         <Grid item xs={7}>
                             <H6 mb={1}>Name</H6>
                             <DarkTextField
@@ -123,7 +123,7 @@ const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
                             type="submit"
                             variant="contained"
                             disabled={!dirty || !isValid || isSubmitting}
-                            loading={isSubmitting}
+                            loading={isSubmitting || loading}
                             sx={{ width: 124, fontSize: 12 }}
                         >
                             Save

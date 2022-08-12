@@ -1,15 +1,11 @@
+import { FC, useState } from "react";
 import {
   Button,
   Divider,
   Grid,
   Modal,
 } from "@mui/material";
-import {DarkTextField} from "../../components/formInput/InputsDark";
-import FlexBox from "../../components/FlexBox";
-import { H2, H6 } from "../../components/Typography";
 import { useFormik } from "formik";
-import { FC, useState } from "react";
-
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
 
@@ -17,19 +13,31 @@ import { useStore } from "../../app/stores/store";
 import { Venue } from "../../app/models/venue";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "material-react-toastify";
+import { toast } from "react-toastify";
+
+import {DarkTextField} from "components/formInput/InputsDark";
+import FlexBox from "components/FlexBox";
+import { H2, H6 } from "components/Typography";
+import { useStore } from "app/stores/store";
+import { Venue } from "app/models/venue";
 import StyledModalCard from "components/StyledModalCard";
+
+export type PaginationState = {
+  queryPageIndex: number;
+  queryPageSize: number;
+}
 
 interface Props {
   data?: any;
   open: boolean;
   isEdit: boolean;
   onClose: () => void;
+  paginationState: PaginationState;
 }
 
-
-const VenueModal: FC<Props> = ({ open, onClose, isEdit, data }) => {
+const VenueModal: FC<Props> = ({ open, onClose, isEdit, data, paginationState }) => {
   const { venueStore } = useStore();
-  const { createVenue, createUpdateLoading, updateVenue } = venueStore;
+  const { createVenue, loading, updateVenue, loadVenues } = venueStore;
 
   const [newVenueFormValues] = useState<Venue>({
     id: isEdit ? data.id : '',
@@ -37,26 +45,28 @@ const VenueModal: FC<Props> = ({ open, onClose, isEdit, data }) => {
     description: isEdit ? data.description : '',
   });
 
-
-
   const validationSchema = Yup.object({
     name: Yup.string().required('Venue name is required'),
     description: Yup.string().required('Venue description is required'),
   });
-
 
   const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid, resetForm } = useFormik({
     initialValues: newVenueFormValues,
     validationSchema: validationSchema,
     onSubmit: async (addVenue: Venue) => {
       if (!isEdit) {
-        await createVenue(addVenue)
+        const response = await createVenue(addVenue)
+        if (!response) return
+        handleClose()
         toast.dark("Venue Added!")
+        await loadVenues(paginationState.queryPageIndex, paginationState.queryPageSize);
       } else {
-        await updateVenue(addVenue)
+        const response = await updateVenue(addVenue)
+        if (!response) return
+        handleClose()
         toast.dark("Venue Updated!")
+        await loadVenues(paginationState.queryPageIndex, paginationState.queryPageSize);
       }
-      handleClose()
     }
   });
 
@@ -126,7 +136,7 @@ const VenueModal: FC<Props> = ({ open, onClose, isEdit, data }) => {
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}
-              loading={createUpdateLoading}
+              loading={loading}
               sx={{ width: 124, fontSize: 12 }}
             >
               Save

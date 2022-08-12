@@ -39,7 +39,7 @@ interface ModalProps {
 
 const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     const { appUserStore, currentUserStore } = useStore();
-    const { updateAppUser, deleteAppUserLoading, updateAppUserLoading, loadingInitial, deleteAppUser } = appUserStore;
+    const { updateAppUser, loading, deleteAppUser } = appUserStore;
     const { currentUser } = currentUserStore;
 
 
@@ -66,8 +66,9 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
       initialValues: userFormValues,
       validationSchema: validationSchema,
       onSubmit: async (user: User, { resetForm }) => {
-        await updateAppUser(user)
-        toast.dark("User Edited Successfully!")
+          const response = await updateAppUser(user)
+          if (!response) return
+          toast.dark("User Edited Successfully!")
         onClose()
         resetForm()
       }
@@ -75,9 +76,10 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
 
 
     const handleDelete = async (id: string) => {
-      await deleteAppUser(id);
-      toast.dark("User Deleted!")
-      onClose()
+        const response = await deleteAppUser(id);
+        if (!response) return
+        toast.dark("User Deleted!")
+        onClose()
     }
 
 
@@ -214,7 +216,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                             <LoadingButton
                                 size="small"
                                 variant="outlined"
-                                loading={deleteAppUserLoading}
+                                loading={loading}
                                 onClick={() => handleDelete(values.id)}
                                 sx={{
                                     width: 124,
@@ -258,7 +260,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                                 type="submit"
                                 variant="contained"
                                 disabled={!dirty || !isValid || isSubmitting}
-                                loading={updateAppUserLoading}
+                                loading={loading}
                                 sx={{ width: 124, fontSize: 12 }}
                             >
                                 Save

@@ -30,7 +30,7 @@ import { KeyboardArrowDown } from "@mui/icons-material";
 const Login: FC = () => {
   const [error, setError] = useState("");
   const { currentUserStore, commonStore, tenantStore } = useStore();
-  const { loadTenants, tenantsSorted, loadingInitial } = tenantStore;
+  const { loadTenants, tenantsSorted, loading } = tenantStore;
 
   const initialValues = {
     email: "",
@@ -223,14 +223,14 @@ const Login: FC = () => {
                   <Paragraph fontWeight={600} mb={1} mt={3}>
                     Tenant
                   </Paragraph>
-                  {loadingInitial &&
+                  {loading &&
 
                     <Box display="flex" alignItems={"center"} width="100%" height={"50px"}>
                       <CircularProgress size={30} />
                     </Box>
                   }
 
-                  {!loadingInitial &&
+                  {!loading &&
                     <Select
                       displayEmpty
                       name="tenant"
@@ -239,7 +239,7 @@ const Login: FC = () => {
                       onChange={handleChange}
                       value={values.tenant || ""}
                       error={Boolean(touched.tenant && errors.tenant)}
-                      IconComponent={() => loadingInitial ? <Fragment /> : <KeyboardArrowDown />}
+                      IconComponent={() => loading ? <Fragment /> : <KeyboardArrowDown />}
                       input={<StyledSelectInput />}
                     >
 

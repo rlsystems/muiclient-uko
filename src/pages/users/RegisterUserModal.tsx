@@ -35,7 +35,7 @@ interface Props {
 
 const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
   const { appUserStore } = useStore();
-  const { createAppUser, createAppUserLoading } = appUserStore;
+  const { createAppUser, loading } = appUserStore;
 
   const [newUserFormValues, setNewUserFormValues] = useState<RegisterUserRequest>({
     id: '',
@@ -64,17 +64,11 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
     initialValues: newUserFormValues,
     validationSchema: validationSchema,
     onSubmit: async (registerUser: RegisterUserRequest) => {
-      try {
-        await createAppUser(registerUser);
-        toast.dark("User Added Successfully!");
-        handleClose();
-      } catch (error) {
-        toast.error("Unable to create user");
-        console.log(error);
-      }
-      
+      const response = await createAppUser(registerUser)
+      if (!response) return
+      toast.dark("User Added Successfully!");
+      handleClose()
     }
-
   });
 
 
@@ -240,7 +234,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}
-              loading={createAppUserLoading}
+              loading={loading}
               sx={{ width: 124, fontSize: 12 }}
             >
               Save

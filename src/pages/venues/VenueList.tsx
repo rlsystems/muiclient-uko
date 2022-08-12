@@ -9,22 +9,23 @@ import { Roles } from "app/models/roles";
 import { Venue } from "app/models/venue";
 import { H5, H6 } from "components/Typography";
 
-import ServerTable, { ColumnShape } from "components/dataTables/serverTable/ServerTable";
-import ResultText from "components/dataTables/serverTable/ResultText";
 import SearchInput from "components/formInput/SearchInput";
 import VenueColumnShape from "./VenueColumnShape";
 import VenueModal from "./VenueModal";
+import ResultText from "components/DataTables/ServerTable/ResultText";
+import ServerTable, { ColumnShape } from "components/DataTables/ServerTable/ServerTable";
 
 
 const VenueList = () => {
   const { venueStore, commonStore, currentUserStore } = useStore();
-  const { loadVenues, venues, venueMetaData, loadingInitial, venuesSorted, loading } = venueStore;
+  const { loadVenues, venues, venueMetaData, loadingInitial } = venueStore;
   const { setTitle } = commonStore;
   const [openModal, setOpenModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredQuery, setFilteredQuery] = useState("");
   const [state, dispatch] = usePaginationMetaData(commonStore.pageSizeDefault);
-  const columns: ColumnShape<Venue>[] = useMemo(() => VenueColumnShape, [VenueColumnShape]);
+  const data: Venue[] = useMemo(() => venues, [venues]);
+  const columns: ColumnShape<Venue>[] = useMemo(() => VenueColumnShape({queryPageIndex: state.queryPageIndex, queryPageSize: state.queryPageSize}), [VenueColumnShape, state]);
 
   const handleSearchButton = () => {
     setSearchQuery("")
@@ -58,7 +59,7 @@ const VenueList = () => {
     setFilteredQuery("")
   }, [loadVenues, state.queryPageSize, state.queryPageIndex])
 
-  
+
   return (
     <Box pt={2} pb={4}>
       <Grid container spacing={2} mb={2}>
@@ -122,15 +123,16 @@ const VenueList = () => {
         isEdit={false}
         data={null}
         onClose={() => setOpenModal(false)}
+        paginationState={{queryPageIndex: state.queryPageIndex + 1, queryPageSize: state.queryPageSize}}
       />)}
 
 
       <ServerTable
-        data={venuesSorted}
+        data={data}
         columns={columns}
         paginationState={state}
         paginationDispatch={dispatch}
-        isLoading={loadingInitial || loading}
+        isLoading={loadingInitial}
       />
       <H6 sx={{ fontSize: "12px", fontWeight: "300", color: "#94A4C4" }}>Server-side pagaination example</H6>
     </Box>

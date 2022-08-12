@@ -5,8 +5,8 @@ import { observer } from "mobx-react-lite";
 import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
 
 import { useStore } from 'app/stores/store';
-import ReactTable from "components/dataTables/reactTable/ReactTable";
-import GlobalFilter from "components/dataTables/reactTable/GlobalFilter";
+import ReactTable from "components/DataTables/ReactTable/ReactTable";
+import GlobalFilter from "components/DataTables/ReactTable/GlobalFilter";
 import RegisterUserModal from "./RegisterUserModal";
 import UserColumnShape from "./UserColumnShape";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
@@ -16,7 +16,7 @@ import { H5, H6 } from "components/Typography";
 
 const UserList: FC = () => {
   const { appUserStore, commonStore } = useStore();
-  const { loadAppUsers, appUserRegistry, appUsersSorted, loadingInitial } = appUserStore;
+  const { loadAppUsers, appUsersSorted, loadingInitial } = appUserStore;
   const { setTitle, pageSizeDefault } = commonStore;
   const [openModal, setOpenModal] = useState(false);
 

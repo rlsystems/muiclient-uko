@@ -25,6 +25,7 @@ import { useStore } from "../../app/stores/store";
 import { LoadingButton } from "@mui/lab";
 import { CreateTenantRequest } from "../../app/models/tenant";
 import StyledModalCard from "components/StyledModalCard";
+import { toast } from "react-toastify";
 
 // component props interface
 interface ModalProps {
@@ -36,7 +37,7 @@ interface ModalProps {
 
 const RegisterTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
   const { tenantStore } = useStore();
-  const { createTenant } = tenantStore;
+  const { createTenant, loading } = tenantStore;
 
   const [tenantFormValues, setTenantFormValues] = useState<CreateTenantRequest>({ //Local State
     id: '',
@@ -65,9 +66,12 @@ const RegisterTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
     initialValues: tenantFormValues,
     validationSchema: validationSchema,
     enableReinitialize: true,
-    onSubmit: (createTenantRequest: CreateTenantRequest, { resetForm }) => {
-      createTenant(createTenantRequest).then(() => onClose())
-        .then(() => resetForm())
+    onSubmit: async (createTenantRequest: CreateTenantRequest, { resetForm }) => {
+      const response = await createTenant(createTenantRequest)
+      if (!response) return
+      resetForm()
+      onClose()
+      toast.success('Tenant created successfully')
     }
   });
 
@@ -105,7 +109,7 @@ const RegisterTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
                 helperText={touched.name && errors.name}
               />
             </Grid>
-            
+
 
             <Grid item xs={6}>
               <H6 mb={1}>Admin Email</H6>
@@ -161,7 +165,7 @@ const RegisterTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}
-              loading={isSubmitting}
+              loading={isSubmitting || loading}
               sx={{ width: 124, fontSize: 12 }}
             >
               Save

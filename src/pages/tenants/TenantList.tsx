@@ -6,20 +6,19 @@ import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, use
 
 
 import { useStore } from 'app/stores/store';
-import FlexBox from "components/FlexBox";
 import TenantColumnShape from "./TenantColumnShape";
 import RegisterTenantModal from "./RegisterTenantModal";
-import ReactTable from "components/dataTables/reactTable/ReactTable";
 import { Tenant } from "app/models/tenant";
-import GlobalFilter from "components/dataTables/reactTable/GlobalFilter";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
 import { CustomTableOptions } from "app/models/reactTable";
 import { H6 } from "components/Typography";
+import ReactTable from "components/DataTables/ReactTable/ReactTable";
+import GlobalFilter from "components/DataTables/ReactTable/GlobalFilter";
 
 
 const TenantList: FC = () => {
   const { tenantStore, commonStore } = useStore();
-  const { loadTenants, tenantRegistry, tenantsSorted, loadingInitial } = tenantStore;
+  const { loadTenants, tenantsSorted, loadingInitial } = tenantStore;
   const { setTitle, pageSizeDefault } = commonStore;
   const data: Tenant[] = useMemo(() => tenantsSorted, [tenantsSorted]);
   const columns: any = useMemo(() => TenantColumnShape, [TenantColumnShape]);

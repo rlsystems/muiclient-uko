@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { H6 } from "components/Typography";
-import { useStore } from "app/stores/store";
+import { store, useStore } from "app/stores/store";
 import { Roles } from "app/models/roles";
 import { IconButton, Tooltip } from "@mui/material";
 import MoreOptions from "components/MoreOptions";
 import { MoreVert } from "@mui/icons-material";
-import VenueModal from './VenueModal'
+import VenueModal, { PaginationState } from './VenueModal'
 import { Venue } from "app/models/venue";
-import { ColumnShape } from "components/dataTables/serverTable/ServerTable";
+import { ColumnShape } from "components/DataTables/ServerTable/ServerTable";
 
-const VenueColumnShape: ColumnShape<Venue>[] = [
+const VenueColumnShape = (paginationState: PaginationState): ColumnShape<Venue>[] => ([
   {
     header: "Name",
     accessor: "name",
@@ -56,6 +56,7 @@ const VenueColumnShape: ColumnShape<Venue>[] = [
       }
       const handleDelete = () => {
         venueStore.deleteVenue(row.id);
+        venueStore.loadVenues(1, paginationState.queryPageSize)
       }
 
       return <React.Fragment>
@@ -73,17 +74,18 @@ const VenueColumnShape: ColumnShape<Venue>[] = [
             handleMoreClose={handleMenuClose}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
-            
+
           />
           <VenueModal
             open={openModal}
             isEdit={true}
             onClose={() => setOpenModal(false)}
             data={row}
+            paginationState={{queryPageIndex: paginationState.queryPageIndex + 1, queryPageSize: paginationState.queryPageSize}}
           />
         </React.Fragment>
     },
   },
-];
+]);
 
 export default VenueColumnShape;

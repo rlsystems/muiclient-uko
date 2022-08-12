@@ -14,7 +14,7 @@ import ScrollBar from "simplebar-react";
 
 import { PAGE_CHANGED, PAGE_SIZE_CHANGED, PaginationDispatchType, PaginationStateType } from "app/hooks/usePaginationMetaData";
 import { PaginationSelectInput } from "components/formInput/InputsLight";
-import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/dataTables/DataTable.styled";
+import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/DataTables/DataTable.styled";
 
 export interface ColumnShape<T> {
   header: string
@@ -48,7 +48,7 @@ const ServerTable = <T extends Record<string, any>>({
     paginationDispatch({ type: PAGE_CHANGED, payload: newPage - 1 }); //build in dispatch - this is a hook
   }
 
-  
+
   const handleChangeRowsPerPage = async (event: SelectChangeEvent<number>) => {
     if (!paginationDispatch) return
     const newPageSize = Number(event.target.value)
@@ -78,8 +78,8 @@ const ServerTable = <T extends Record<string, any>>({
 
           {!isLoading &&
             <TableBody>
-              {data.map((row: T, index) => {               
-                return (          
+              {data.map((row: T, index) => {
+                return (
                   <StyledTableRow key={index}>
                     {columns.map((cell, index) => (
                       <StyledTableRowCell key={index}>
@@ -103,13 +103,13 @@ const ServerTable = <T extends Record<string, any>>({
             onChange={handleChangeRowsPerPage}
             input={<PaginationSelectInput />}
           >
-            {[5, 10, 15, 20, 25, 50].map(option =>
+            {[5, 10, 25, 50, 100].map(option =>
               <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
             )}
           </Select>
-          <StyledPagination 
+          <StyledPagination
             count={paginationState?.totalPageCount || 0}
             shape="rounded"
             onChange={handleChangePage}

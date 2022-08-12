@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
+import { toast } from "react-toastify";
 import agent from "../api/agent";
 import { CreateTenantRequest, Tenant } from "../models/tenant";
 
@@ -8,22 +9,37 @@ export default class TenantStore {
     tenantRegistry = new Map<string, Tenant>();
     selectedTenant: Tenant | undefined = undefined;
 
-    editMode: boolean = false;
-    loading: boolean = false;
-    loadingInitial: boolean = false; 
-
+    loading = false;
+    loadingInitial = false;
 
     constructor() {
-        makeAutoObservable(this) 
+        makeAutoObservable(this)
     }
 
+    setLoading = (state: boolean) => {
+        runInAction(() => {
+            this.loading = state;
+        })
+    }
+
+    setLoadingInitial = (state: boolean) => {
+        runInAction(() => {
+            this.loadingInitial = state;
+        })
+    }
+
+    get tenantsSorted() {
+        return Array.from(this.tenantRegistry.values());
+    }
+
+    private setTenant = (tenant: Tenant) => { //add to registry
+        this.tenantRegistry.set(tenant.id, tenant);
+    }
 
     loadTenants = async () => {
         this.setLoadingInitial(true);
         try {
-
-            console.log('loading tenants');
-            const result = await agent.Tenants.list(); 
+            const result = await agent.Tenants.list();
             result.data.forEach(tenant => {
                 this.setTenant(tenant);
             })
@@ -33,113 +49,60 @@ export default class TenantStore {
         }
     }
 
-    loadTenant = async (id: string) => {
-        let tenant = this.getTenant(id);
-        if(tenant) {
-            this.selectedTenant = tenant;
-            return tenant;
-        } 
-        else {
-            this.loadingInitial = true;
-            try {
-                const result = await agent.Tenants.details(id);
-                this.selectedTenant = result.data;
-                this.setLoadingInitial(false);
-                return result.data;
-            } catch (error) {
-                console.log(error);
-                this.setLoadingInitial(false);
+    createTenant = async (createTenantRequest: CreateTenantRequest): Promise<boolean | undefined> => {
+        this.setLoading(true);
+
+        try {
+            const response = await agent.Tenants.create(createTenantRequest);
+            this.setLoading(false);
+            if (!response.succeeded) {
+                toast.error(response.messages[0]);
+                return false
             }
-        }
-    }
 
-   
-
-    // computed Property
-    get tenantsSorted() {
-        return Array.from(this.tenantRegistry.values());
-    }
-
-    // helper methods -----------------
-    private getTenant = (id: string) => {
-        return this.tenantRegistry.get(id);
-    }
-
-    private setTenant = (tenant: Tenant) => { //add to registry 
-        this.tenantRegistry.set(tenant.id, tenant);
-    }
-
-    setLoadingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-    //---------------------------------
-
-
-    
-    createTenant = async (createTenantRequest: CreateTenantRequest) => {
-        this.loading = true;
-
-        try {
-            let response = await agent.Tenants.create(createTenantRequest);
+            const newtenant: Tenant = {
+                id: createTenantRequest.id,
+                name: createTenantRequest.name,
+                isActive: true,
+            }
             runInAction(() => {
-
-                if(response.succeeded){
-
-                    var newtenant: Tenant = {
-                        id: response.data.id,
-                        name: response.data.name,
-                        isActive: true,
-                    }
-
-                    this.tenantRegistry.set(newtenant.id, newtenant); 
-                    this.selectedTenant = newtenant;
-
-                }
-                          
-                this.editMode = false;
-                this.loading = false;
+                this.tenantRegistry.set(newtenant.id, newtenant);
+                this.selectedTenant = newtenant;
             })
+            return true
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
+            this.setLoading(false);
+            return false
         }
     }
 
 
-    updateTenant = async (tenant: Tenant) => {
-        this.loading = true;
+    updateTenant = async (tenant: Tenant): Promise<boolean | undefined> => {
+        this.setLoading(true);
 
         try {
-            let response = await agent.Tenants.update(tenant);
-            
+            const response = await agent.Tenants.update(tenant);
+            this.setLoading(false);
+            if (!response.succeeded) {
+                toast.error(response.messages[0]);
+                return false
+            }
+            const updatedTenant: Tenant = {
+                id: tenant.id,
+                name: tenant.name,
+                isActive: tenant.isActive,
+            }
+
             runInAction(() => {
-     
-                if(response.succeeded){
-
-                    var updatedTenant: Tenant = {
-                        id: tenant.id,
-                        name: tenant.name,
-                        isActive: tenant.isActive,
-                    }
-
-                    this.tenantRegistry.set(updatedTenant.id, updatedTenant); 
-                    this.selectedTenant = updatedTenant;
-
-                }
-                          
-                this.editMode = false;
-                this.loading = false;
+                this.tenantRegistry.set(updatedTenant.id, updatedTenant);
+                this.selectedTenant = updatedTenant;
             })
+            return true
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
+            this.setLoading(false);
+            return false
         }
     }
-
-   
-
 }

@@ -10,7 +10,7 @@ import { Tenant } from "app/models/tenant";
 
 
 // operations for current user - edit profile, update preferences
-export default class CurrentUserStore { 
+export default class CurrentUserStore {
     currentUser: CurrentUser | null = null;
     loadingInitial: boolean = false;
 
@@ -20,12 +20,18 @@ export default class CurrentUserStore {
             if(currentUser) {
                 store.commonStore.setPageSize(currentUser.pageSizeDefault);
                 store.commonStore.setDarkTheme(currentUser.darkModeDefault);
-            }      
+            }
         });
     }
 
     get isLoggedIn() {
         return !!this.currentUser;
+    }
+
+    setLoadingInitial = (state: boolean) => {
+        runInAction(() => {
+            this.loadingInitial = state;
+        })
     }
 
     login = async (creds: UserLogin) => {
@@ -34,10 +40,10 @@ export default class CurrentUserStore {
             const response = await agent.Account.login(creds);
             if(!response.succeeded) throw new Error(response.messages[0]);
 
-            store.commonStore.setToken(response.data.token); 
+            store.commonStore.setToken(response.data.token);
             const user = await agent.Account.current();
-            runInAction(() => 
-                this.currentUser = user.data          
+            runInAction(() =>
+                this.currentUser = user.data
             );
             history.push('/venues');
         } catch (error) {
@@ -47,31 +53,22 @@ export default class CurrentUserStore {
 
     logout = () => {
         store.commonStore.setToken(null); // set all local variables to blank, remove token, etc
-        store.venueStore.selectedVenue = undefined; 
-        store.venueStore.venueRegistry = new Map<string, Venue>(); 
 
-        store.appUserStore.selectedAppUser = undefined; 
-        store.appUserStore.appUserRegistry = new Map<string, User>(); 
+        store.appUserStore.appUserRegistry = new Map<string, User>();
 
-        store.tenantStore.selectedTenant = undefined; 
-        store.tenantStore.tenantRegistry = new Map<string, Tenant>(); 
+        store.tenantStore.tenantRegistry = new Map<string, Tenant>();
 
         window.localStorage.removeItem('jwt');
         this.currentUser = null;
         history.push('/');
     };
 
-    setLoadingInitial = (state: boolean) => {
-        this.loadingInitial = state;
-    }
-
-
     getCurrentUser = async () => {
         try {
             const result = await agent.Account.current();
-            
-            runInAction(() => 
-                this.currentUser = result.data          
+
+            runInAction(() =>
+                this.currentUser = result.data
             );
             return this.currentUser;
 
@@ -81,17 +78,19 @@ export default class CurrentUserStore {
     }
 
     updateCurrentUser = async (user: UpdateProfileRequest) => {
-        store.appUserStore.updateAppUserLoading = true;
+        runInAction(() => {
+            store.appUserStore.loading = true;
+        })
         try {
             let updatedUser = await agent.Account.updateProfile(user);
             runInAction(() => {
                 store.appUserStore.appUserRegistry.set(user.id, updatedUser.data);
                 this.currentUser = updatedUser.data;
-                store.appUserStore.updateAppUserLoading = false;
+                store.appUserStore.loading = false;
             })
         } catch (error) {
             runInAction(() => {
-                store.appUserStore.updateAppUserLoading = false;
+                store.appUserStore.loading = false;
             })
         }
     }
@@ -134,9 +133,4 @@ export default class CurrentUserStore {
             console.log(error);
         }
     }
-
 }
-
-
-
-
