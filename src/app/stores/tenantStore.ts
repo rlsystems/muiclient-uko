@@ -29,7 +29,8 @@ export default class TenantStore {
     }
 
     get tenantsSorted() {
-        return Array.from(this.tenantRegistry.values());
+        return Array.from(this.tenantRegistry.values()).sort((a, b) => new Date(b.createdOn).valueOf() - new Date(a.createdOn).valueOf());
+
     }
 
     private setTenant = (tenant: Tenant) => { //add to registry
@@ -60,10 +61,12 @@ export default class TenantStore {
                 return false
             }
 
+            const createdOnDate = new Date().toUTCString(); // create a UTC date client side (alternatly you could return the new user object instead of just the id)
             const newtenant: Tenant = {
                 id: createTenantRequest.id,
                 name: createTenantRequest.name,
                 isActive: true,
+                createdOn: createdOnDate
             }
             runInAction(() => {
                 this.tenantRegistry.set(newtenant.id, newtenant);
@@ -92,6 +95,7 @@ export default class TenantStore {
                 id: tenant.id,
                 name: tenant.name,
                 isActive: tenant.isActive,
+                createdOn: tenant.createdOn
             }
 
             runInAction(() => {

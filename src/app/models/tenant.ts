@@ -3,6 +3,7 @@ export interface Tenant {
     id: string;
     name: string;
     isActive: boolean;
+    createdOn: string;
 }
 
 // Create Tenant
@@ -11,5 +12,6 @@ export interface CreateTenantRequest {
     name: string;
     adminEmail: string;
     password: string;
+    
 }
 

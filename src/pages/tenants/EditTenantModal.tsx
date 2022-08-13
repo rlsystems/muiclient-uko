@@ -39,6 +39,7 @@ const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
         id: data.id,
         name: data.name,
         isActive: data.isActive,
+        createdOn: data.createdOn
     });
 
     const handleClose = () => {

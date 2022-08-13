@@ -5,7 +5,7 @@ export interface UserLogin {
     tenant: string; // in production, would come from subdomain
 }
 
-//Token Response
+// Token Response
 export interface TokenData {
     token: string;
     refreshToken: string;

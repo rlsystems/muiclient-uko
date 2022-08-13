@@ -14,7 +14,7 @@ import ScrollBar from "simplebar-react";
 
 import { PAGE_CHANGED, PAGE_SIZE_CHANGED, PaginationDispatchType, PaginationStateType } from "app/hooks/usePaginationMetaData";
 import { PaginationSelectInput } from "components/formInput/InputsLight";
-import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/DataTables/DataTable.styled";
+import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/dataTables/DataTable.styled";
 
 export interface ColumnShape<T> {
   header: string

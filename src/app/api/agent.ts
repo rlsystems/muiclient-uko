@@ -1,18 +1,16 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'material-react-toastify';
-
 import { store } from '../stores/store';
 import { TokenData, UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
 import { User, RegisterUserRequest} from '../models/user';
 import { ChangePasswordRequest, UpdateProfileRequest, UpdatePreferencesRequest, CurrentUser } from '../models/currentUser';
-
 import { SearchParams } from '../models/searchParams';
 import { PaginatedResult, Result } from '../models/responseWrappers';
 import { CreateTenantRequest, Tenant } from '../models/tenant';
 import { AddVenueRequest, Venue } from '../models/venue';
 import sleep from 'app/utils/sleep';
 
-// Base URL: https://localhost:7250/api
+// Base URL: https://localhost:7250/api for dev, or your production api url
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 // Send up the token with every request, when there is a token
@@ -28,10 +26,11 @@ axios.interceptors.request.use(config => {
     return config;
 })
 
+// Axios reponse interceptors
 axios.interceptors.response.use(async response => {
     if (process.env.NODE_ENV === 'development') await sleep(1000); // Artifical delay for development
     return response;
-}, (error: AxiosError) => {
+}, (error: AxiosError) => { // Basic error handling for 400 and 500 type errors
     const { data, status } = error.response!;
     switch (status) {
         case 400:
@@ -84,7 +83,7 @@ const Account = {
     resetPassword: (resetPasswordRequest: ResetPasswordRequest) => requests.post<Result>(`/identity/reset-password`, resetPasswordRequest),
 }
 
-// Venues
+// Venues (sample business entity)
 const Venues = {
     search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/VenueListPaginated`, params), //server-side pagination
     create: (venue: AddVenueRequest) => requests.post<Result<String>>('/venues', venue),
@@ -107,7 +106,7 @@ const Tenants = {
     list: () => requests.get<Result<Tenant[]>>('/tenants'), // full list for client-side pagination
     details: (id: string) => requests.get<Result<Tenant>>(`/tenants/${id}`),
     create: (tenant: CreateTenantRequest) => requests.post<Result<Tenant>>(`/tenants`, tenant),
-    update: (tenant: Tenant) => requests.put<Result<Tenant>>(`/tenants/`, tenant), //include id in body
+    update: (tenant: Tenant) => requests.put<Result<Tenant>>(`/tenants/`, tenant), 
 }
 
 const agent = {

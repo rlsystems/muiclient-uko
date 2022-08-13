@@ -8,9 +8,10 @@ export interface User {
     isActive: boolean;
     roleId: string;
     imageUrl: string;
+    createdOn: string;
 }
 
-// Create new user
+// Register new user
 export interface RegisterUserRequest {
     id: string;
     firstName: string;

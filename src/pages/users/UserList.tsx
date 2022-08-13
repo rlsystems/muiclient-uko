@@ -5,8 +5,8 @@ import { observer } from "mobx-react-lite";
 import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
 
 import { useStore } from 'app/stores/store';
-import ReactTable from "components/DataTables/ReactTable/ReactTable";
-import GlobalFilter from "components/DataTables/ReactTable/GlobalFilter";
+import ReactTable from "components/dataTables/reactTable/ReactTable";
+import GlobalFilter from "components/dataTables/reactTable/GlobalFilter";
 import RegisterUserModal from "./RegisterUserModal";
 import UserColumnShape from "./UserColumnShape";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
@@ -59,9 +59,9 @@ const UserList: FC = () => {
 
   useEffect(() => {
     loadAppUsers();
+    console.log('effect load app users')
   }, [loadAppUsers])
 
-  // if (loadingInitial) return <LoadingScreen content='Loading Users...' />
 
   return (
     <Box pt={2} pb={4}>

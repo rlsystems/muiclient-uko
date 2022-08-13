@@ -7,7 +7,7 @@ import MoreOptions from "components/MoreOptions";
 import { MoreVert } from "@mui/icons-material";
 import VenueModal, { PaginationState } from './VenueModal'
 import { Venue } from "app/models/venue";
-import { ColumnShape } from "components/DataTables/ServerTable/ServerTable";
+import { ColumnShape } from "components/dataTables/serverTable/ServerTable";
 
 const VenueColumnShape = (paginationState: PaginationState): ColumnShape<Venue>[] => ([
   {

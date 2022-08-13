@@ -1,3 +1,4 @@
+// Generic response wrappers
 export interface PaginatedResult<T = any> {
     data: T[];
     currentpage: number;

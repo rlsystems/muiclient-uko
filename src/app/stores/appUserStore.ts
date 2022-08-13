@@ -8,48 +8,49 @@ export default class AppUserStore {
 
     appUserRegistry = new Map<string, User>();
 
-    loading = false;
-    loadingInitial = false;
+    //users: User[] = []; //REMOVE THE REGISTRIES
 
+    loading = false; // this loading is for adding new users, updating and deleting
+    loadingInitial = false; // this loading is for the view
+
+    // Let Mobx auto create the interface for this class
     constructor() {
-        makeAutoObservable(this) // Let Mobx auto create the interface for this class
+        makeAutoObservable(this)
     }
 
-    // computed Property
+    // Computed property - returns an array of users sorted by created on date, newest first
     get appUsersSorted() {
-        // TODO: SORT THE BELOW ARRAY
-        return Array.from(this.appUserRegistry.values())
-            // .sort((a, b) => a.createdDate - b.createdDate);
-            // .sort((a, b) => b.createdDate - a.createdDate);
+        return Array.from(this.appUserRegistry.values()).sort((a, b) => new Date(b.createdOn).valueOf() - new Date(a.createdOn).valueOf());
     }
 
-    // helper methods -----------------
-    public getAppUser = (id: string) => {
-        return this.appUserRegistry.get(id);
-    }
 
+
+    // Helper method
     private setAppUser = (user: User) => {
         runInAction(() => {
             this.appUserRegistry.set(user.id, user);
         })
     }
 
+    // Loading setter
     setLoadingInitial = (state: boolean) => {
         runInAction(() => {
             this.loadingInitial = state;
         })
     }
 
+    // Loading setter
     setLoading = (state: boolean) => {
         runInAction(() => {
             this.loading = state;
         })
     }
 
-    loadAppUsers = async () => { // triggered by visiting user management view
+    // Loading app users - triggered by visiting user list
+    loadAppUsers = async () => { 
         this.setLoadingInitial(true);
         try {
-            const result = await agent.Users.list(); // get list of app users
+            const result = await agent.Users.list(); // full list from api
 
             result.data.forEach(user => {
                 this.setAppUser(user);
@@ -60,9 +61,8 @@ export default class AppUserStore {
             this.setLoadingInitial(false);
         }
     }
-    //---------------------------------
 
-    // register a new user
+    // Register a new user
     createAppUser = async (appUser: RegisterUserRequest): Promise<boolean | undefined> => {
         this.setLoading(true)
 
@@ -75,7 +75,8 @@ export default class AppUserStore {
             }
 
             runInAction(() => {
-                appUser.id = String(response.data); // the GUID
+                appUser.id = String(response.data); // the GUID returned from the api
+                const createdOnDate = new Date().toUTCString(); // create a UTC date client side (alternatly you could return the new user object instead of just the id)
 
                 const newuser: User = {
                     id: appUser.id,
@@ -85,10 +86,11 @@ export default class AppUserStore {
                     phoneNumber: appUser.phoneNumber,
                     roleId: appUser.roleId,
                     imageUrl: "",
-                    isActive: true
+                    isActive: true,
+                    createdOn: createdOnDate
                 }
 
-                this.appUserRegistry.set(appUser.id, newuser); // add to registry list (local memory)
+                this.appUserRegistry.set(appUser.id, newuser); // add to registry list (local memory) - prevents having to reload the table
 
             })
             return true
@@ -99,13 +101,14 @@ export default class AppUserStore {
         }
     }
 
+    // Update an existing user
     updateAppUser = async (user: User): Promise<boolean | undefined> => {
         this.setLoading(true)
 
         try {
             const response = await agent.Users.update(user);
             this.setLoading(false)
-            if (!response.succeeded) {
+            if (!response.succeeded) { // handle any errors returned from api
                 toast.error(response.messages[0]);
                 return false
             }
@@ -120,17 +123,17 @@ export default class AppUserStore {
         }
     }
 
+    // Delete user
     deleteAppUser = async (id: string): Promise<boolean | undefined> => {
         this.setLoadingInitial(true)
 
         try {
-            const response = await agent.Users.delete(id); // delete from database
+            const response = await agent.Users.delete(id); // api call to delete from database
             this.setLoadingInitial(false)
             if (!response.succeeded) {
                 toast.error(response.messages[0]);
                 return false
             }
-
             runInAction(() => {
                 this.appUserRegistry.delete(id); // delete from registry (local)
             })
