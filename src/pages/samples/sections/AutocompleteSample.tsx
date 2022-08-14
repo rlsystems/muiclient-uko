@@ -12,8 +12,6 @@ import { H5, Small } from "components/Typography";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
-
-
 const StyledChip = styled(Chip)(({ theme }) => ({
     fontSize: 12,
     fontWeight: 500,
@@ -25,10 +23,7 @@ const StyledChip = styled(Chip)(({ theme }) => ({
     "& .MuiSvgIcon-root": { fontSize: 18 },
   }));
   
-
-
 const AutocompleteSample: FC = () => {
-
     return (
         <Card sx={{ padding: 3 }}>
             <FlexBox justifyContent={"space-between"}>
@@ -56,10 +51,7 @@ const AutocompleteSample: FC = () => {
                         }
                     />
                 </Grid>
-        
-
             </Grid>
-
         </Card>
     );
 };

@@ -1,14 +1,11 @@
 import { toast } from "material-react-toastify";
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction, toJS } from "mobx";
 import agent from "../api/agent";
 import { RegisterUserRequest, User } from "../models/user";
 
 
 export default class AppUserStore {
-
-    appUserRegistry = new Map<string, User>();
-
-    //users: User[] = []; //REMOVE THE REGISTRIES
+    users: User[] = []; 
 
     loading = false; // this loading is for adding new users, updating and deleting
     loadingInitial = false; // this loading is for the view
@@ -20,19 +17,10 @@ export default class AppUserStore {
 
     // Computed property - returns an array of users sorted by created on date, newest first
     get appUsersSorted() {
-        return Array.from(this.appUserRegistry.values()).sort((a, b) => new Date(b.createdOn).valueOf() - new Date(a.createdOn).valueOf());
+        return Array.from(this.users.values()).sort((a, b) => new Date(b.createdOn).valueOf() - new Date(a.createdOn).valueOf());
     }
 
-
-
-    // Helper method
-    private setAppUser = (user: User) => {
-        runInAction(() => {
-            this.appUserRegistry.set(user.id, user);
-        })
-    }
-
-    // Loading setter
+    // Loading setter (initial page load)
     setLoadingInitial = (state: boolean) => {
         runInAction(() => {
             this.loadingInitial = state;
@@ -46,14 +34,13 @@ export default class AppUserStore {
         })
     }
 
-    // Loading app users - triggered by visiting user list
+    // Load app users - triggered by visiting user list
     loadAppUsers = async () => { 
         this.setLoadingInitial(true);
         try {
             const result = await agent.Users.list(); // full list from api
-
-            result.data.forEach(user => {
-                this.setAppUser(user);
+            runInAction(() => {
+                this.users = result.data;
             })
             this.setLoadingInitial(false);
         } catch (error) {
@@ -89,8 +76,7 @@ export default class AppUserStore {
                     isActive: true,
                     createdOn: createdOnDate
                 }
-
-                this.appUserRegistry.set(appUser.id, newuser); // add to registry list (local memory) - prevents having to reload the table
+                this.users.unshift(newuser); // add to registry list (local memory) - prevents having to reload the table
 
             })
             return true
@@ -113,7 +99,8 @@ export default class AppUserStore {
                 return false
             }
             runInAction(() => {
-                this.appUserRegistry.set(user.id, user); // update app user in registry
+                const userIndex = this.users.findIndex(x => x.id == user.id); // find index of user and update 
+                this.users[userIndex] = user;
             })
             return true
         } catch (error) {
@@ -135,7 +122,8 @@ export default class AppUserStore {
                 return false
             }
             runInAction(() => {
-                this.appUserRegistry.delete(id); // delete from registry (local)
+                const userIndex = this.users.findIndex(x => x.id == id); // find index of user and update 
+                this.users.splice(userIndex, 1)
             })
             return true
         } catch (error) {

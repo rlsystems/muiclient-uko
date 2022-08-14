@@ -1,21 +1,18 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
-import { ServerError } from "../models/serverError";
 
 export default class CommonStore {
-    error: ServerError | null = null;
     token: string | null = window.localStorage.getItem('jwt');
     tenant: string | null = '';
-    hasSubdomain: boolean = false; // set upon application loading
+    hasSubdomain: boolean = false; // set upon app loading
     title: string | null = '';
     darkMode: boolean = true;
     pageSizeDefault: number = 10;
     appLoaded:boolean = false;
 
-
     constructor() {
         makeAutoObservable(this); // let MobX auto create interfaces
         
-        reaction( // reaction doesnt run when store is initialized, only runs when there is a change to 'token'
+        reaction( // reaction only runs when there is a change to token. not on initialization
             () => this.token,
             token => {
                 if(token){
@@ -26,7 +23,6 @@ export default class CommonStore {
             }
         )
     }
-
 
     setToken = (token: string | null) => {      
         runInAction(() => {

@@ -1,8 +1,7 @@
 import { InputBase, styled, TextField, TextFieldProps } from "@mui/material";
 import React from "react";
 
-
-//Text Input
+// text input
 const StyledTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
   "& .MuiOutlinedInput-input": {
     fontWeight: 500,
@@ -26,7 +25,7 @@ export const LightTextField = (props: TextFieldProps) => {
 };
 
 
-// Select Input (dropdown)
+// select input (dropdown)
 export const StyledSelectInput = styled(InputBase)(({ theme }) => ({
   height: 50,
   fontSize: 12,
@@ -45,7 +44,7 @@ export const StyledSelectInput = styled(InputBase)(({ theme }) => ({
 }));
 
 
-//pagination select dropdown
+// pagination select dropdown
 export const PaginationSelectInput = styled(InputBase)(({ theme }) => ({
   marginRight: theme.spacing(2),
   '& .MuiInputBase-input': {
@@ -57,7 +56,6 @@ export const PaginationSelectInput = styled(InputBase)(({ theme }) => ({
     fontWeight: 500,
     padding: '10px 26px 10px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',

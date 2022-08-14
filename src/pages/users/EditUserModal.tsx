@@ -1,6 +1,5 @@
 import {
     Button,
-    Card,
     Checkbox,
     Divider,
     FormControlLabel,
@@ -9,18 +8,14 @@ import {
     Modal,
     Radio,
     RadioGroup,
-    styled,
 } from "@mui/material";
 import {DarkTextField} from "../../components/formInput/InputsDark";
 import FlexBox from "../../components/FlexBox";
 import { H2, H6 } from "../../components/Typography";
 import { useFormik } from "formik";
 import { FC, useState } from "react";
-
-
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
-
 import { useStore } from "../../app/stores/store";
 import { User } from "../../app/models/user";
 import { LoadingButton } from "@mui/lab";
@@ -28,22 +23,22 @@ import { toast } from "material-react-toastify";
 import StyledModalCard from "components/StyledModalCard";
 
 
-// component props interface
+
 interface ModalProps {
     data?: any;
     open: boolean;
     onClose: () => void;
 }
 
-
+// edit user modal, fyi - current user cannot edit themselves
+// current users can edit their info in profile
 
 const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     const { appUserStore, currentUserStore } = useStore();
     const { updateAppUser, loading, deleteAppUser } = appUserStore;
     const { currentUser } = currentUserStore;
 
-
-    const [userFormValues, setUserFormValues] = useState<User>({ //Local State
+    const [userFormValues, setUserFormValues] = useState<User>({ // Local State
         id: data.id,
         firstName: data.firstName,
         lastName: data.lastName,
@@ -53,7 +48,6 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
         roleId: data.roleId,
         imageUrl: data.imageUrl,
         createdOn: data.createdOn
-
     });
 
     const validationSchema = Yup.object({
@@ -61,8 +55,6 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
         lastName: Yup.string().required('The last name is required'),
         email: Yup.string().required().email(),
     })
-
-
 
     const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid } = useFormik({
       initialValues: userFormValues,
@@ -85,9 +77,8 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     }
 
 
-    //to conditionally render form
+    // to conditionally render form
     const isRootUser: boolean = values.roleId === 'root';
-    const isCurrentUser: boolean = values.id === currentUser?.id; //Hide role / Is active
 
     return (
         <Modal open={open} onClose={onClose}>
@@ -103,19 +94,17 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                         className="main-form"
                     >
 
-                        {(!isRootUser && !isCurrentUser) &&
+                        {(!isRootUser) &&
                             <Grid item xs={12}>
                                 <FormGroup>
                                     <FormControlLabel control={
                                         <Checkbox
-
                                             id="isActive"
                                             name="isActive"
                                             checked={values.isActive}
                                             value={values.isActive}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-
                                         />
                                     } label="Is Active" />
                                 </FormGroup>
@@ -183,7 +172,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                         </Grid>
 
 
-                        {(!isRootUser && !isCurrentUser) &&
+                        {(!isRootUser) &&
                             <Grid item xs={12}>
                                 <H6 mb={1}>Role</H6>
                                 <RadioGroup

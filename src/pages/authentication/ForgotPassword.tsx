@@ -11,8 +11,6 @@ import { toast } from "material-react-toastify";
 import * as Yup from "yup";
 
 const ForgotPassword: FC = () => {
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const { currentUserStore, commonStore } = useStore();
 
   const initialValues = {
@@ -34,14 +32,12 @@ const ForgotPassword: FC = () => {
       initialValues,
       validationSchema,
       onSubmit: async (values) => {
-
         const result = await currentUserStore.forgotPassword(values);
         if (result?.succeeded === true) {
           toast.dark("Password reset email sent");
         } else {
           toast.error("Could not send email");
         }
-
       },
     });
 
@@ -97,21 +93,7 @@ const ForgotPassword: FC = () => {
                 helperText={touched.tenant && errors.tenant}
               />
             )}
-
-            {error && (
-              <FormHelperText
-                error
-                sx={{
-                  mt: 2,
-                  fontSize: 13,
-                  fontWeight: 500,
-                  textAlign: "center",
-                }}
-              >
-                {error}
-              </FormHelperText>
-            )}
-
+       
             <Box sx={{ mt: 4 }}>
               <LoadingButton
                 loading={isSubmitting}

@@ -1,7 +1,6 @@
 import {
     Box,
     Card,
-
     styled,
     Table,
     TableBody,
@@ -15,7 +14,6 @@ import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import ScrollBar from "simplebar-react";
 import { HeadTableCell, BodyTableCell } from "components/BasicTable";
-
 
 const TableSample: FC = () => {
     return (
@@ -73,8 +71,6 @@ const TableSample: FC = () => {
                     </TableBody>
                 </Table>
             </ScrollBar>
-
-
         </Card>
     );
 };
@@ -109,7 +105,6 @@ const orderList = [
         totalAmount: "$120,660",
     },
 ];
-
 
 
 export default TableSample;

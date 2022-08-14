@@ -21,16 +21,14 @@ import TableSample from "./sections/TableSample";
 import GraphSample from "./sections/GraphSample";
 
 
-
+// sample list of styled components and their usage
 const UserList: FC = () => {
     const { commonStore } = useStore();
     const { setTitle } = commonStore;
 
-
     useEffect(() => {
         setTitle("UI Samples");
     }, [])
-
 
     return (
 
@@ -84,7 +82,6 @@ const UserList: FC = () => {
                 <GraphSample />
             </Grid>
         </Grid>
-
     );
 };
 

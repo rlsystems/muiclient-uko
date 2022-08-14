@@ -7,7 +7,8 @@ import PopoverMenu from "../../../components/PopoverMenu";
 import { useStore } from "../../../app/stores/store";
 import { useHistory } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-// styled components
+
+
 const StyledSmall = styled(Small)(({ theme }) => ({
   display: "block",
   padding: "5px 1rem",
@@ -80,8 +81,6 @@ const ProfilePopover: FC = () => {
         }
       >
         <Box pt={1}>
-
-
           <StyledSmall
             onClick={() => handleMenuItem("/profile?tab=user-info")}
           >
@@ -98,9 +97,7 @@ const ProfilePopover: FC = () => {
             Change Password
           </StyledSmall>
 
-
           <Divider sx={{ my: 1 }} />
-
           <StyledSmall
             onClick={() => {
               logout();

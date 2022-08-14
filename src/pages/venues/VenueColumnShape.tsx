@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { H6 } from "components/Typography";
-import { store, useStore } from "app/stores/store";
+import { useStore } from "app/stores/store";
 import { Roles } from "app/models/roles";
 import { IconButton, Tooltip } from "@mui/material";
 import MoreOptions from "components/MoreOptions";
@@ -74,7 +74,6 @@ const VenueColumnShape = (paginationState: PaginationState): ColumnShape<Venue>[
             handleMoreClose={handleMenuClose}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
-
           />
           <VenueModal
             open={openModal}

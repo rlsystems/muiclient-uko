@@ -12,15 +12,12 @@ import PencilIcon from "icons/PencilIcon";
 import { FC, useState, MouseEvent } from "react";
 import { NavLink } from "react-router-dom";
 
-
-
 const PopoverSample: FC = () => {
     const [moreEl, setMoreEl] = useState<null | HTMLElement>(null);
     const handleMoreOpen = (event: MouseEvent<HTMLButtonElement>) => {
         setMoreEl(event.currentTarget);
     };
     const handleMoreClose = () => setMoreEl(null);
-
     return (
         <Card sx={{ padding: 3 }}>
             <FlexBox justifyContent={"space-between"}>
@@ -32,7 +29,6 @@ const PopoverSample: FC = () => {
             <Small color="text.disabled">
                 Sample popover menu with list items
             </Small>
-
             <Grid container spacing={6} pt={3} >
                 <Grid item xs={12} md={6}>
                     <ListCard item={sampleItem1} handleMore={handleMoreOpen} />
@@ -42,15 +38,12 @@ const PopoverSample: FC = () => {
                 </Grid>
                 <MoreOptions anchorEl={moreEl} handleMoreClose={handleMoreClose} />
             </Grid>
-
-
-
         </Card>
     );
 };
 
 
-//Sample list card items
+// Sample list card items
 const sampleItem1 = {
     title: "Amazon",
     image: "/static/brand-logo/amazon.svg",
@@ -62,7 +55,7 @@ const sampleItem2 = {
     snippet: "Source control platform",
 };
 
-//Popover Menu 
+// Popover Menu 
 interface MoreOptionsProps {
     open?: boolean;
     anchorEl: HTMLElement | null;
@@ -93,7 +86,5 @@ const MoreOptions: FC<MoreOptionsProps> = ({ anchorEl, handleMoreClose }) => {
         </Menu>
     );
 };
-
-
 
 export default PopoverSample;

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { H6, Small } from "components/Typography";
 import EditIconButton from "components/EditIconButton";
-
 import EditTenantModal from "./EditTenantModal";
 import { Box } from "@mui/material";
 
-
+// columns for the tenants table
 const TenantColumnShape = [
   {
     Header: "Key",
@@ -31,8 +30,7 @@ const TenantColumnShape = [
     accessor: "name",
     minWidth: 250,
     Cell: ({ row }: any) => {
-
-      const { name, id } = row.original;
+      const { name } = row.original;
       return (
         <H6 color="text.primary"
           sx={{ textTransform: "capitalize" }}
@@ -64,11 +62,9 @@ const TenantColumnShape = [
       const [openModal, setOpenModal] = useState(false);
       const { id } = row.original;
 
-
       return (
         <>
           {id != "root" ?<EditIconButton onClick={() => setOpenModal(true)} /> : <Box display={'flex'} justifyContent={'center'} alignItems={'center'} sx={{ height: "36px" }}>N/A</Box>}
-          
           {openModal && <EditTenantModal
             open={openModal}
             data={row.original}

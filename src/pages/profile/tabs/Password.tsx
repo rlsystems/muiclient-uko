@@ -13,9 +13,7 @@ import checkPasswordStrength from "app/utils/checkPasswordStrength";
 const Password: FC = () => {
   const { currentUserStore, commonStore } = useStore();
   const { changePassword } = currentUserStore;
-
   const [strength, setStrength] = useState(0);
-
 
   const [passwordFormValues, setPasswordFormValues] = useState<ChangePasswordRequest>({ //Local State
     password: "",
@@ -37,7 +35,6 @@ const Password: FC = () => {
     initialValues: passwordFormValues,
     validationSchema: fieldValidationSchema,
     onSubmit: async (values) => {
-
       const result = await changePassword(values);
       if (result?.succeeded === true) {
         toast.dark("Password updated");
@@ -58,7 +55,6 @@ const Password: FC = () => {
     setStrength(passwordStrength);
   }
 
-
   return (
     <Card
       sx={{
@@ -73,7 +69,6 @@ const Password: FC = () => {
     >
       <H5>Change Your Password</H5>
       <form onSubmit={handleSubmit}>
-
         <Grid container columnSpacing={6}>
           <Grid item xs={12} md={6}>
             <LightTextField
@@ -144,10 +139,7 @@ const Password: FC = () => {
             </LoadingButton>
           </Grid>
         </Grid>
-
-
       </form>
-
     </Card>
   );
 };

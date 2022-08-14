@@ -3,7 +3,7 @@ import { Box, Card, FormHelperText, LinearProgress } from "@mui/material";
 import { useStore } from "app/stores/store";
 import checkPasswordStrength from "app/utils/checkPasswordStrength";
 import FlexBox from "components/FlexBox";
-import {LightTextField} from "components/formInput/InputsLight";
+import { LightTextField } from "components/formInput/InputsLight";
 import { H1, Small } from "components/Typography";
 import { useFormik } from "formik";
 import React, { FC, useState } from "react";
@@ -23,7 +23,7 @@ const ResetPassword: FC = () => {
         confirmPassword: "",
         tenant: "root"
     };
-    // form field value validation schema
+
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .email("Must be a valid email")
@@ -39,32 +39,25 @@ const ResetPassword: FC = () => {
             .required("Tenant key is required"),
     });
 
-
     const { errors, values, touched, handleBlur, handleChange, handleSubmit, isSubmitting, isValid } =
         useFormik({
             initialValues,
             validationSchema,
             onSubmit: async (values) => {
-
                 const result = await currentUserStore.resetPassword(values);
                 if (result?.succeeded === true) {
                     toast.dark("Password reset successfully");
                 } else {
                     toast.error("Problem resetting password");
                 }
-
             },
         });
 
-
-    //repeated here and in user profile --- place in utility function??
-    //Also, what type should 'e' be -- some key press event?
     const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         handleChange(e);
-
         const newPassword = e.target.value;
         const passwordStrength = checkPasswordStrength(newPassword, {
-        checkFor: ['length', 'lowerCase', 'upperCase', 'number', 'specialCharacter']
+            checkFor: ['length', 'lowerCase', 'upperCase', 'number', 'specialCharacter']
         }).strength
         setStrength(passwordStrength);
     }

@@ -8,9 +8,6 @@ import { H5, Small } from "components/Typography";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
-
-
-
 const TextInputs: FC = () => {
     return (
         <Card sx={{ padding: 3}}>
@@ -23,7 +20,6 @@ const TextInputs: FC = () => {
             <Small color="text.disabled">
                 Default style text inputs
             </Small>
-
             <Grid container spacing={4} marginTop={.5}>
                 <Grid item xs={12} sm={6}>
                     <LightTextField
@@ -67,13 +63,9 @@ const TextInputs: FC = () => {
                         label="Description"
                     />
                 </Grid>
-
             </Grid>
-
         </Card>
     );
 };
-
-
 
 export default TextInputs;

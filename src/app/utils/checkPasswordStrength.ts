@@ -1,4 +1,3 @@
-
 export type CheckPasswordValidationOptionsType = 'length' | 'lowerCase' | 'upperCase' | 'number' | 'specialCharacter';
 
 export type CheckPasswordOptionsType = {

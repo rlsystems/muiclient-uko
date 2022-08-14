@@ -9,7 +9,6 @@ import {
 import FlexBox from "components/FlexBox";
 import { StyledSelectInput } from "components/formInput/InputsLight";
 import { DarkMenuItem, DarkStyledSelectInput } from "components/formInput/InputsDark";
-
 import { H5, Small } from "components/Typography";
 import { FC, useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -87,8 +86,5 @@ const Selections: FC = () => {
         </Card>
     );
 };
-
-
-
 
 export default Selections;

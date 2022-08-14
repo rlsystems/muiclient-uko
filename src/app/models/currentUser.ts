@@ -12,7 +12,6 @@ export interface CurrentUser {
     darkModeDefault: boolean;
     pageSizeDefault: number;
     createdOn: string;
-
 }
 
 // Update your profile (includes image upload, excludes role and active)
@@ -25,7 +24,6 @@ export interface UpdateProfileRequest {
     imageFile?: Blob;
     imageUrl: string;
     deleteCurrentImage: boolean;
-
 }
 
 // Update your preferences

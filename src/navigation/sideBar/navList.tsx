@@ -2,7 +2,6 @@ import { Roles } from "app/models/roles";
 import Icons from "../../icons/sidebar";
 
 const navList = [
-
   {
     title: "UI Component Samples",
     Icon: Icons.PagesIcon,
@@ -31,7 +30,6 @@ const navList = [
     roles: [Roles.root],
     topDivider: false
   }
-
 ];
 
 export default navList;

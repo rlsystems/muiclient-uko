@@ -12,10 +12,8 @@ import FlexBox from "../../components/FlexBox";
 import { H2, H6 } from "../../components/Typography";
 import { useFormik } from "formik";
 import { FC, useState } from "react";
-
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
-
 import { useStore } from "../../app/stores/store";
 import { LoadingButton } from "@mui/lab";
 import { Tenant } from "../../app/models/tenant";
@@ -23,19 +21,17 @@ import StyledModalCard from "components/StyledModalCard";
 import { toast } from "material-react-toastify";
 
 
-// component props interface
 interface ModalProps {
     data?: any;
     open: boolean;
     onClose: () => void;
 }
 
-
 const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
     const { tenantStore } = useStore();
     const { updateTenant, loading } = tenantStore;
 
-    const [tenantFormValues] = useState<Tenant>({ //Local State
+    const [tenantFormValues] = useState<Tenant>({ // local state
         id: data.id,
         name: data.name,
         isActive: data.isActive,
@@ -43,11 +39,11 @@ const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
     });
 
     const handleClose = () => {
-        resetForm(); //method from Formik
-        onClose(); //method from Mui Modal
+        resetForm(); // method from Formik
+        onClose(); // method from Mui Modal
     }
 
-    //gets passed to formik
+    // validation schema - passed to formik
     const validationSchema = Yup.object({
         name: Yup.string().required('Tenant name is required'),
     })

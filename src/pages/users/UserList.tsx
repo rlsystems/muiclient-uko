@@ -1,9 +1,8 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { Box, Button, Grid, styled } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
 import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
-
 import { useStore } from 'app/stores/store';
 import ReactTable from "components/dataTables/reactTable/ReactTable";
 import GlobalFilter from "components/dataTables/reactTable/GlobalFilter";
@@ -11,7 +10,7 @@ import RegisterUserModal from "./RegisterUserModal";
 import UserColumnShape from "./UserColumnShape";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
 import { CustomTableOptions } from "app/models/reactTable";
-import { H5, H6 } from "components/Typography";
+import { H6 } from "components/Typography";
 
 
 const UserList: FC = () => {
@@ -59,13 +58,11 @@ const UserList: FC = () => {
 
   useEffect(() => {
     loadAppUsers();
-    console.log('effect load app users')
   }, [loadAppUsers])
 
 
   return (
     <Box pt={2} pb={4}>
-
       <Grid container spacing={2} mb={2}>
         <Grid item xs={12} md={6} >
           <GlobalFilter
@@ -87,7 +84,6 @@ const UserList: FC = () => {
         </Grid>
       </Grid>
 
-
       {openModal && <RegisterUserModal
         open={openModal}
         data={null}
@@ -108,7 +104,6 @@ const UserList: FC = () => {
         isLoading={loadingInitial}
       />
       <H6 sx={{fontSize: "12px", fontWeight: "300", color: "#94A4C4"}}>Client-side pagination with ReactTable example</H6>
-
     </Box>
   );
 };

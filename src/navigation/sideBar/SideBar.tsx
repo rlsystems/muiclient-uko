@@ -26,7 +26,6 @@ const MainMenu = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-
 const StyledListItemButton = styled(ListItemButton)(() => ({
   marginBottom: "1rem",
   justifyContent: "center",
@@ -45,30 +44,24 @@ const SideBar = () => {
         <StyledListItemButton disableRipple>
           <img src="/logo/nanoLogo.png" alt="Nano Logo" width={31} />
         </StyledListItemButton>
-
         <ScrollBar style={{ maxHeight: "calc(100% - 50px)" }}>
           {navList.filter(item => !item.roles || item.roles.includes(currentUserStore.currentUser?.roleId as Roles)).map((nav, index) => (
             <Fragment key={index}>
               {nav.topDivider && <Divider variant="middle" sx={{ marginBottom: "15px" }} />}
-
               <Tooltip title={nav.title} placement="right" >
-
                 <StyledListItemButton
                   disableRipple
                   onClick={() => history.push(nav.path)}
                 >
-
                   <nav.Icon
                     sx={{
                       color:
                         nav.path === pathname ? "primary.main" : "secondary.400",
-                      //borderTop: "1px solid red"
                     }}
                   />
                 </StyledListItemButton>
               </Tooltip>
             </Fragment>
-
           ))}
         </ScrollBar>
       </List>

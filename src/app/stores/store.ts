@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
-
 import AppUserStore from "./appUserStore";
 import CommonStore from "./commonStore";
 import TenantStore from "./tenantStore";
 import CurrentUserStore from "./currentUserStore";
 import VenueStore from "./venueStore";
 
+// base Mobx store
 interface Store {
     commonStore: CommonStore;
     currentUserStore: CurrentUserStore;
@@ -22,8 +22,8 @@ export const store: Store = {
     venueStore: new VenueStore()
 }
 
-export const StoreContext = createContext(store); //store context is an object with activityStore inside
+export const StoreContext = createContext(store); 
 
-export function useStore() { //this is a hook 
+export function useStore() { 
     return useContext(StoreContext);
 }

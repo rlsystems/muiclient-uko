@@ -1,9 +1,9 @@
 import { styled, TableCell } from "@mui/material";
 
 const commonCSS = {
-    minWidth: 120, //default col width
-    "&:nth-of-type(2)": { minWidth: 170 }, //makes product name column wider
-    "&:nth-of-type(3)": { minWidth: 80 }, //price column shorter
+    minWidth: 120, // default col width
+    "&:nth-of-type(2)": { minWidth: 170 }, // makes product name column wider (in sample)
+    "&:nth-of-type(3)": { minWidth: 80 }, // price column shorter (in sample)
 };
 
 

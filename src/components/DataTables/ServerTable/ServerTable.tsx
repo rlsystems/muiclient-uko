@@ -11,18 +11,20 @@ import {
   TableRow,
 } from "@mui/material";
 import ScrollBar from "simplebar-react";
-
 import { PAGE_CHANGED, PAGE_SIZE_CHANGED, PaginationDispatchType, PaginationStateType } from "app/hooks/usePaginationMetaData";
 import { PaginationSelectInput } from "components/formInput/InputsLight";
 import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/dataTables/DataTable.styled";
 
+// this is a custom component which receives pagination state, used with pagination api endpoints
+// server table does not use react-table however it is styled the same
+
 export interface ColumnShape<T> {
   header: string
-  accessor: keyof T | null //similar to an ID
+  accessor: keyof T | null // similar to an id
   minWidth: string | number
   maxWidth?: string | number
   width?: string | number
-  renderRow?: (row: any) => React.ReactNode //like Cell (function) from react table
+  renderRow?: (row: any) => React.ReactNode 
 }
 
 type ServerTableProps<T> = {
@@ -34,8 +36,6 @@ type ServerTableProps<T> = {
   isLoading?: boolean
 }
 
-// Record is a generic utility type in TS
-
 const ServerTable = <T extends Record<string, any>>({
   data,
   columns,
@@ -44,10 +44,9 @@ const ServerTable = <T extends Record<string, any>>({
   hidePagination,
   isLoading }: ServerTableProps<T>) => {
   const handleChangePage = async (_: any, newPage: number) => {
-    if (!paginationDispatch) return //if no dispatch return nothing
-    paginationDispatch({ type: PAGE_CHANGED, payload: newPage - 1 }); //build in dispatch - this is a hook
+    if (!paginationDispatch) return
+    paginationDispatch({ type: PAGE_CHANGED, payload: newPage - 1 }); 
   }
-
 
   const handleChangeRowsPerPage = async (event: SelectChangeEvent<number>) => {
     if (!paginationDispatch) return
@@ -73,7 +72,6 @@ const ServerTable = <T extends Record<string, any>>({
                 </StyledTableHeaderCell>
               )}
             </TableRow>
-
           </TableHead>
 
           {!isLoading &&

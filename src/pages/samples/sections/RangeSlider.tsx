@@ -8,10 +8,8 @@ import { H5, Small, Tiny } from "components/Typography";
 import { FC, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-
 const RangeSlider: FC = () => {
     const [value, setValue] = useState<number[]>([100, 1000]);
-
     const handleChange = (e: Event, value: number | number[]) => {
         setValue(value as number[]);
     };
@@ -29,7 +27,6 @@ const RangeSlider: FC = () => {
             </Small>
 
             <Box mt={3} width="70%">
-
                 <Slider
                     disableSwap
                     color="primary"
@@ -67,11 +64,9 @@ const RangeSlider: FC = () => {
                     </Tiny>
                 </FlexBox>
             </Box>
-
         </Card>
     );
 };
-
 
 
 export default RangeSlider;

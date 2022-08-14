@@ -7,7 +7,6 @@ import {
   CircularProgress,
   Divider,
   FormControlLabel,
-  FormHelperText,
   MenuItem,
   Select,
   styled,
@@ -28,7 +27,6 @@ import { toast } from "material-react-toastify";
 import { KeyboardArrowDown } from "@mui/icons-material";
 
 const Login: FC = () => {
-  const [error, setError] = useState("");
   const { currentUserStore, commonStore, tenantStore } = useStore();
   const { loadTenants, tenantsSorted, loading } = tenantStore;
 
@@ -168,21 +166,6 @@ const Login: FC = () => {
               </Link>
             </FlexBox>
 
-
-            {error && (
-              <FormHelperText
-                error
-                sx={{
-                  mt: 2,
-                  fontSize: 13,
-                  fontWeight: 500,
-                  textAlign: "center",
-                }}
-              >
-                {error}
-              </FormHelperText>
-            )}
-
             <Box sx={{ mt: 4 }}>
               <LoadingButton
                 sx={{ mb: 2 }}
@@ -244,7 +227,7 @@ const Login: FC = () => {
                     >
 
                       {tenantsSorted.map((item) => (
-                        <MenuItem value={item.id} sx={{ fontSize: 12, fontWeight: 500, textTransform: "capitalize" }}>
+                        <MenuItem key={item.id} value={item.id} sx={{ fontSize: 12, fontWeight: 500, textTransform: "capitalize" }}>
                           {item.name}
                         </MenuItem>
                       ))}

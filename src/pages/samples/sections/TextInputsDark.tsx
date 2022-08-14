@@ -8,9 +8,6 @@ import { H5, Small } from "components/Typography";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
-
-
-
 const TextInputsDark: FC = () => {
     return (
         <Card sx={{ padding: 3 }}>
@@ -23,7 +20,6 @@ const TextInputsDark: FC = () => {
             <Small color="text.disabled">
                 Alternate style dark text inputs
             </Small>
-
             <Grid container spacing={4} marginTop={.5}>
                 <Grid item xs={12} sm={6}>
                     <DarkTextField
@@ -67,13 +63,10 @@ const TextInputsDark: FC = () => {
                         placeholder="Description"
                     />
                 </Grid>
-
             </Grid>
-
         </Card>
     );
 };
-
 
 
 export default TextInputsDark;

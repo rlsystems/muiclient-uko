@@ -1,11 +1,7 @@
 import { alpha, Pagination, styled as muiStyled, TableRow, TableCell } from "@mui/material";
 import styled from "@emotion/styled";
 
-
-
 // Shared styles for both Server Table and React Table
-
-
 export const StyledTableHeaderCell = styled(TableCell, {shouldForwardProp: prop => prop !== 'column'})<{column: any}>`
   padding-top: 0;
   padding-bottom: 0;

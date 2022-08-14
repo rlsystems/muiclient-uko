@@ -1,25 +1,20 @@
 import { Box, Button, Card, Grid, styled, useTheme } from "@mui/material";
-
-
 import { FC, useEffect, useState } from "react";
 import { H3 } from "../../components/Typography";
 import convertToSlug from "../../app/utils/convertSlug";
 import FlexBox from "../../components/FlexBox";
-
 import PasswordIcon from "../../icons/PasswordIcon";
 import ProfileIcon from "../../icons/ProfileIcon";
-
 import UserInfo from "./tabs/UserInfo/UserInfo";
 import Preferences from "./tabs/Preferences";
 import Password from "./tabs/Password";
-
 import { useStore } from "../../app/stores/store";
 import SettingIcon from "../../icons/SettingIcon";
 import { useHistory, useLocation } from "react-router-dom";
 import React from "react";
 import queryString from "query-string";
 
-// styled component
+
 const StyledButton = styled(Button)(() => ({
   fontSize: 12,
   borderRadius: 0,
@@ -30,10 +25,8 @@ const StyledButton = styled(Button)(() => ({
 
 const AccountSettings: FC = () => {
   const { commonStore } = useStore();
-
   const location = useLocation();
   const history = useHistory();
-
 
   useEffect(() => {
     commonStore.setTitle("Profile");
@@ -42,14 +35,11 @@ const AccountSettings: FC = () => {
   const theme = useTheme();
   const [active, setActive] = useState("user-info");
 
-
-
   React.useEffect(() => {
     if (!location.search) return
     const parsedQuery = queryString.parse(location.search)
     if (!parsedQuery.tab) return
     setActive(parsedQuery.tab as string);
-    
   }, [location])
 
   const style = {
@@ -107,7 +97,6 @@ const AccountSettings: FC = () => {
           {active === convertToSlug(tabList[0].name) && <UserInfo />}
           {active === convertToSlug(tabList[1].name) && <Preferences />}
           {active === convertToSlug(tabList[2].name) && <Password />}
-
         </Grid>
       </Grid>
     </Box>
@@ -131,8 +120,6 @@ const tabList = [
     Icon: PasswordIcon,
   }
 ];
-
-
 
 
 export default AccountSettings;

@@ -28,7 +28,6 @@ const UserColumnShape = [
             >
               (You)
             </Small>}</H6>
-
           </FlexBox>
         </FlexBox>
       );
@@ -40,8 +39,6 @@ const UserColumnShape = [
     minWidth: 200,
     canFilter: false,
     Cell: ({ value }: any) => (
-
-
       <Small
         sx={{
           borderRadius: 10,
@@ -82,16 +79,11 @@ const UserColumnShape = [
     Cell: ({ row }: any) => {
       const { currentUserStore } = useStore();
       const { currentUser } = currentUserStore;
-
       const [openModal, setOpenModal] = useState(false);
       const { id } = row.original;
 
-
-
       return (
-
         <>
-
           {id != currentUser?.id ?
             <EditIconButton onClick={() => setOpenModal(true)} />
             :
@@ -103,7 +95,6 @@ const UserColumnShape = [
             data={row.original}
             onClose={() => setOpenModal(false)}
           />}
-
         </>
       );
     },

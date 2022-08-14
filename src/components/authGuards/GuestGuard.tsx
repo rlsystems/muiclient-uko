@@ -6,7 +6,6 @@ interface GuestGuardProps {
   children: ReactNode;
 }
 
-
 // this handles the initial redirection
 const GuestGuard = ({ children }: GuestGuardProps) => {
   const { currentUserStore: {isLoggedIn} } = useStore();

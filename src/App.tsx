@@ -1,7 +1,6 @@
 
 import * as React from 'react';
 import { useEffect } from 'react';
-
 import { StyledEngineProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
@@ -10,33 +9,33 @@ import { nanoTheme } from "./theme";
 import { observer } from 'mobx-react-lite';
 import { useLocation } from 'react-router-dom';
 import { ToastContainer } from 'material-react-toastify';
-import { useStore } from './app/stores/store'; //main mobx store
-import LoadingScreen from './components/LoadingScreen';
 import routes, { renderRoutes } from './routes';
+import { useStore } from './app/stores/store'; 
+import LoadingScreen from './components/LoadingScreen';
 
 function App() {
-  const location = useLocation(); // returns location object from router, useful for the key
+  const location = useLocation(); // returns location object from router, useful for the key if neexed
   const { commonStore, currentUserStore } = useStore();
   const isDevelopment: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 
-  //Get the current user (otherwise reloading browser will clear mobx)
+  // Get the current user (otherwise reloading browser will clear mobx)
   useEffect(() => {
-    if (commonStore.token) {
+    if (commonStore.token) { // token present, get user from API
       
       if (currentUserStore.currentUser) return
       currentUserStore.getCurrentUser().finally(() => commonStore.setAppLoaded());
 
-    } else {
+    } else { // no token present, not logged in
       commonStore.setAppLoaded();
     }
   }, [commonStore, currentUserStore])
 
-  // check if there is a subdomain given --> will hide the tenant fields on client, API will detect the subdomain from the URI if present and use that
+  // simple way of checking if there is a subdomain given --> will hide the tenant fields on client, API will detect the subdomain from the URI if present and use that
   useEffect(() => {
     const host = window.location.host;
     const subdomain = host.split('.');
-    const minimumSegments = isDevelopment ? 2 : 3;
+    const minimumSegments = isDevelopment ? 2 : 3; // adjust to your url structure needs 
 
     if (subdomain.length == minimumSegments) {
       commonStore.setSubdomain();
@@ -46,7 +45,7 @@ function App() {
   // App theme
   const appTheme = nanoTheme({
     direction: "ltr",
-    colorMode: commonStore.darkMode ? 'dark' : 'light',
+    colorMode: commonStore.darkMode ? 'dark' : 'light', // check user preferences
     isResponsiveFontSizes: true,
   });
 

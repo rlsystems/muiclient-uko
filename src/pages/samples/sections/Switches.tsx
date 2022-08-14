@@ -49,15 +49,10 @@ const Switches: FC = () => {
                             },
                         }}
                     />
-
                 </Grid>
-
             </Grid>
-
         </Card>
     );
 };
-
-
 
 export default Switches;

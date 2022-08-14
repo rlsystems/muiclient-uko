@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 import { darken } from "@mui/material";
 
-
-//text that appears after server table search with Clear option
+//text that appears after searching with server table
 const ResultText = styled.a<{color?: string, italic?: boolean}>`
   color: ${p => p.color || "currentColor"};
   text-decoration: none;

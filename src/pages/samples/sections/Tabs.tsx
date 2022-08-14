@@ -12,11 +12,9 @@ import { NavLink } from "react-router-dom";
 
 const Tabs: FC = () => {
     const [tabValue, setTabValue] = useState("1");
-
     const handleChange = (e: SyntheticEvent, value: string) => {
         setTabValue(value);
     };
-
 
     return (
         <Card sx={{ padding: 3 }}>
@@ -31,7 +29,6 @@ const Tabs: FC = () => {
             </Small>
 
             <Box mt={1}>
-
                 <TabContext value={tabValue}>
                     <TabList
                         onChange={handleChange}
@@ -60,13 +57,9 @@ const Tabs: FC = () => {
                         </Box>
                     </TabPanel>
                 </TabContext>
-
             </Box>
-
         </Card>
     );
 };
-
-
 
 export default Tabs;

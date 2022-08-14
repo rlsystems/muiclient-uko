@@ -122,7 +122,6 @@ const ReactTable: FC<ReactTableProps> = (props) => {
 
       {!hidePagination && (
         <Stack alignItems={{xs: "flex-end", sm: "center"}} spacing={{xs: 1, sm: 0}} justifyContent={{xs: "flex-start", sm: "flex-end"}} marginY={1} direction={{xs: "column-reverse", sm: "row"}}>
-          {/* make this select the same blue color, same size if possible, and position it to the left of the pagination*/}
           <Select
             value={pageSize}
             onChange={handleChangeRowsPerPage}

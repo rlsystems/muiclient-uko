@@ -8,10 +8,8 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { observer } from "mobx-react-lite";
-
 import { LoadingButton } from "@mui/lab";
 import { toast } from "material-react-toastify";
-
 import {DarkTextField} from "components/formInput/InputsDark";
 import FlexBox from "components/FlexBox";
 import { H2, H6 } from "components/Typography";
@@ -71,7 +69,6 @@ const VenueModal: FC<Props> = ({ open, onClose, isEdit, data, paginationState })
     resetForm();
     onClose();
   }
-
 
   return (
     <Modal open={open} onClose={handleClose}>

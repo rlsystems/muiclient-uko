@@ -1,8 +1,7 @@
 import { InputBase, MenuItem, styled, TextField, TextFieldProps } from "@mui/material";
 import { FC } from "react";
 
-
-//Text Inputs
+// Text Inputs
 const StyledDarkTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
   "&:hover, & .MuiOutlinedInput-root:hover": {
     "& .MuiOutlinedInput-notchedOutline": {

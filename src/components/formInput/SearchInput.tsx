@@ -2,7 +2,6 @@ import { InputBase, InputBaseProps, styled } from "@mui/material";
 import SearchIcon from "../../icons/SearchIcon";
 import { FC } from "react";
 
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({ 
   height: 45,
   fontSize: 13,

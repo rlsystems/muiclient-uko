@@ -119,10 +119,7 @@ const UserInfo: FC = () => {
               <Tiny color="text.disabled" sx={{ textTransform: "capitalize" }}>{currentUser?.roleId} Level User</Tiny>
             </Box>
           </FlexBox>
-
-
         </FlexBox>
-
         <Grid container spacing={4} mt={1}>
           <Grid item xs={12} sm={6}>
             <LightTextField
@@ -174,12 +171,10 @@ const UserInfo: FC = () => {
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="flex-end" mt={3}>
             <LoadingButton 
- 
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}
               loading={isUpdating}
-
             >
               Save Changes
             </LoadingButton>

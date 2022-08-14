@@ -9,15 +9,11 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { H2 } from "../../components/Typography";
-
 import { FC } from "react";
-
 import ProfileButton from "./profileButton/ProfileButton";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import ThemeIcon from "../../icons/ThemeIcon";
-//
-
 
 
 // custom styled components
@@ -43,12 +39,9 @@ const StyledIconButton = styled(IconButton)(() => ({
 }));
 
 
-
-
-// root component
+// main component
 const Navbar: FC = () => {
   const { commonStore } = useStore();
-  const downMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
 
   let mode = 'dark';
   if (commonStore.darkMode === true) {
@@ -62,7 +55,6 @@ const Navbar: FC = () => {
   return (
     <StyledNavbar position="sticky">
       <StyledToolBar>
-
         <H2
           fontSize={21}
           lineHeight={0}
@@ -72,9 +64,7 @@ const Navbar: FC = () => {
         >
           {commonStore.title}
         </H2>
-
         <Box flexGrow={1} ml={1} />
-
 
         {mode === "light" ? (
           <StyledIconButton
@@ -91,7 +81,6 @@ const Navbar: FC = () => {
             <Brightness4 />
           </StyledIconButton>
         )}
-
 
         <ProfileButton />
       </StyledToolBar>

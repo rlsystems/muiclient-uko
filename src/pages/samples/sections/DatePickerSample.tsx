@@ -7,12 +7,10 @@ import {
 } from "@mui/material";
 import { DatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-
 import FlexBox from "components/FlexBox";
 import { H5, Small } from "components/Typography";
-import {DarkTextField} from "components/formInput/InputsDark";
-import {LightTextField} from "components/formInput/InputsLight";
-
+import { DarkTextField } from "components/formInput/InputsDark";
+import { LightTextField } from "components/formInput/InputsLight";
 
 const DatePickerSample: FC = () => {
     const [value, setValue] = React.useState<Date | null>(
@@ -24,7 +22,7 @@ const DatePickerSample: FC = () => {
     };
 
     return (
-        <Card sx={{ padding: 3}}>
+        <Card sx={{ padding: 3 }}>
             <FlexBox justifyContent={"space-between"}>
                 <H5>Date & Time Picker</H5>
                 <NavLink to={{ pathname: "https://mui.com/x/react-date-pickers/getting-started/" }} target="_blank">
@@ -71,13 +69,10 @@ const DatePickerSample: FC = () => {
                             )}
                         />
                     </LocalizationProvider>
-
                 </Grid>
             </Grid>
         </Card >
     );
 };
-
-
 
 export default DatePickerSample;

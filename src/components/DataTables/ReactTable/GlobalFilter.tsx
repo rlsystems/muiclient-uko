@@ -22,7 +22,6 @@ const GlobalFilter: React.FC<GlobalFilterProps> = ({
     setGlobalFilter(value || undefined)
   }, 200) // 200 is the delay for the user input
   
-  
   return (
     <SearchInput
       value={value || ''}

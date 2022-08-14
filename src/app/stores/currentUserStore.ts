@@ -1,18 +1,14 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import agent from "../api/agent";
-import { User } from "../models/user";
 import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, CurrentUser } from "../models/currentUser";
 import { UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
 import { store } from "./store";
 import { history } from '../..';
-import { Venue } from "../models/venue";
-import { Tenant } from "app/models/tenant";
 
-
-// operations for current user - edit profile, update preferences
+// current user - edit profile, update preferences, change password, etc
 export default class CurrentUserStore {
     currentUser: CurrentUser | null = null;
-    loadingInitial: boolean = false;
+    loadingInitial = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -24,16 +20,19 @@ export default class CurrentUserStore {
         });
     }
 
+    // helper method, check if logged in
     get isLoggedIn() {
         return !!this.currentUser;
     }
 
+    // loading setter (initial page load)
     setLoadingInitial = (state: boolean) => {
         runInAction(() => {
             this.loadingInitial = state;
         })
     }
 
+    // login - get token, then set current user and push to venues view 
     login = async (creds: UserLogin) => {
         store.commonStore.setTenant(creds.tenant);
         try {
@@ -51,18 +50,17 @@ export default class CurrentUserStore {
         }
     };
 
+    // set all local variables to blank, remove token, push user to login url
     logout = () => {
-        store.commonStore.setToken(null); // set all local variables to blank, remove token, etc
-
-        store.appUserStore.appUserRegistry = new Map<string, User>();
-
-        store.tenantStore.tenantRegistry = new Map<string, Tenant>();
-
+        store.commonStore.setToken(null); 
+        store.appUserStore.users = [];
+        store.tenantStore.tenants = [];
         window.localStorage.removeItem('jwt');
         this.currentUser = null;
         history.push('/');
     };
 
+    // get current user from api
     getCurrentUser = async () => {
         try {
             const result = await agent.Account.current();
@@ -77,6 +75,7 @@ export default class CurrentUserStore {
         }
     }
 
+    // update current user 
     updateCurrentUser = async (user: UpdateProfileRequest) => {
         runInAction(() => {
             store.appUserStore.loading = true;
@@ -84,7 +83,9 @@ export default class CurrentUserStore {
         try {
             let updatedUser = await agent.Account.updateProfile(user);
             runInAction(() => {
-                store.appUserStore.appUserRegistry.set(user.id, updatedUser.data);
+                const userIndex = store.appUserStore.users.findIndex(x => x.id == user.id);
+                store.appUserStore.users[userIndex] = updatedUser.data; // also update the users array
+
                 this.currentUser = updatedUser.data;
                 store.appUserStore.loading = false;
             })
@@ -95,16 +96,17 @@ export default class CurrentUserStore {
         }
     }
 
+    // update preferences (page size, dark mode default)
     updatePreferences = async (updatePreferencesRequest: UpdatePreferencesRequest) => {
         try {
             const response = await agent.Account.updatePreferences(updatePreferencesRequest);
-
             return response
         } catch (error) {
             console.log(error);
         }
     }
 
+    // change password
     changePassword = async (changePasswordRequest: ChangePasswordRequest) => {
         try {
             const response = await agent.Account.changePassword(changePasswordRequest);
@@ -114,6 +116,7 @@ export default class CurrentUserStore {
         }
     }
 
+    // forgot password
     forgotPassword = async (forgotPasswordRequest: ForgotPasswordRequest) => {
         store.commonStore.setTenant(forgotPasswordRequest.tenant);
         try {
@@ -124,6 +127,7 @@ export default class CurrentUserStore {
         }
     }
 
+    // reset password
     resetPassword = async (resetPasswordRequest: ResetPasswordRequest) => {
         store.commonStore.setTenant(resetPasswordRequest.tenant);
         try {

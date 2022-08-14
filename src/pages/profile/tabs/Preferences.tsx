@@ -14,23 +14,14 @@ import { LoadingButton } from "@mui/lab";
 const Preferences: FC = () => {
   const { currentUserStore } = useStore();
   const { currentUser, updatePreferences, getCurrentUser } = currentUserStore;
-
-  // const defaultPageSize = currentUser ? currentUser?.pageSizeDefault : "10";
   const darkModeDefault = currentUser ? currentUser?.darkModeDefault : true;
-
-
-  //const [pageSize, setPageSize] = useState(defaultPageSize);
-
   const [isUpdating, setIsUpdating] = useState(false);
-
-
 
   const [preferencesFormValues, setPreferencesFormValues] = useState<UpdatePreferencesRequest>({ //Local State
     darkModeDefault: darkModeDefault,
     pageSizeDefault: currentUser?.pageSizeDefault || 10,
 
   });
-
 
   const { values, errors, touched, handleChange, handleSubmit, handleBlur, isSubmitting, isValid, dirty, setFieldValue, resetForm } = useFormik({
     initialValues: preferencesFormValues,
@@ -45,7 +36,6 @@ const Preferences: FC = () => {
 
       setPreferencesFormValues(values); 
       await getCurrentUser();
-
     },
   });
 
@@ -54,7 +44,6 @@ const Preferences: FC = () => {
       <H5 mb={2}>Preferences</H5>
       <form onSubmit={handleSubmit}>
         <Grid container gap={4} >
-
           <Grid item xs={7} mt={2}>
             <H6 mb={1}>Page Size Default</H6>
             <Select
@@ -65,14 +54,11 @@ const Preferences: FC = () => {
               IconComponent={() => <KeyboardArrowDown />}
               input={<StyledSelectInput />}
             >
-
               {[5, 10, 25, 50, 100].map((item) => (
                 <MenuItem value={item} sx={{ fontSize: 12, fontWeight: 500 }}>
                   {item}
                 </MenuItem>
-
               ))}
-
             </Select>
           </Grid>
           <Grid item xs={7}>
@@ -90,24 +76,18 @@ const Preferences: FC = () => {
               sx={{ mt: "1rem" }}
             />
           </Grid>
-
-
         </Grid>
         <FlexBox justifyContent={"flex-end"}>
           <LoadingButton
-            
             type="submit"
             variant="contained"
             disabled={!dirty || !isValid || isSubmitting}
-            loading={isUpdating}
-          
+            loading={isUpdating} 
           >
             Save Changes
           </LoadingButton>
         </FlexBox>
       </form>
-
-
     </Card>
   );
 };

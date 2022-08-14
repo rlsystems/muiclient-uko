@@ -9,7 +9,6 @@ import { H5, Small } from "components/Typography";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
-
 const Buttons: FC = () => {
     return (
         <Card sx={{ padding: 3 }}>
@@ -67,7 +66,5 @@ const Buttons: FC = () => {
         </Card>
     );
 };
-
-
 
 export default Buttons;

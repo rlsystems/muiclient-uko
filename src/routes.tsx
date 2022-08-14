@@ -34,15 +34,14 @@ const TenantListPage = Loadable(lazy(() => import('./pages/tenants/TenantList'))
 const UserListPage = Loadable(lazy(() => import('./pages/users/UserList')));
 const VenueListPage = Loadable(lazy(() => import('./pages/venues/VenueList')));
 const SampleListPage = Loadable(lazy(() => import('./pages/samples/SampleList')));
-
 const AccountSettingsPage = Loadable(lazy(() => import('./pages/profile/AccountSettings')));
 
 export const renderRoutes = (routes: RouteType[] = []) => (
   <Switch>
     {routes.map((route, i) => {
-      const Guard = route.guard || React.Component; //creating a component
+      const Guard = route.guard || React.Component; 
       const Layout = route.layout || Fragment;
-      const Component = route.component || React.Component; //this is the actual page
+      const Component = route.component || React.Component; 
 
       return (
         <Route
@@ -141,7 +140,6 @@ const routes: RouteType[] = [
         guard: AuthGuard,
         component: SampleListPage,
         title: `${appName} | UI Component Samples`
-
       },
       {
         exact: true,

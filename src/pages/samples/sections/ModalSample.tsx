@@ -14,20 +14,19 @@ import { NavLink } from "react-router-dom";
 
 
 
-  //// -- To prevent close on backdrop click --
-  // const handleBackdropClose = (_: any, reason: any) => {
-  //   if (reason && reason == "backdropClick")
-  //   return;
-  //   handleClose();
-  // }
-
+//// -- To prevent close on backdrop click --
+// const handleBackdropClose = (_: any, reason: any) => {
+//   if (reason && reason == "backdropClick")
+//   return;
+//   handleClose();
+// }
 
 
 const ModalSample: FC = () => {
     const [openModal, setOpenModal] = useState(false);
     return (
         <Card sx={{ padding: 3 }}>
-             <FlexBox justifyContent={"space-between"}>
+            <FlexBox justifyContent={"space-between"}>
                 <H5>Modal</H5>
                 <NavLink to={{ pathname: "https://mui.com/material-ui/react-modal/" }} target="_blank">
                     <Small color="primary.main">Docs</Small>
@@ -36,7 +35,6 @@ const ModalSample: FC = () => {
             <Small color="text.disabled">
                 Modal dialog example with overlay
             </Small>
-
             <Grid container spacing={4} marginTop={.5}>
                 <Grid item xs={12} >
                     <Button
@@ -45,19 +43,16 @@ const ModalSample: FC = () => {
                         Open Modal
                     </Button>
                 </Grid>
-
                 <ModalExample
                     openModal={openModal}
-                    closeModal={() => setOpenModal(false)}             
+                    closeModal={() => setOpenModal(false)}
                 />
             </Grid>
-
         </Card>
     );
 };
 
-
-//modal window props interface
+// modal window props interface
 interface ModalExampleProps {
     openModal: boolean;
     closeModal: () => void;
@@ -90,8 +85,6 @@ const ModalExample: FC<ModalExampleProps> = ({
         </Modal>
     );
 };
-
-
 
 
 export default ModalSample;

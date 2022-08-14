@@ -2,7 +2,7 @@
 export interface UserLogin {
     email: string;
     password: string;
-    tenant: string; // in production, would come from subdomain
+    tenant: string; // from header or subdomain
 }
 
 // Token Response

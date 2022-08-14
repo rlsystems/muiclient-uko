@@ -4,17 +4,14 @@ import { Add, Search } from "@mui/icons-material";
 import { observer } from "mobx-react-lite";
 import { useStore } from 'app/stores/store';
 import usePaginationMetaData, { TOTAL_PAGE_COUNT_CHANGED } from "app/hooks/usePaginationMetaData";
-
 import { Roles } from "app/models/roles";
 import { Venue } from "app/models/venue";
 import { H5, H6 } from "components/Typography";
-
 import SearchInput from "components/formInput/SearchInput";
 import VenueColumnShape from "./VenueColumnShape";
 import VenueModal from "./VenueModal";
 import ResultText from "components/dataTables/serverTable/ResultText";
 import ServerTable, { ColumnShape } from "components/dataTables/serverTable/ServerTable";
-
 
 const VenueList = () => {
   const { venueStore, commonStore, currentUserStore } = useStore();
@@ -59,7 +56,6 @@ const VenueList = () => {
     setFilteredQuery("")
   }, [loadVenues, state.queryPageSize, state.queryPageIndex])
 
-
   return (
     <Box pt={2} pb={4}>
       <Grid container spacing={2} mb={2}>
@@ -75,7 +71,6 @@ const VenueList = () => {
               sx={{
                 marginLeft: 2,
                 px: "30px"
-
               }}
               startIcon={<Search />}
               variant="contained"
@@ -90,7 +85,6 @@ const VenueList = () => {
             endIcon={<Add />}
             variant="contained"
             onClick={() => setOpenModal(true)}
-
           >
             Add Venue
           </Button>) : (<Tooltip title="Basic user cannot use this feature">
@@ -125,7 +119,6 @@ const VenueList = () => {
         onClose={() => setOpenModal(false)}
         paginationState={{queryPageIndex: state.queryPageIndex + 1, queryPageSize: state.queryPageSize}}
       />)}
-
 
       <ServerTable
         data={data}

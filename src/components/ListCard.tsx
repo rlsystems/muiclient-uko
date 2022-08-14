@@ -4,7 +4,6 @@ import FlexBox from 'components/FlexBox';
 import { H6, Tiny } from 'components/Typography';
 import React, { FC, MouseEvent } from 'react';
 
-// component interface
 interface ListCardProps {
   item: {
     image: string;

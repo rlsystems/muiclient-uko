@@ -10,13 +10,9 @@ import { H5, Small } from "components/Typography";
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
-
-
-
-
 const RadioButtons: FC = () => {
     return (
-        <Card sx={{ padding: 3}}>
+        <Card sx={{ padding: 3 }}>
             <FlexBox justifyContent={"space-between"}>
                 <H5>Radio Buttons</H5>
                 <NavLink to={{ pathname: "https://mui.com/material-ui/react-radio-button/" }} target="_blank">
@@ -31,7 +27,6 @@ const RadioButtons: FC = () => {
                     row
                     name="status"
                     defaultValue={"Pending"}
-
                 >
                     {["Pending", "Processing", "Delivered"].map((item) => (
                         <StyledFormControlLabel
@@ -42,13 +37,9 @@ const RadioButtons: FC = () => {
                         />
                     ))}
                 </RadioGroup>
-
             </Box>
-
         </Card>
     );
 };
-
-
 
 export default RadioButtons;

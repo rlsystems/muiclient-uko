@@ -10,8 +10,6 @@ import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
 
-
-
 const CheckBoxes: FC = () => {
     return (
         <Card sx={{ padding: 3 }}>
@@ -27,7 +25,6 @@ const CheckBoxes: FC = () => {
             </Small>
 
             <Box marginTop={2}>
-
                 {["One", "Two", "Three", "Four"].map((item) => (
                     <StyledFormControlLabel
                         key={item}                    
@@ -36,11 +33,7 @@ const CheckBoxes: FC = () => {
                         control={<Checkbox />}
                     />
                 ))}
-
-
-
             </Box>
-
         </Card>
     );
 };

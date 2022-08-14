@@ -3,8 +3,6 @@ import { Box, Button, Grid, styled } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { Add } from "@mui/icons-material";
 import { useExpanded, useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
-
-
 import { useStore } from 'app/stores/store';
 import TenantColumnShape from "./TenantColumnShape";
 import RegisterTenantModal from "./RegisterTenantModal";
@@ -15,7 +13,7 @@ import { H6 } from "components/Typography";
 import ReactTable from "components/dataTables/reactTable/ReactTable";
 import GlobalFilter from "components/dataTables/reactTable/GlobalFilter";
 
-
+// tenants list table, accessable to root admin only
 const TenantList: FC = () => {
   const { tenantStore, commonStore } = useStore();
   const { loadTenants, tenantsSorted, loadingInitial } = tenantStore;

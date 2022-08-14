@@ -9,7 +9,6 @@ import FlexBox from "components/FlexBox";
 import { H3, H5, Small, Tiny } from "components/Typography";
 import { FC, useState } from "react";
 
-// styled components
 const StyledButton = styled(ButtonBase)(({ theme }) => ({
     width: 35,
     height: 35,
@@ -22,24 +21,20 @@ const StyledButton = styled(ButtonBase)(({ theme }) => ({
 
 const Incrementer: FC = () => {
     const [quantity, setQuantity] = useState(1);
-
     return (
         <Card sx={{ padding: 3 }}>
             <H5>Incrementer</H5>
             <Small color="text.disabled">
                 Numeric input control
             </Small>
-
             <Box mt={3} >
                 <FlexBox alignItems="center">
                     <StyledButton onClick={() => setQuantity((state) => state + 1)}>
                         <Add color="disabled" />
                     </StyledButton>
-
                     <H3 width={40} textAlign="center">
                         {quantity}
                     </H3>
-
                     <StyledButton
                         onClick={() =>
                             setQuantity((state) => (state > 0 ? state - 1 : state))
@@ -48,13 +43,9 @@ const Incrementer: FC = () => {
                         <Remove color="disabled" />
                     </StyledButton>
                 </FlexBox>
-
             </Box>
-
         </Card>
     );
 };
-
-
 
 export default Incrementer;

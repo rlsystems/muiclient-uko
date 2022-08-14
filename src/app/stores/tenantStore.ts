@@ -5,9 +5,7 @@ import { CreateTenantRequest, Tenant } from "../models/tenant";
 
 
 export default class TenantStore {
-
-    tenantRegistry = new Map<string, Tenant>();
-    selectedTenant: Tenant | undefined = undefined;
+    tenants: Tenant[] = [];
 
     loading = false;
     loadingInitial = false;
@@ -16,33 +14,32 @@ export default class TenantStore {
         makeAutoObservable(this)
     }
 
-    setLoading = (state: boolean) => {
-        runInAction(() => {
-            this.loading = state;
-        })
-    }
-
+    // loading setter (initial page load)
     setLoadingInitial = (state: boolean) => {
         runInAction(() => {
             this.loadingInitial = state;
         })
     }
 
+    // loading setter
+    setLoading = (state: boolean) => {
+        runInAction(() => {
+            this.loading = state;
+        })
+    }
+
+    // return an array sorted by created on date
     get tenantsSorted() {
-        return Array.from(this.tenantRegistry.values()).sort((a, b) => new Date(b.createdOn).valueOf() - new Date(a.createdOn).valueOf());
-
+        return Array.from(this.tenants.values()).sort((a, b) => new Date(b.createdOn).valueOf() - new Date(a.createdOn).valueOf());
     }
 
-    private setTenant = (tenant: Tenant) => { //add to registry
-        this.tenantRegistry.set(tenant.id, tenant);
-    }
-
+    // load tenants
     loadTenants = async () => {
         this.setLoadingInitial(true);
         try {
             const result = await agent.Tenants.list();
-            result.data.forEach(tenant => {
-                this.setTenant(tenant);
+            runInAction(() => {
+                this.tenants = result.data;
             })
             this.setLoadingInitial(false);
         } catch (error) {
@@ -50,6 +47,7 @@ export default class TenantStore {
         }
     }
 
+    // create new tenant
     createTenant = async (createTenantRequest: CreateTenantRequest): Promise<boolean | undefined> => {
         this.setLoading(true);
 
@@ -68,10 +66,7 @@ export default class TenantStore {
                 isActive: true,
                 createdOn: createdOnDate
             }
-            runInAction(() => {
-                this.tenantRegistry.set(newtenant.id, newtenant);
-                this.selectedTenant = newtenant;
-            })
+            this.tenants.push(newtenant); // add to registry list (local memory) - prevents having to reload the table
             return true
         } catch (error) {
             console.log(error);
@@ -80,7 +75,7 @@ export default class TenantStore {
         }
     }
 
-
+    // update tenant
     updateTenant = async (tenant: Tenant): Promise<boolean | undefined> => {
         this.setLoading(true);
 
@@ -91,16 +86,10 @@ export default class TenantStore {
                 toast.error(response.messages[0]);
                 return false
             }
-            const updatedTenant: Tenant = {
-                id: tenant.id,
-                name: tenant.name,
-                isActive: tenant.isActive,
-                createdOn: tenant.createdOn
-            }
 
             runInAction(() => {
-                this.tenantRegistry.set(updatedTenant.id, updatedTenant);
-                this.selectedTenant = updatedTenant;
+                const tenantIndex = this.tenants.findIndex(x => x.id == tenant.id);
+                this.tenants[tenantIndex] = tenant;
             })
             return true
         } catch (error) {

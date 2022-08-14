@@ -19,6 +19,7 @@ const ContentWrapper = styled(Box)(({theme}) => ({
     },
   }));
 
+// Main layout with top bar and sidebar navigation
 const AppLayout = (props: Props) => {
   return (
     <React.Fragment>
