@@ -1,13 +1,14 @@
 import { Roles } from "app/models/roles";
 import Icons from "../../icons/sidebar";
 
+// list of navigation items that appear in sidebar
 const navList = [
   {
     title: "UI Component Samples",
     Icon: Icons.PagesIcon,
     path: "/samples",
-    roles: null,
-    topDivider: false
+    roles: null, 
+    topDivider: false // for visually seperating sections
   },
   {
     title: "Venues",
@@ -20,7 +21,7 @@ const navList = [
     title: "Users",
     Icon: Icons.UserProfileIcon,
     path: "/users",
-    roles: [Roles.root, Roles.admin],
+    roles: [Roles.root, Roles.admin], // for restricting to certian roles
     topDivider: true
   },
   {

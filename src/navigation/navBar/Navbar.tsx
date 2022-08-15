@@ -4,9 +4,7 @@ import {
   Box,
   IconButton,
   styled,
-  Theme,
   Toolbar,
-  useMediaQuery,
 } from "@mui/material";
 import { H2 } from "../../components/Typography";
 import { FC } from "react";
@@ -50,7 +48,6 @@ const Navbar: FC = () => {
   } else {
     mode = 'light';
   }
-
 
   return (
     <StyledNavbar position="sticky">

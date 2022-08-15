@@ -1,4 +1,3 @@
-import { store } from 'app/stores/store';
 import React from 'react'
 
 export const paginationInitialState = {
@@ -7,9 +6,8 @@ export const paginationInitialState = {
   totalPageCount: 0,
 };
 
-//This is like a mobx mini-store
-//mobx stores are global, and singleton
-//this store is like a transient or scoped class that any table can use. 
+// pagination settings
+// mobx stores are global/singleton. This is like a transient or scoped pagination object that server tables can use
 
 export type PaginationStateType = typeof paginationInitialState;
 export type PaginationDispatchType = React.Dispatch<{

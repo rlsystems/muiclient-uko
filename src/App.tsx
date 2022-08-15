@@ -14,7 +14,7 @@ import { useStore } from './app/stores/store';
 import LoadingScreen from './components/LoadingScreen';
 
 function App() {
-  const location = useLocation(); // returns location object from router, useful for the key if neexed
+  const location = useLocation(); // returns location object from router, useful for the key if needed
   const { commonStore, currentUserStore } = useStore();
   const isDevelopment: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
