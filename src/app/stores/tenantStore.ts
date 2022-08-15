@@ -58,15 +58,8 @@ export default class TenantStore {
                 toast.error(response.messages[0]);
                 return false
             }
-
-            const createdOnDate = new Date().toUTCString(); // create a UTC date client side (alternatly you could return the new user object instead of just the id)
-            const newtenant: Tenant = {
-                id: createTenantRequest.id,
-                name: createTenantRequest.name,
-                isActive: true,
-                createdOn: createdOnDate
-            }
-            this.tenants.push(newtenant); // add to registry list (local memory) - prevents having to reload the table
+            const newTenant = response.data;
+            this.tenants.push(newTenant); // add to registry list (local memory) - prevents having to reload the table
             return true
         } catch (error) {
             console.log(error);
@@ -86,7 +79,6 @@ export default class TenantStore {
                 toast.error(response.messages[0]);
                 return false
             }
-
             runInAction(() => {
                 const tenantIndex = this.tenants.findIndex(x => x.id == tenant.id);
                 this.tenants[tenantIndex] = tenant;

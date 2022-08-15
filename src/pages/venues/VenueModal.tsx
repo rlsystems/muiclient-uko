@@ -38,6 +38,7 @@ const VenueModal: FC<Props> = ({ open, onClose, isEdit, data, paginationState })
     id: isEdit ? data.id : '',
     name: isEdit ? data.name : '',
     description: isEdit ? data.description : '',
+    createdOn: isEdit ? data.createdOn : '',
   });
 
   const validationSchema = Yup.object({

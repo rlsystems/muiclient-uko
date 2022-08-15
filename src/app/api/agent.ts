@@ -86,18 +86,18 @@ const Account = {
 // Venues (sample business entity)
 const Venues = {
     search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/VenueListPaginated`, params), //server-side pagination
-    create: (venue: AddVenueRequest) => requests.post<Result<String>>('/venues', venue),
+    create: (venue: AddVenueRequest) => requests.post<Result<Venue>>('/venues', venue),
     details: (id: string) => requests.get<Result<Venue>>(`/venues/${id}`),
-    update: (venue: Venue) => requests.put<Result<string>>(`/venues/${venue.id}`, venue),
+    update: (venue: Venue) => requests.put<Result<Venue>>(`/venues/${venue.id}`, venue),
     delete: (id: string) => requests.del<Result<string>>(`/venues/${id}`),
 }
 
 // App User Management
 const Users = {
     list: () => requests.get<Result<User[]>>('/identity/'), // full list for client-side pagination
-    create: (appUser: RegisterUserRequest) => requests.post<Result<String>>(`/identity/register`, appUser),
+    create: (appUser: RegisterUserRequest) => requests.post<Result<User>>(`/identity/register`, appUser),
     details: (id: string) => requests.get<Result<User>>(`/identity/user/${id}`),
-    update: (user: User) => requests.put<Result<string>>(`/identity/user/${user.id}`, user),
+    update: (user: User) => requests.put<Result<User>>(`/identity/user/${user.id}`, user),
     delete: (id: string) => requests.del<Result<string>>(`/identity/user/${id}`),
 }
 

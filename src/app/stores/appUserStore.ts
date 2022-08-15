@@ -62,22 +62,8 @@ export default class AppUserStore {
             }
 
             runInAction(() => {
-                appUser.id = String(response.data); // the GUID returned from the api
-                const createdOnDate = new Date().toUTCString(); // create a UTC date client side (alternatly you could return the new user object instead of just the id)
-
-                const newuser: User = {
-                    id: appUser.id,
-                    firstName: appUser.firstName,
-                    lastName: appUser.lastName,
-                    email: appUser.email,
-                    phoneNumber: appUser.phoneNumber,
-                    roleId: appUser.roleId,
-                    imageUrl: "",
-                    isActive: true,
-                    createdOn: createdOnDate
-                }
-                this.users.unshift(newuser); // add to registry list (local memory) - prevents having to reload the table
-
+                const newAppUser = response.data; // the user returned from the api
+                this.users.push(newAppUser); // add to registry list (local memory) - prevents having to reload the table
             })
             return true
         } catch (error) {

@@ -3,6 +3,7 @@ export interface Venue {
   id: string;
   name: string;
   description: string;
+  createdOn: string;
 }
 
 // create new venue
