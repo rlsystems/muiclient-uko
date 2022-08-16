@@ -7,7 +7,8 @@ import { RegisterUserRequest, User } from "../models/user";
 export default class AppUserStore {
     users: User[] = []; 
 
-    loading = false; // this loading is for adding new users, updating and deleting
+    loading = false; // this loading is for adding/editing button
+    loadingDelete = false; // this loading is for delete button 
     loadingInitial = false; // this loading is for the view
 
     // Let Mobx auto create the interface for this class
@@ -26,6 +27,13 @@ export default class AppUserStore {
             this.loadingInitial = state;
         })
     }
+
+   // Loading setter (delete user button)
+   setLoadingDelete = (state: boolean) => {
+    runInAction(() => {
+        this.loadingDelete = state;
+    })
+}
 
     // Loading setter
     setLoading = (state: boolean) => {
@@ -98,11 +106,11 @@ export default class AppUserStore {
 
     // Delete user
     deleteAppUser = async (id: string): Promise<boolean | undefined> => {
-        this.setLoadingInitial(true)
+        this.setLoadingDelete(true)
 
         try {
             const response = await agent.Users.delete(id); // api call to delete from database
-            this.setLoadingInitial(false)
+            this.setLoadingDelete(false)
             if (!response.succeeded) {
                 toast.error(response.messages[0]);
                 return false
@@ -114,7 +122,7 @@ export default class AppUserStore {
             return true
         } catch (error) {
             console.log(error);
-            this.setLoadingInitial(false)
+            this.setLoadingDelete(false)
             return false
         }
     }

@@ -23,7 +23,6 @@ import { toast } from "material-react-toastify";
 import StyledModalCard from "components/StyledModalCard";
 
 
-
 interface ModalProps {
     data?: any;
     open: boolean;
@@ -31,11 +30,11 @@ interface ModalProps {
 }
 
 // edit user modal, fyi - current user cannot edit themselves
-// current users can edit their info in profile
+// current users edit their info in profile view
 
 const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
-    const { appUserStore, currentUserStore } = useStore();
-    const { updateAppUser, loading, deleteAppUser } = appUserStore;
+    const { appUserStore } = useStore();
+    const { updateAppUser, loading, loadingDelete, deleteAppUser } = appUserStore;
 
     const [userFormValues, setUserFormValues] = useState<User>({ // Local State
         id: data.id,
@@ -76,7 +75,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     }
 
 
-    // to conditionally render form
+    // check for root user to conditionally render form
     const isRootUser: boolean = values.roleId === 'root';
 
     return (
@@ -195,9 +194,6 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                                 </RadioGroup>
                             </Grid>
                         }
-
-
-
                     </Grid>
 
                     <FlexBox justifyContent={!isRootUser ? "space-between" : "flex-end"} marginTop={4}>
@@ -206,7 +202,7 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                             <LoadingButton
                                 size="small"
                                 variant="outlined"
-                                loading={loading}
+                                loading={loadingDelete}
                                 onClick={() => handleDelete(values.id)}
                                 sx={{
                                     width: 124,

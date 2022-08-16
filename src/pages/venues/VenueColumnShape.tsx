@@ -54,9 +54,9 @@ const VenueColumnShape = (paginationState: PaginationState): ColumnShape<Venue>[
       const handleEdit = () => {
         setOpenModal(true);
       }
-      const handleDelete = () => {
-        venueStore.deleteVenue(row.id);
-        venueStore.loadVenues(1, paginationState.queryPageSize)
+      const handleDelete = async () => {
+        await venueStore.deleteVenue(row.id);
+        await venueStore.loadVenues(1, paginationState.queryPageSize)
       }
 
       return <React.Fragment>
