@@ -6,19 +6,17 @@ import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { ThemeProvider } from "@emotion/react"
 import { nanoTheme } from "./theme";
 import { observer } from 'mobx-react-lite';
-import { useLocation } from 'react-router-dom';
 import { ToastContainer } from 'material-react-toastify';
 import routes, { renderRoutes } from './routes';
 import { useStore } from './app/stores/store'; 
 import LoadingScreen from './components/LoadingScreen';
 
 function App() {
-  const location = useLocation(); // returns location object from router, useful for the key if needed
   const { commonStore, currentUserStore } = useStore();
   const isDevelopment: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 
-  // Get the current user (otherwise reloading browser will clear mobx)
+  // get the current user (otherwise reloading browser will clear mobx)
   useEffect(() => {
     if (commonStore.token) { // token present, get user from API
       
@@ -30,18 +28,18 @@ function App() {
     }
   }, [commonStore, currentUserStore])
 
-  // simple way of checking if there is a subdomain given --> will hide the tenant fields on client, API will detect the subdomain from the URI if present and use that
+  // checking if there is a subdomain 
   useEffect(() => {
     const host = window.location.host;
     const subdomain = host.split('.');
     const minimumSegments = isDevelopment ? 2 : 3; // adjust to your url structure needs 
 
     if (subdomain.length == minimumSegments) {
-      commonStore.setSubdomain();
+      commonStore.setSubdomain(); // set to true --> will hide the tenant selection on client login
     }
   }, [])
 
-  // App theme
+  // app theme
   const appTheme = nanoTheme({
     direction: "ltr",
     colorMode: commonStore.darkMode ? 'dark' : 'light', // check user preferences

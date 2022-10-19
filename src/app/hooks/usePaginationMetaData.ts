@@ -7,7 +7,7 @@ export const paginationInitialState = {
 };
 
 // pagination settings
-// mobx stores are global/singleton. This is like a transient or scoped pagination object that server tables can use
+// mobx stores are singleton. This is like a transient pagination object that the server tables can use
 
 export type PaginationStateType = typeof paginationInitialState;
 export type PaginationDispatchType = React.Dispatch<{

@@ -1,8 +1,8 @@
 import { Roles } from 'app/models/roles';
 import React, { Suspense, Fragment, lazy, LazyExoticComponent, FC } from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
-import AuthGuard from './components/authGuards/AuthGuard';
-import GuestGuard from './components/authGuards/GuestGuard';
+import AuthGuard from './navigation/authGuards/AuthGuard';
+import GuestGuard from './navigation/authGuards/GuestGuard';
 import AppLayout from './navigation/AppLayout';
 import LoadingScreen from './components/LoadingScreen';
 import {Helmet} from "react-helmet";
