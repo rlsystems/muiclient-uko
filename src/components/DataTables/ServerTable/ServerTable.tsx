@@ -13,7 +13,7 @@ import {
 import ScrollBar from "simplebar-react";
 import { PAGE_CHANGED, PAGE_SIZE_CHANGED, PaginationDispatchType, PaginationStateType } from "app/hooks/usePaginationMetaData";
 import { PaginationSelectInput } from "components/formInput/InputsLight";
-import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/dataTables/DataTable.styled";
+import { StyledTableHeaderCell, StyledTableRow, StyledTableRowCell, StyledPagination } from "components/DataTables/DataTable.styled";
 
 // this is a custom component which receives pagination state, used with pagination api endpoints
 // server table does not use react-table however it is styled the same
@@ -24,7 +24,7 @@ export interface ColumnShape<T> {
   minWidth: string | number
   maxWidth?: string | number
   width?: string | number
-  renderRow?: (row: any) => React.ReactNode 
+  renderRow?: (row: any) => React.ReactNode
 }
 
 type ServerTableProps<T> = {
@@ -45,7 +45,7 @@ const ServerTable = <T extends Record<string, any>>({
   isLoading }: ServerTableProps<T>) => {
   const handleChangePage = async (_: any, newPage: number) => {
     if (!paginationDispatch) return
-    paginationDispatch({ type: PAGE_CHANGED, payload: newPage - 1 }); 
+    paginationDispatch({ type: PAGE_CHANGED, payload: newPage - 1 });
   }
 
   const handleChangeRowsPerPage = async (event: SelectChangeEvent<number>) => {

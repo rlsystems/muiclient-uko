@@ -10,8 +10,8 @@ import { Tenant } from "app/models/tenant";
 import { paginationInitialState } from "app/hooks/usePaginationMetaData";
 import { CustomTableOptions } from "app/models/reactTable";
 import { H6 } from "components/Typography";
-import ReactTable from "components/dataTables/reactTable/ReactTable";
-import GlobalFilter from "components/dataTables/reactTable/GlobalFilter";
+import ReactTable from "components/DataTables/ReactTable/ReactTable";
+import GlobalFilter from "components/DataTables/ReactTable/GlobalFilter";
 
 // tenants list table, accessable to root admin only
 const TenantList: FC = () => {
