@@ -10,8 +10,8 @@ import { H5, H6 } from "components/Typography";
 import SearchInput from "components/formInput/SearchInput";
 import VenueColumnShape from "./VenueColumnShape";
 import VenueModal from "./VenueModal";
-import ResultText from "components/dataTables/serverTable/ResultText";
-import ServerTable, { ColumnShape } from "components/dataTables/serverTable/ServerTable";
+import ResultText from "components/DataTables/ServerTable/ResultText";
+import ServerTable, { ColumnShape } from "components/DataTables/ServerTable/ServerTable";
 
 const VenueList = () => {
   const { venueStore, commonStore, currentUserStore } = useStore();
