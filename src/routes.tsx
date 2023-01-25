@@ -1,6 +1,6 @@
 import { Roles } from 'app/models/roles';
 import React, { Suspense, Fragment, lazy, LazyExoticComponent, FC } from 'react';
-import { Switch, Redirect, Route } from 'react-router-dom';
+import {  Route } from 'react-router-dom';
 import AuthGuard from './navigation/authGuards/AuthGuard';
 import GuestGuard from './navigation/authGuards/GuestGuard';
 import AppLayout from './navigation/AppLayout';
@@ -12,7 +12,6 @@ interface RouteType {
   layout?: (props: any) => JSX.Element;
   component?: (props: any) => JSX.Element;
   routes?: RouteType[];
-  exact?: boolean;
   path?: string;
   roles?: Roles[];
   title?: string;
@@ -37,145 +36,115 @@ const SampleListPage = Loadable(lazy(() => import('./pages/samples/SampleList'))
 const AccountSettingsPage = Loadable(lazy(() => import('./pages/profile/AccountSettings')));
 
 export const renderRoutes = (routes: RouteType[] = []) => (
-  <Switch>
-    {routes.map((route, i) => {
-      const Guard = route.guard || React.Component; 
-      const Layout = route.layout || Fragment;
-      const Component = route.component || React.Component; 
+  routes.map((route, i) => {
+    const Guard = route.guard || React.Component;
+    const Layout = route.layout || Fragment;
+    const Component = route.component || React.Component;
 
-      return (
-        <Route
-          key={i}
-          path={route.path}
-          exact={route.exact}
-          render={(props) => (
-            <Fragment>
-              {route.title &&
-                <Helmet>
-                  <title>{route.title}</title>
-                </Helmet>
-              }
-              {route.guard ? <Guard roles={route.roles}>
+    return (
+      <Route
+        key={i}
+        path={route.path}
+        element={(
+          <Fragment>
+            {route.title &&
+              <Helmet>
+                <title>{route.title}</title>
+              </Helmet>
+            }
+            {route.guard ?
+              <Guard roles={route.roles}>
                 <Layout>
-                  {route.routes ? (
-                    renderRoutes(route.routes)
-                  ) : (
-                    <Component {...props} />
-                  )}
+                  <Component />
                 </Layout>
               </Guard> :
-                <Layout>
-                  {route.routes ? (
-                    renderRoutes(route.routes)
-                  ) : (
-                    <Component {...props} />
-                  )}
-                </Layout>}
-            </Fragment>
-
-          )}
-        />
-      );
-    })}
-  </Switch>
+              <Layout>
+                <Component />
+              </Layout>
+            }
+          </Fragment>
+        )}
+      />
+    ) })
 );
 
 const appName = "ASP Nano Demo"
 
 const routes: RouteType[] = [
   {
-    exact: true,
+    path: '/',
+    guard: GuestGuard,
+    component: LoginPage,
+    title: `${appName} | Login`
+  },
+  {
     path: '/404',
     component: NotFoundPage,
     title: `${appName} | Not Found`
   },
   {
-    exact: true,
     path: '/403',
     component: UnauthorizedPage,
     title: `${appName} | Unauthorized`
   },
   {
-    exact: true,
-    guard: GuestGuard,
     path: '/login',
+    guard: GuestGuard,
     component: LoginPage,
     title: `${appName} | Login`
   },
   {
-    exact: true,
-    guard: GuestGuard,
     path: '/forgot-password',
+    guard: GuestGuard,
     component: ForgotPasswordPage,
     title: `${appName} | Forgot Password`
   },
   {
-    exact: true,
-    guard: GuestGuard,
     path: '/reset-password',
+    guard: GuestGuard,
     component: ResetPasswordPage,
     title: `${appName} | Reset Password`
   },
   {
-    exact: true,
-    guard: GuestGuard,
-    path: '/',
-    component: LoginPage,
-    title: `${appName} | Login`
+    path: '/venues',
+    guard: AuthGuard,
+    layout: AppLayout,
+    component: VenueListPage,
+    title: `${appName} | Venues`
   },
   {
-    path: '/',
+    path: '/samples',
+    guard: AuthGuard,
+    component: SampleListPage,
+    title: `${appName} | UI Component Samples`,
     layout: AppLayout,
-    routes: [
-      {
-        exact: true,
-        path: '/venues',
-        guard: AuthGuard,
-        component: VenueListPage,
-        title: `${appName} | Venues`
-      },
-      {
-        exact: true,
-        path: '/samples',
-        guard: AuthGuard,
-        component: SampleListPage,
-        title: `${appName} | UI Component Samples`
-      },
-      {
-        exact: true,
-        path: '/profile',
-        guard: AuthGuard,
-        component: AccountSettingsPage,
-        title: `${appName} | Profile`
-      },
-      {
-        exact: true,
-        path: '/users',
-        component: UserListPage,
-        guard: AuthGuard,
-        roles: [Roles.root, Roles.admin],
-        title: `${appName} | User Administration`
-      },
-      {
-        exact: true,
-        path: '/tenants',
-        component: TenantListPage,
-        guard: AuthGuard,
-        roles: [Roles.root],
-        title: `${appName} | Tenant Administration`
-      },
-      {
-        component: () => <Redirect to="/404" />
-      }
-    ]
+  },
+  {
+    path: '/profile',
+    guard: AuthGuard,
+    component: AccountSettingsPage,
+    title: `${appName} | Profile`,
+    layout: AppLayout,
+  },
+  {
+    path: '/users',
+    component: UserListPage,
+    guard: AuthGuard,
+    roles: [Roles.root, Roles.admin],
+    title: `${appName} | User Administration`,
+    layout: AppLayout,
+  },
+  {
+    path: '/tenants',
+    component: TenantListPage,
+    guard: AuthGuard,
+    roles: [Roles.root],
+    title: `${appName} | Tenant Administration`,
+    layout: AppLayout,
   },
   {
     path: '*',
-    routes: [
-      {
-        component: () => <Redirect to="/404" />
-      }
-    ]
+    component: NotFoundPage
   }
 ];
 

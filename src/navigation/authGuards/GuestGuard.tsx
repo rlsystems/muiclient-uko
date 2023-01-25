@@ -1,6 +1,6 @@
 import React, { Fragment, ReactNode } from "react";
-import { Redirect } from "react-router-dom";
 import { useStore } from "../../app/stores/store";
+import router from "router";
 
 interface GuestGuardProps {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface GuestGuardProps {
 const GuestGuard = ({ children }: GuestGuardProps) => {
   const { currentUserStore: {isLoggedIn} } = useStore();
 
-  if (isLoggedIn) return <Redirect to="/venues" />;
+  if (isLoggedIn) router.navigate("/venues")
 
   return <Fragment>{children}</Fragment>;
 };

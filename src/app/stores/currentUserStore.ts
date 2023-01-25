@@ -3,7 +3,7 @@ import agent from "../api/agent";
 import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, CurrentUser } from "../models/currentUser";
 import { UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
 import { store } from "./store";
-import { history } from '../..';
+import router from "router";
 
 // current user - edit profile, update preferences, change password, etc
 export default class CurrentUserStore {
@@ -32,7 +32,7 @@ export default class CurrentUserStore {
         })
     }
 
-    // login - get token, then set current user and push to venues view 
+    // login - get token, then set current user and push to venues view
     login = async (creds: UserLogin) => {
         store.commonStore.setTenant(creds.tenant);
         try {
@@ -44,7 +44,7 @@ export default class CurrentUserStore {
             runInAction(() =>
                 this.currentUser = user.data
             );
-            history.push('/venues');
+            router.navigate('/venues');
         } catch (error) {
             throw error;
         }
@@ -52,12 +52,12 @@ export default class CurrentUserStore {
 
     // set all local variables to blank, remove token, push user to login url
     logout = () => {
-        store.commonStore.setToken(null); 
+        store.commonStore.setToken(null);
         store.appUserStore.users = [];
         store.tenantStore.tenants = [];
         window.localStorage.removeItem('jwt');
         this.currentUser = null;
-        history.push('/');
+        router.navigate('/');
     };
 
     // get current user from api
@@ -75,7 +75,7 @@ export default class CurrentUserStore {
         }
     }
 
-    // update current user 
+    // update current user
     updateCurrentUser = async (user: UpdateProfileRequest) => {
         runInAction(() => {
             store.appUserStore.loading = true;

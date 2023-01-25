@@ -10,9 +10,10 @@ import Preferences from "./tabs/Preferences";
 import Password from "./tabs/Password";
 import { useStore } from "../../app/stores/store";
 import SettingIcon from "../../icons/SettingIcon";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 import queryString from "query-string";
+import router from "router";
 
 
 const StyledButton = styled(Button)(() => ({
@@ -26,7 +27,7 @@ const StyledButton = styled(Button)(() => ({
 const AccountSettings: FC = () => {
   const { commonStore } = useStore();
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate()
 
   useEffect(() => {
     commonStore.setTitle("Profile");
@@ -77,7 +78,7 @@ const AccountSettings: FC = () => {
                   startIcon={<Icon sx={{ color: "text.disabled" }} />}
                   onClick={() => {
                     setActive(convertToSlug(name));
-                    history.push("/profile?tab=" + convertToSlug(name));
+                    navigate("/profile?tab=" + convertToSlug(name));
                   }}
                   sx={
                     active === convertToSlug(name)

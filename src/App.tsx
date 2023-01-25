@@ -7,9 +7,10 @@ import { ThemeProvider } from "@emotion/react"
 import { nanoTheme } from "./theme";
 import { observer } from 'mobx-react-lite';
 import { ToastContainer } from 'material-react-toastify';
-import routes, { renderRoutes } from './routes';
-import { useStore } from './app/stores/store'; 
+import { useStore } from './app/stores/store';
 import LoadingScreen from './components/LoadingScreen';
+import ScrollToTop from 'app/utils/ScrollToTop';
+import { Outlet } from 'react-router-dom';
 
 function App() {
   const { commonStore, currentUserStore } = useStore();
@@ -19,7 +20,7 @@ function App() {
   // get the current user (otherwise reloading browser will clear mobx)
   useEffect(() => {
     if (commonStore.token) { // token present, get user from API
-      
+
       if (currentUserStore.currentUser) return
       currentUserStore.getCurrentUser().finally(() => commonStore.setAppLoaded());
 
@@ -28,11 +29,11 @@ function App() {
     }
   }, [commonStore, currentUserStore])
 
-  // checking if there is a subdomain 
+  // checking if there is a subdomain
   useEffect(() => {
     const host = window.location.host;
     const subdomain = host.split('.');
-    const minimumSegments = isDevelopment ? 2 : 3; // adjust to your url structure needs 
+    const minimumSegments = isDevelopment ? 2 : 3; // adjust to your url structure needs
 
     if (subdomain.length == minimumSegments) {
       commonStore.setSubdomain(); // set to true --> will hide the tenant selection on client login
@@ -52,9 +53,10 @@ function App() {
     <StyledEngineProvider injectFirst>
       <MuiThemeProvider theme={appTheme}>
         <ThemeProvider theme={appTheme}>
+          <ScrollToTop />
           <CssBaseline />
           <ToastContainer position='bottom-left' hideProgressBar draggable autoClose={3000} />
-          {renderRoutes(routes)}
+          <Outlet />
         </ThemeProvider>
       </MuiThemeProvider>
     </StyledEngineProvider>

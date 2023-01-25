@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import ScrollBar from "simplebar-react";
 import navList from "./navList";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { Roles } from "app/models/roles";
@@ -35,7 +35,7 @@ const StyledListItemButton = styled(ListItemButton)(() => ({
 // root component
 const SideBar = () => {
   const { pathname } = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate()
   const { currentUserStore } = useStore();
 
   return (
@@ -51,7 +51,7 @@ const SideBar = () => {
               <Tooltip title={nav.title} placement="right" >
                 <StyledListItemButton
                   disableRipple
-                  onClick={() => history.push(nav.path)}
+                  onClick={() => navigate(nav.path)}
                 >
                   <nav.Icon
                     sx={{
