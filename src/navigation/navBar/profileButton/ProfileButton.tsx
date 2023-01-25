@@ -5,8 +5,8 @@ import NanoAvatar from "../../../components/NanoAvatar";
 import { FC, Fragment, useRef, useState } from "react";
 import PopoverMenu from "../../../components/PopoverMenu";
 import { useStore } from "../../../app/stores/store";
-import { useHistory } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import router from "router";
 
 
 const StyledSmall = styled(Small)(({ theme }) => ({
@@ -27,9 +27,8 @@ const ProfilePopover: FC = () => {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const { currentUserStore: { currentUser, logout } } = useStore();
-  const history = useHistory();
   const handleMenuItem = (path: string) => {
-    history.push(path);
+    router.navigate(path);
     setOpen(false);
   };
 
