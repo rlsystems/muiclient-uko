@@ -3,26 +3,25 @@ import { toast } from 'material-react-toastify';
 import { store } from '../stores/store';
 import { TokenData, UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
 import { User, RegisterUserRequest} from '../models/user';
-import { ChangePasswordRequest, UpdateProfileRequest, UpdatePreferencesRequest, CurrentUser } from '../models/currentUser';
+import { ChangePasswordRequest, UpdateProfileRequest, UpdatePreferencesRequest, ChangeProfileImageRequest, CurrentUser } from '../models/currentUser';
 import { SearchParams } from '../models/searchParams';
 import { PaginatedResult, Result } from '../models/responseWrappers';
 import { CreateTenantRequest, Tenant } from '../models/tenant';
 import { AddVenueRequest, Venue } from '../models/venue';
 import sleep from 'app/utils/sleep';
 
-// Base URL: https://localhost:7250/api for dev, or your production api url
+// Base URL
+// -- development: https://localhost:7250/api
+// -- production: (your domain)
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 // Send up the token with every request, when there is a token
 axios.interceptors.request.use(config => {
     const token = store.commonStore.token;
-
     config.headers = {
         Tenant: store.commonStore.tenant ?? '',
     };
-
     if (token) config.headers.Authorization = `Bearer ${token}`
-
     return config;
 })
 
@@ -47,8 +46,6 @@ axios.interceptors.response.use(async response => {
     }
     return Promise.reject(error);
 })
-
-
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 // Axios Base
@@ -59,23 +56,20 @@ const requests = {
     del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
 
-// Auth / Profile Management (Current User)
+// Authentication & Profile Management (Current User)
 const Account = {
     current: () => requests.get<Result<CurrentUser>>('/identity/profile'),
     login: (user: UserLogin) => requests.post<Result<TokenData>>(`/tokens`, user),
     update: (user: UpdateProfileRequest) => requests.put<Result<CurrentUser>>(`/identity/profile`, user),
-
-    updateProfile: (user: UpdateProfileRequest) => {
-        let formData = new FormData(); // Form data so that we can include the image file
-
-        Object.entries(user).forEach( ([key, val]) => {
+    updateProfile: (user: UpdateProfileRequest) => requests.put<Result>(`/identity/profile`, user),
+    changeProfileImage: (changeProfileImageRequest: ChangeProfileImageRequest)=> {
+        let formData = new FormData(); // form data to send up a file
+        Object.entries(changeProfileImageRequest).forEach( ([key, val]) => {
             formData.append(key, val);
         })
-
-        return requests.put<Result<CurrentUser>>('/identity/profile', formData, {
+        return requests.put<Result<string>>('/identity/profile-image', formData, {
             headers: { 'Content-type': 'multipart/form-data' }
         })
-
     },
     updatePreferences: (updatePreferencesRequest: UpdatePreferencesRequest) => requests.put<Result>(`/identity/preferences`, updatePreferencesRequest),
     changePassword: (changePasswordRequest: ChangePasswordRequest) => requests.put<Result>(`/identity/change-password`, changePasswordRequest),
@@ -85,14 +79,14 @@ const Account = {
 
 // Venues (sample business entity)
 const Venues = {
-    search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/VenueListPaginated`, params), //server-side pagination
+    search: (params: SearchParams) => requests.post<PaginatedResult<Venue>>(`/venues/VenueListPaginated`, params), // paginated list handled server-side
     create: (venue: AddVenueRequest) => requests.post<Result<Venue>>('/venues', venue),
     details: (id: string) => requests.get<Result<Venue>>(`/venues/${id}`),
     update: (venue: Venue) => requests.put<Result<Venue>>(`/venues/${venue.id}`, venue),
     delete: (id: string) => requests.del<Result<string>>(`/venues/${id}`),
 }
 
-// App User Management
+// User Management
 const Users = {
     list: () => requests.get<Result<User[]>>('/identity/'), // full list for client-side pagination
     create: (appUser: RegisterUserRequest) => requests.post<Result<User>>(`/identity/register`, appUser),

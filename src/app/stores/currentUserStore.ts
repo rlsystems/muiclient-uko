@@ -1,7 +1,7 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import agent from "../api/agent";
-import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, CurrentUser } from "../models/currentUser";
-import { UserLogin, ForgotPasswordRequest, ResetPasswordRequest} from '../models/auth';
+import { ChangePasswordRequest, UpdatePreferencesRequest, UpdateProfileRequest, CurrentUser, ChangeProfileImageRequest } from "../models/currentUser";
+import { UserLogin, ForgotPasswordRequest, ResetPasswordRequest } from '../models/auth';
 import { store } from "./store";
 import router from "router";
 
@@ -13,7 +13,7 @@ export default class CurrentUserStore {
     constructor() {
         makeAutoObservable(this);
         reaction(() => this.currentUser, (currentUser) => { // triggered when there is a change to currentUser
-            if(currentUser) {
+            if (currentUser) {
                 store.commonStore.setPageSize(currentUser.pageSizeDefault);
                 store.commonStore.setDarkTheme(currentUser.darkModeDefault);
             }
@@ -37,7 +37,7 @@ export default class CurrentUserStore {
         store.commonStore.setTenant(creds.tenant);
         try {
             const response = await agent.Account.login(creds);
-            if(!response.succeeded) throw new Error(response.messages[0]);
+            if (!response.succeeded) throw new Error(response.messages[0]);
 
             store.commonStore.setToken(response.data.token);
             const user = await agent.Account.current();
@@ -75,18 +75,12 @@ export default class CurrentUserStore {
         }
     }
 
-    // update current user
-    updateCurrentUser = async (user: UpdateProfileRequest) => {
-        runInAction(() => {
-            store.appUserStore.loading = true;
-        })
+    updateProfileImage = async (changeProfileImageRequest: ChangeProfileImageRequest) => {
+        store.appUserStore.loading = true;
         try {
-            let updatedUser = await agent.Account.updateProfile(user);
+            let updatedProfileImage = await agent.Account.changeProfileImage(changeProfileImageRequest);
             runInAction(() => {
-                const userIndex = store.appUserStore.users.findIndex(x => x.id == user.id);
-                store.appUserStore.users[userIndex] = updatedUser.data; // also update the users array
-
-                this.currentUser = updatedUser.data;
+                if (this.currentUser) this.currentUser.imageUrl = updatedProfileImage.data;
                 store.appUserStore.loading = false;
             })
         } catch (error) {
@@ -94,6 +88,16 @@ export default class CurrentUserStore {
                 store.appUserStore.loading = false;
             })
         }
+    }
+
+    // update current user
+    updateCurrentUser = async (user: UpdateProfileRequest) => {
+        store.appUserStore.loading = true;
+        const response = await agent.Account.updateProfile(user);
+        if (response.succeeded)
+            this.currentUser = response.data;
+        store.appUserStore.loading = false;
+        return response;
     }
 
     // update preferences (page size, dark mode default)

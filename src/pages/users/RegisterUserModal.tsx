@@ -43,8 +43,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
-    confirmPassword: '',
+    password: 'Password123!',
     phoneNumber: '',
     roleId: 'basic'
   });
@@ -55,7 +54,6 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
     lastName: Yup.string().required('The last name is required'),
     email: Yup.string().required().email(),
     password: Yup.string().required(),
-    confirmPassword: Yup.string().required()
   });
 
 
@@ -161,28 +159,11 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
                 id="password"
                 name="password"
                 placeholder="Password"
-                type="password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.password && Boolean(errors.password)}
                 helperText={touched.password && errors.password}
-                autoComplete="new-password"
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <H6 mb={1}>Confirm Password</H6>
-              <DarkTextField
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                type="password"
-                value={values.confirmPassword}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.confirmPassword && Boolean(errors.confirmPassword)}
-                helperText={touched.confirmPassword && errors.confirmPassword}
                 autoComplete="new-password"
               />
             </Grid>

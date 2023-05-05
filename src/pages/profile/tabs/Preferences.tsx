@@ -54,8 +54,8 @@ const Preferences: FC = () => {
               IconComponent={() => <KeyboardArrowDown />}
               input={<StyledSelectInput />}
             >
-              {[5, 10, 25, 50, 100].map((item) => (
-                <MenuItem value={item} sx={{ fontSize: 12, fontWeight: 500 }}>
+              {[5, 10, 25, 50, 100].map((item, index) => (
+                <MenuItem value={item} key={index} sx={{ fontSize: 12, fontWeight: 500 }}>
                   {item}
                 </MenuItem>
               ))}

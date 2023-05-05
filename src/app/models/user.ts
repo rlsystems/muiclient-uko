@@ -18,7 +18,6 @@ export interface RegisterUserRequest {
     lastName: string;
     email: string;
     password: string;
-    confirmPassword: string;
     phoneNumber: string;
     roleId: string;
 }

@@ -7,14 +7,14 @@ import {
   styled,
 } from "@mui/material";
 import FlexBox from "components/FlexBox";
-import {LightTextField} from "components/formInput/InputsLight";
+import { LightTextField } from "components/formInput/InputsLight";
 import { H5, Tiny } from "components/Typography";
 import NanoAvatar from "components/NanoAvatar";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useStore } from "app/stores/store";
 import { observer } from "mobx-react-lite";
-import { UpdateProfileRequest } from "app/models/currentUser";
+import { ChangeProfileImageRequest, UpdateProfileRequest } from "app/models/currentUser";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "material-react-toastify";
 import getBase64 from "app/utils/getBase64";
@@ -23,7 +23,7 @@ import ImagePopover from "./ImagePopover";
 const UserInfo: FC = () => {
   const {
     currentUserStore: {
-      currentUser, updateCurrentUser, getCurrentUser
+      currentUser, updateCurrentUser, updateProfileImage
     }
   } = useStore();
   const [isUpdating, setIsUpdating] = useState(false);
@@ -35,9 +35,6 @@ const UserInfo: FC = () => {
     lastName: currentUser?.lastName || "",
     phoneNumber: currentUser?.phoneNumber || "",
     email: currentUser?.email || "",
-    imageFile: undefined,
-    imageUrl: currentUser?.imageUrl || "",
-    deleteCurrentImage: false
   });
 
   const fieldValidationSchema = Yup.object().shape({
@@ -54,30 +51,40 @@ const UserInfo: FC = () => {
     enableReinitialize: true,
     onSubmit: async (values) => {
       setIsUpdating(true);
-      await updateCurrentUser(values);
-      toast.dark("Profile Updated"); 
-      resetForm(); 
+      let response = await updateCurrentUser(values);
+      if(response.succeeded) {
+        toast.dark("Profile Updated");
+        resetForm();   
+        setUserFormValues(values);
+      } else {
+        response.messages.forEach(error => {
+          toast.error(error);
+        })
+      }
       setIsUpdating(false);
-      setUserFormValues(values); 
-      await getCurrentUser();
-
     },
   });
 
   const handleImageUpload: React.ChangeEventHandler<HTMLInputElement> = async (evt) => {
     const file = evt.target?.files?.[0];
-    setFieldValue("imageFile", file); //formik
+    let imageRequest: ChangeProfileImageRequest = {
+      imageFile: file
+    }
+    await updateProfileImage(imageRequest)
     const base64 = await getBase64(file!) as string;
     if (base64) setTempImage(base64);
   }
 
   const handleImageRemove = async () => {
-    await updateCurrentUser({ ...values, deleteCurrentImage: true });
+    let imageRequest: ChangeProfileImageRequest = {
+      deleteCurrentImage: true
+    }
+    await updateProfileImage(imageRequest);
     setTempImage("");
   }
 
 
- const StyledBadge = styled(Badge)(({ theme }) => ({
+  const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       width: 25,
       height: 25,
@@ -90,36 +97,37 @@ const UserInfo: FC = () => {
   return (
     <Card sx={{ padding: "1.5rem", pb: "4rem" }}>
       <H5>Edit your account information:</H5>
-      <form onSubmit={handleSubmit}>
-        <FlexBox
-          my="1.5rem"
-          flexWrap="wrap"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <FlexBox alignItems="center">
-            <StyledBadge
-              overlap="circular"
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
-              badgeContent={
-                <ImagePopover
-                  handleImageUpdate={handleImageUpload}
-                  handleImageRemove={handleImageRemove}
-                />
-              }
-            >
-              <NanoAvatar
-                alt="Avatar"
-                src={tempImage || ""}
-                sx={{ width: 90, height: 90 }}
+
+      <FlexBox
+        my="1.5rem"
+        flexWrap="wrap"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <FlexBox alignItems="center">
+          <StyledBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            badgeContent={
+              <ImagePopover
+                handleImageUpdate={handleImageUpload}
+                handleImageRemove={handleImageRemove}
               />
-            </StyledBadge>
-            <Box ml="1rem">
-              <H5>{currentUser?.firstName}</H5>
-              <Tiny color="text.disabled" sx={{ textTransform: "capitalize" }}>{currentUser?.roleId} Level User</Tiny>
-            </Box>
-          </FlexBox>
+            }
+          >
+            <NanoAvatar
+              alt="Avatar"
+              src={tempImage || ""}
+              sx={{ width: 90, height: 90 }}
+            />
+          </StyledBadge>
+          <Box ml="1rem">
+            <H5>{currentUser?.firstName}</H5>
+            <Tiny color="text.disabled" sx={{ textTransform: "capitalize" }}>{currentUser?.roleId} Level User</Tiny>
+          </Box>
         </FlexBox>
+      </FlexBox>
+      <form onSubmit={handleSubmit}>
         <Grid container spacing={4} mt={1}>
           <Grid item xs={12} sm={6}>
             <LightTextField
@@ -170,7 +178,7 @@ const UserInfo: FC = () => {
             />
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="flex-end" mt={3}>
-            <LoadingButton 
+            <LoadingButton
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}

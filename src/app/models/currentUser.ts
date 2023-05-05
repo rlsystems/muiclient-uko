@@ -1,4 +1,3 @@
-
 // Current User (profile)
 export interface CurrentUser {
     id: string;
@@ -21,9 +20,6 @@ export interface UpdateProfileRequest {
     lastName: string;
     email: string;
     phoneNumber: string;
-    imageFile?: Blob;
-    imageUrl: string;
-    deleteCurrentImage: boolean;
 }
 
 // Update your preferences
@@ -32,9 +28,15 @@ export interface UpdatePreferencesRequest {
     pageSizeDefault: number;
 }
 
-//Update your password
+// Update your password
 export interface ChangePasswordRequest {
     password: string;
     newPassword: string;
     confirmNewPassword: string;
+}
+
+// Change your profile image
+export interface ChangeProfileImageRequest {
+    deleteCurrentImage?: boolean;
+    imageFile?: Blob;
 }
