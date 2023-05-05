@@ -8,7 +8,6 @@ import router from "router";
 // current user - edit profile, update preferences, change password, etc
 export default class CurrentUserStore {
     currentUser: CurrentUser | null = null;
-    loadingInitial = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -20,16 +19,9 @@ export default class CurrentUserStore {
         });
     }
 
-    // helper method, check if logged in
+    // check if logged in
     get isLoggedIn() {
-        return !!this.currentUser;
-    }
-
-    // loading setter (initial page load)
-    setLoadingInitial = (state: boolean) => {
-        runInAction(() => {
-            this.loadingInitial = state;
-        })
+        return !!this.currentUser; // shorthand cast to boolean
     }
 
     // login - get token, then set current user and push to venues view
@@ -38,7 +30,6 @@ export default class CurrentUserStore {
         try {
             const response = await agent.Account.login(creds);
             if (!response.succeeded) throw new Error(response.messages[0]);
-
             store.commonStore.setToken(response.data.token);
             const user = await agent.Account.current();
             runInAction(() =>
@@ -46,6 +37,7 @@ export default class CurrentUserStore {
             );
             router.navigate('/venues');
         } catch (error) {
+            console.log(error);
             throw error;
         }
     };
@@ -63,50 +55,54 @@ export default class CurrentUserStore {
     // get current user from api
     getCurrentUser = async () => {
         try {
-            const result = await agent.Account.current();
-
+            const response = await agent.Account.current();
+            if (!response.succeeded) throw new Error(response.messages[0]);
             runInAction(() =>
-                this.currentUser = result.data
+                this.currentUser = response.data
             );
             return this.currentUser;
-
         } catch (error) {
             console.log(error);
+            throw error;
         }
     }
 
     updateProfileImage = async (changeProfileImageRequest: ChangeProfileImageRequest) => {
-        store.appUserStore.loading = true;
         try {
-            let updatedProfileImage = await agent.Account.changeProfileImage(changeProfileImageRequest);
+            const response = await agent.Account.changeProfileImage(changeProfileImageRequest);
+            if (!response.succeeded) throw new Error(response.messages[0]);
             runInAction(() => {
-                if (this.currentUser) this.currentUser.imageUrl = updatedProfileImage.data;
-                store.appUserStore.loading = false;
+                if (this.currentUser) this.currentUser.imageUrl = response.data;
             })
         } catch (error) {
-            runInAction(() => {
-                store.appUserStore.loading = false;
-            })
+            console.log(error);
+            throw error;
         }
     }
 
     // update current user
     updateCurrentUser = async (user: UpdateProfileRequest) => {
-        store.appUserStore.loading = true;
-        const response = await agent.Account.updateProfile(user);
-        if (response.succeeded)
-            this.currentUser = response.data;
-        store.appUserStore.loading = false;
-        return response;
+        try {
+            const response = await agent.Account.updateProfile(user);
+            if (!response.succeeded) throw new Error(response.messages[0]);
+            runInAction(() => {
+                this.currentUser = response.data;
+            })
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
 
     // update preferences (page size, dark mode default)
     updatePreferences = async (updatePreferencesRequest: UpdatePreferencesRequest) => {
         try {
             const response = await agent.Account.updatePreferences(updatePreferencesRequest);
+            if (!response.succeeded) throw new Error(response.messages[0]);
             return response
         } catch (error) {
             console.log(error);
+            throw error;
         }
     }
 
@@ -114,9 +110,11 @@ export default class CurrentUserStore {
     changePassword = async (changePasswordRequest: ChangePasswordRequest) => {
         try {
             const response = await agent.Account.changePassword(changePasswordRequest);
+            if (!response.succeeded) throw new Error(response.messages[0]);
             return response
         } catch (error) {
             console.log(error);
+            throw error;
         }
     }
 
@@ -125,9 +123,11 @@ export default class CurrentUserStore {
         store.commonStore.setTenant(forgotPasswordRequest.tenant);
         try {
             const response = await agent.Account.forgotPassword(forgotPasswordRequest);
+            if (!response.succeeded) throw new Error(response.messages[0]);
             return response
         } catch (error) {
             console.log(error);
+            throw error;
         }
     }
 
@@ -136,9 +136,11 @@ export default class CurrentUserStore {
         store.commonStore.setTenant(resetPasswordRequest.tenant);
         try {
             const response = await agent.Account.resetPassword(resetPasswordRequest);
+            if (!response.succeeded) throw new Error(response.messages[0]);
             return response
         } catch (error) {
             console.log(error);
+            throw error;
         }
     }
 }

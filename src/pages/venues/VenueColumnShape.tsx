@@ -8,6 +8,7 @@ import { MoreVert } from "@mui/icons-material";
 import VenueModal, { PaginationState } from './VenueModal'
 import { Venue } from "app/models/venue";
 import { ColumnShape } from "components/DataTables/ServerTable/ServerTable";
+import { toast } from "material-react-toastify";
 
 const VenueColumnShape = (paginationState: PaginationState): ColumnShape<Venue>[] => ([
   {
@@ -42,21 +43,23 @@ const VenueColumnShape = (paginationState: PaginationState): ColumnShape<Venue>[
       const { currentUserStore, venueStore} = useStore();
       const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
       const [openModal, setOpenModal] = useState(false);
-
       const handleMenuOpen = (evt: React.MouseEvent<HTMLElement | HTMLSpanElement>) => {
         setAnchorEl(evt.currentTarget);
       }
-
       const handleMenuClose = () => {
         setAnchorEl(null);
       }
-
       const handleEdit = () => {
         setOpenModal(true);
       }
       const handleDelete = async () => {
-        await venueStore.deleteVenue(row.id);
-        await venueStore.loadVenues(1, paginationState.queryPageSize)
+        try {
+          await venueStore.deleteVenue(row.id);
+          await venueStore.loadVenues(1, paginationState.queryPageSize)
+        } catch (error) {
+          const message = (error as Error)?.message || "Update venue failed";
+          toast.error(message);
+        }      
       }
 
       return <React.Fragment>

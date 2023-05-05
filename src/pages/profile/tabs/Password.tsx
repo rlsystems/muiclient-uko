@@ -11,7 +11,7 @@ import { toast } from "material-react-toastify";
 import checkPasswordStrength from "app/utils/checkPasswordStrength";
 
 const Password: FC = () => {
-  const { currentUserStore, commonStore } = useStore();
+  const { currentUserStore } = useStore();
   const { changePassword } = currentUserStore;
   const [strength, setStrength] = useState(0);
 
@@ -35,14 +35,15 @@ const Password: FC = () => {
     initialValues: passwordFormValues,
     validationSchema: fieldValidationSchema,
     onSubmit: async (values) => {
-      const result = await changePassword(values);
-      if (result?.succeeded === true) {
+      try {
+        await changePassword(values);
         toast.dark("Password updated");
-      } else {
-        toast.error("Problem updating password");
-      }
-      setStrength(10);
-      resetForm();
+        setStrength(0);
+        resetForm();
+      } catch (error) {
+        const message = (error as Error)?.message || "Password update failed";
+        toast.error(message);
+      }  
     },
   });
 

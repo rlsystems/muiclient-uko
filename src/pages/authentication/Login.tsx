@@ -54,7 +54,6 @@ const Login: FC = () => {
       initialValues,
       validationSchema,
       onSubmit: async (values) => {
-        console.log(values);
         try {
           await currentUserStore.login(values);
           toast.dark("Logged In Successfully!");
@@ -146,9 +145,6 @@ const Login: FC = () => {
                   helperText={touched.password && errors.password}
                 />
               </TextFieldWrapper>
-
-
-
 
             </FlexBox>
             <FlexBox mt={2} alignItems="center" justifyContent="space-between">

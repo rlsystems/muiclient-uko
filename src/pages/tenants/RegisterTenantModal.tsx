@@ -18,12 +18,11 @@ import StyledModalCard from "components/StyledModalCard";
 import { toast } from "material-react-toastify";
 
 interface ModalProps {
-  data?: any;
   open: boolean;
   onClose: () => void;
 }
 
-const RegisterTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
+const RegisterTenantModal: FC<ModalProps> = ({ open, onClose }) => {
   const { tenantStore } = useStore();
   const { createTenant, loading } = tenantStore;
 
@@ -52,11 +51,15 @@ const RegisterTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
     validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: async (createTenantRequest: CreateTenantRequest, { resetForm }) => {
-      const response = await createTenant(createTenantRequest)
-      if (!response) return
-      resetForm()
-      onClose()
-      toast.dark('Tenant created successfully')
+      try {
+        await createTenant(createTenantRequest);
+        resetForm();
+        onClose();
+        toast.dark('Tenant created successfully');
+      } catch(error) {
+        const message = (error as Error)?.message;
+        toast.error(message);
+      }
     }
   });
 

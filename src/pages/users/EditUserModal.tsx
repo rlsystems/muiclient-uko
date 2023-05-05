@@ -29,13 +29,14 @@ interface ModalProps {
     onClose: () => void;
 }
 
-// edit user modal, fyi - current user cannot edit themselves
-// current users edit their info in profile view
+// edit user modal
+// -- current users edit info in profile view
 
 const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
     const { appUserStore } = useStore();
     const { updateAppUser, loading, loadingDelete, deleteAppUser } = appUserStore;
 
+    // initial values
     const [userFormValues, setUserFormValues] = useState<User>({ // Local State
         id: data.id,
         firstName: data.firstName,
@@ -48,30 +49,40 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
         createdOn: data.createdOn
     });
 
+    // validation schema
     const validationSchema = Yup.object({
         firstName: Yup.string().required('The first name is required'),
         lastName: Yup.string().required('The last name is required'),
         email: Yup.string().required().email(),
     })
 
+    // formik
     const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid } = useFormik({
       initialValues: userFormValues,
       validationSchema: validationSchema,
       onSubmit: async (user: User, { resetForm }) => {
-          const response = await updateAppUser(user)
-          if (!response) return
-          toast.dark("User Edited Successfully!")
-        onClose()
-        resetForm()
+        try {
+            await updateAppUser(user)
+            toast.dark("User Edited Successfully!");
+            onClose();
+            resetForm();
+          } catch(error) {
+            const message = (error as Error)?.message;
+            toast.error(message);
+          }
       }
     });
 
 
     const handleDelete = async (id: string) => {
-        const response = await deleteAppUser(id);
-        if (!response) return
-        toast.dark("User Deleted!")
-        onClose()
+        try {
+            await deleteAppUser(id);
+            toast.dark("User Deleted!")
+            onClose()
+        } catch (error) {
+            const message = (error as Error)?.message;
+            toast.error(message);
+        }       
     }
 
 
@@ -84,14 +95,12 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                 <H2 mb={2}>Edit User</H2>
                 <Divider sx={{ marginBottom: 3 }} />
                 <form onSubmit={handleSubmit}>
-
                     <Grid
                         container
                         spacing={3}
                         columnSpacing={5}
                         className="main-form"
                     >
-
                         {(!isRootUser) &&
                             <Grid item xs={12}>
                                 <FormGroup>
@@ -197,7 +206,6 @@ const EditUserModal: FC<ModalProps> = ({ open, onClose, data }) => {
                     </Grid>
 
                     <FlexBox justifyContent={!isRootUser ? "space-between" : "flex-end"} marginTop={4}>
-
                         {!isRootUser &&
                             <LoadingButton
                                 size="small"

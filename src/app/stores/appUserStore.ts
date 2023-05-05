@@ -42,88 +42,74 @@ export default class AppUserStore {
         })
     }
 
-    // Load app users - triggered by visiting user list
+    // Load app users - triggered by visiting user list view
     loadAppUsers = async () => { 
         this.setLoadingInitial(true);
         try {
-            const result = await agent.Users.list(); // full list from api
+            const response = await agent.Users.list(); // full list from api
+            if (!response.succeeded) throw new Error(response.messages[0]);
             runInAction(() => {
-                this.users = result.data;
+                this.users = response.data;
             })
             this.setLoadingInitial(false);
-        } catch (error) {
+        } catch (error) {        
             console.log(error);
             this.setLoadingInitial(false);
+            throw error;
         }
     }
 
     // Register a new user
-    createAppUser = async (appUser: RegisterUserRequest): Promise<boolean | undefined> => {
+    createAppUser = async (appUser: RegisterUserRequest) => {
         this.setLoading(true)
-
         try {
             const response = await agent.Users.create(appUser);
-            this.setLoading(false)
-            if (!response.succeeded) {
-                toast.error(response.messages[0]);
-                return false
-            }
-
+            if (!response.succeeded) throw new Error(response.messages[0]);
             runInAction(() => {
                 const newAppUser = response.data; // the user returned from the api
                 this.users.push(newAppUser); // add to registry list (local memory) - prevents having to reload the table
             })
-            return true
+            this.setLoading(false)
         } catch (error) {
             console.log(error);
             this.setLoading(false)
-            return false
+            throw error;
         }
     }
 
     // Update an existing user
-    updateAppUser = async (user: User): Promise<boolean | undefined> => {
+    updateAppUser = async (user: User) => {
         this.setLoading(true)
-
         try {
-            const response = await agent.Users.update(user);
-            this.setLoading(false)
-            if (!response.succeeded) { // handle any errors returned from api
-                toast.error(response.messages[0]);
-                return false
-            }
+            const response = await agent.Users.update(user);         
+            if (!response.succeeded) throw new Error(response.messages[0]);
             runInAction(() => {
                 const userIndex = this.users.findIndex(x => x.id == user.id); // find index of user and update 
                 this.users[userIndex] = user;
             })
-            return true
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
-            this.setLoading(false)
-            return false
+            this.setLoading(false);
+            throw error;
         }
     }
 
     // Delete user
-    deleteAppUser = async (id: string): Promise<boolean | undefined> => {
+    deleteAppUser = async (id: string) => {
         this.setLoadingDelete(true)
-
         try {
             const response = await agent.Users.delete(id); // api call to delete from database
-            this.setLoadingDelete(false)
-            if (!response.succeeded) {
-                toast.error(response.messages[0]);
-                return false
-            }
+            if (!response.succeeded) throw new Error(response.messages[0]);
             runInAction(() => {
-                const userIndex = this.users.findIndex(x => x.id == id); // find index of user and update 
+                const userIndex = this.users.findIndex(x => x.id == id); // find index of user and remove 
                 this.users.splice(userIndex, 1)
             })
-            return true
+            this.setLoadingDelete(false);
         } catch (error) {
             console.log(error);
-            this.setLoadingDelete(false)
-            return false
+            this.setLoadingDelete(false);
+            throw error;
         }
     }
 }

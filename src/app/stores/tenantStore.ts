@@ -37,57 +37,53 @@ export default class TenantStore {
     loadTenants = async () => {
         this.setLoadingInitial(true);
         try {
-            const result = await agent.Tenants.list();
+            const response = await agent.Tenants.list();
+            if (!response.succeeded) throw new Error(response.messages[0]);
             runInAction(() => {
-                this.tenants = result.data;
+                this.tenants = response.data;
             })
             this.setLoadingInitial(false);
         } catch (error) {
+            console.log(error);
             this.setLoadingInitial(false);
+            throw error;
         }
     }
 
     // create new tenant
-    createTenant = async (createTenantRequest: CreateTenantRequest): Promise<boolean | undefined> => {
+    createTenant = async (createTenantRequest: CreateTenantRequest) => {
         this.setLoading(true);
 
         try {
             const response = await agent.Tenants.create(createTenantRequest);
-            this.setLoading(false);
-            if (!response.succeeded) {
-                toast.error(response.messages[0]);
-                return false
-            }
+            if (!response.succeeded) throw new Error(response.messages[0]);
             const newTenant = response.data;
-            this.tenants.push(newTenant); // add to registry list (local memory) - prevents having to reload the table
-            return true
+            runInAction(() => {
+                this.tenants.push(newTenant); // add to registry list (local memory) - prevents having to reload the table
+            })
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
             this.setLoading(false);
-            return false
+            throw error;
         }
     }
 
     // update tenant
-    updateTenant = async (tenant: Tenant): Promise<boolean | undefined> => {
+    updateTenant = async (tenant: Tenant) => {
         this.setLoading(true);
-
         try {
             const response = await agent.Tenants.update(tenant);
-            this.setLoading(false);
-            if (!response.succeeded) {
-                toast.error(response.messages[0]);
-                return false
-            }
+            if (!response.succeeded) throw new Error(response.messages[0]);
             runInAction(() => {
                 const tenantIndex = this.tenants.findIndex(x => x.id == tenant.id);
                 this.tenants[tenantIndex] = tenant;
             })
-            return true
+            this.setLoading(false);
         } catch (error) {
             console.log(error);
             this.setLoading(false);
-            return false
+            throw error;
         }
     }
 }

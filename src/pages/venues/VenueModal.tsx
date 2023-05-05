@@ -51,17 +51,26 @@ const VenueModal: FC<Props> = ({ open, onClose, isEdit, data, paginationState })
     validationSchema: validationSchema,
     onSubmit: async (addVenue: Venue) => {
       if (!isEdit) {
-        const response = await createVenue(addVenue)
-        if (!response) return
-        handleClose()
-        toast.dark("Venue Added!")
-        await loadVenues(paginationState.queryPageIndex, paginationState.queryPageSize);
+        try {
+          await createVenue(addVenue)
+          handleClose()
+          toast.dark("Venue Added!")
+          await loadVenues(paginationState.queryPageIndex, paginationState.queryPageSize);
+        } catch (error) {
+          const message = (error as Error)?.message || "Create venue failed";
+          toast.error(message);
+        }
+        
       } else {
-        const response = await updateVenue(addVenue)
-        if (!response) return
-        handleClose()
-        toast.dark("Venue Updated!")
-        await loadVenues(paginationState.queryPageIndex, paginationState.queryPageSize);
+        try {
+          await updateVenue(addVenue)
+          handleClose()
+          toast.dark("Venue Updated!")
+          await loadVenues(paginationState.queryPageIndex, paginationState.queryPageSize);
+        } catch(error) {
+          const message = (error as Error)?.message || "Update venue failed";
+          toast.error(message);
+        }
       }
     }
   });

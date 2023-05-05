@@ -86,7 +86,6 @@ const TenantList: FC = () => {
 
       <RegisterTenantModal
         open={openModal}
-        data={null}
         onClose={() => setOpenModal(false)}
       />
 

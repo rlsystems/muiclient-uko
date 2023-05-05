@@ -31,19 +31,15 @@ const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
     const { tenantStore } = useStore();
     const { updateTenant, loading } = tenantStore;
 
-    const [tenantFormValues] = useState<Tenant>({ // local state
+    // initial form values
+    const [tenantFormValues] = useState<Tenant>({ 
         id: data.id,
         name: data.name,
         isActive: data.isActive,
         createdOn: data.createdOn
     });
 
-    const handleClose = () => {
-        resetForm(); // method from Formik
-        onClose(); // method from Mui Modal
-    }
-
-    // validation schema - passed to formik
+    // validation schema 
     const validationSchema = Yup.object({
         name: Yup.string().required('Tenant name is required'),
     })
@@ -53,13 +49,22 @@ const EditTenantModal: FC<ModalProps> = ({ open, onClose, data }) => {
         validationSchema: validationSchema,
         enableReinitialize: true,
         onSubmit: async (tenant: Tenant, { resetForm }) => {
-            const response = await updateTenant(tenant)
-            if (!response) return
-            onClose()
-            resetForm()
-            toast.dark('Tenant created successfully')
+            try {
+                await updateTenant(tenant);
+                onClose();
+                resetForm();
+                toast.dark('Tenant created successfully');
+            } catch (error) {
+                const message = (error as Error)?.message;
+                toast.error(message);
+            }     
         }
     });
+
+    const handleClose = () => {
+        resetForm(); // method from Formik
+        onClose(); // method from Mui Modal
+    }
 
     return (
         <Modal open={open} onClose={handleClose}>

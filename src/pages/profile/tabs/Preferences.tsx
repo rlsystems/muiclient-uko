@@ -15,7 +15,6 @@ const Preferences: FC = () => {
   const { currentUserStore } = useStore();
   const { currentUser, updatePreferences, getCurrentUser } = currentUserStore;
   const darkModeDefault = currentUser ? currentUser?.darkModeDefault : true;
-  const [isUpdating, setIsUpdating] = useState(false);
 
   const [preferencesFormValues, setPreferencesFormValues] = useState<UpdatePreferencesRequest>({ //Local State
     darkModeDefault: darkModeDefault,
@@ -27,13 +26,9 @@ const Preferences: FC = () => {
     initialValues: preferencesFormValues,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      setIsUpdating(true);
       await updatePreferences(values);
-      toast.dark("Preferences Updated"); 
-    
+      toast.dark("Preferences Updated");   
       resetForm(); 
-      setIsUpdating(false);
-
       setPreferencesFormValues(values); 
       await getCurrentUser();
     },
@@ -82,7 +77,7 @@ const Preferences: FC = () => {
             type="submit"
             variant="contained"
             disabled={!dirty || !isValid || isSubmitting}
-            loading={isUpdating} 
+            loading={isSubmitting} 
           >
             Save Changes
           </LoadingButton>

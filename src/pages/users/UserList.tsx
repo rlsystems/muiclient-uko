@@ -86,7 +86,6 @@ const UserList: FC = () => {
 
       {openModal && <RegisterUserModal
         open={openModal}
-        data={null}
         onClose={() => setOpenModal(false)}
       />}
 

@@ -26,7 +26,6 @@ const UserInfo: FC = () => {
       currentUser, updateCurrentUser, updateProfileImage
     }
   } = useStore();
-  const [isUpdating, setIsUpdating] = useState(false);
   const [tempImage, setTempImage] = useState(currentUser?.imageUrl)
 
   const [userFormValues, setUserFormValues] = useState<UpdateProfileRequest>({ //Local State
@@ -50,33 +49,36 @@ const UserInfo: FC = () => {
     validationSchema: fieldValidationSchema,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      setIsUpdating(true);
-      let response = await updateCurrentUser(values);
-      if(response.succeeded) {
+      try {
+        await updateCurrentUser(values);
         toast.dark("Profile Updated");
-        resetForm();   
+        resetForm();
         setUserFormValues(values);
-      } else {
-        response.messages.forEach(error => {
-          toast.error(error);
-        })
+      } catch (error) {
+        const message = (error as Error)?.message || "Update profile failed";
+        toast.error(message);
       }
-      setIsUpdating(false);
     },
   });
 
   const handleImageUpload: React.ChangeEventHandler<HTMLInputElement> = async (evt) => {
-    const file = evt.target?.files?.[0];
-    let imageRequest: ChangeProfileImageRequest = {
-      imageFile: file
+    try {
+      const file = evt.target?.files?.[0];
+      const imageRequest: ChangeProfileImageRequest = {
+        imageFile: file
+      }
+      await updateProfileImage(imageRequest)
+      const base64 = await getBase64(file!) as string;
+      if (base64) setTempImage(base64);
+    } catch (error) {
+      const message = (error as Error)?.message || "Upload image failed";
+      toast.error(message);
     }
-    await updateProfileImage(imageRequest)
-    const base64 = await getBase64(file!) as string;
-    if (base64) setTempImage(base64);
+
   }
 
   const handleImageRemove = async () => {
-    let imageRequest: ChangeProfileImageRequest = {
+    const imageRequest: ChangeProfileImageRequest = {
       deleteCurrentImage: true
     }
     await updateProfileImage(imageRequest);
@@ -84,7 +86,7 @@ const UserInfo: FC = () => {
   }
 
 
-  const StyledBadge = styled(Badge)(({ theme }) => ({
+  const ImageUploadButton = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       width: 25,
       height: 25,
@@ -105,7 +107,7 @@ const UserInfo: FC = () => {
         justifyContent="space-between"
       >
         <FlexBox alignItems="center">
-          <StyledBadge
+          <ImageUploadButton
             overlap="circular"
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             badgeContent={
@@ -120,7 +122,7 @@ const UserInfo: FC = () => {
               src={tempImage || ""}
               sx={{ width: 90, height: 90 }}
             />
-          </StyledBadge>
+          </ImageUploadButton>
           <Box ml="1rem">
             <H5>{currentUser?.firstName}</H5>
             <Tiny color="text.disabled" sx={{ textTransform: "capitalize" }}>{currentUser?.roleId} Level User</Tiny>
@@ -182,13 +184,11 @@ const UserInfo: FC = () => {
               type="submit"
               variant="contained"
               disabled={!dirty || !isValid || isSubmitting}
-              loading={isUpdating}
+              loading={isSubmitting}
             >
               Save Changes
             </LoadingButton>
           </Grid>
-
-
         </Grid>
       </form>
     </Card>

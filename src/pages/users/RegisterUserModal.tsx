@@ -28,16 +28,15 @@ import StyledModalCard from "components/StyledModalCard";
 
 // component props interface
 interface Props {
-  data?: any;
   open: boolean;
   onClose: () => void;
-
 }
 
-const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
+const RegisterUserModal: FC<Props> = ({ open, onClose }) => {
   const { appUserStore } = useStore();
   const { createAppUser, loading } = appUserStore;
 
+  // initial values
   const [newUserFormValues, setNewUserFormValues] = useState<RegisterUserRequest>({
     id: '',
     firstName: '',
@@ -48,7 +47,7 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
     roleId: 'basic'
   });
 
-  //gets passed to formik
+  // validation schema
   const validationSchema = Yup.object({
     firstName: Yup.string().required('The first name is required'),
     lastName: Yup.string().required('The last name is required'),
@@ -56,28 +55,30 @@ const RegisterUserModal: FC<Props> = ({ open, onClose, data }) => {
     password: Yup.string().required(),
   });
 
-
-
-
+  // formik 
   const { values, errors, handleChange, handleSubmit, touched, handleBlur, dirty, isSubmitting, isValid, resetForm } = useFormik({
     initialValues: newUserFormValues,
     validationSchema: validationSchema,
     onSubmit: async (registerUser: RegisterUserRequest) => {
-      const response = await createAppUser(registerUser)
-      if (!response) return
-      toast.dark("User Added Successfully!");
-      handleClose()
+      try {
+        await createAppUser(registerUser);
+        toast.dark("User Added Successfully!");
+        handleClose();
+      } catch(error) {
+        const message = (error as Error)?.message;
+        toast.error(message);
+      }
     }
   });
 
 
   const handleClose = () => {
-    resetForm(); //method from Formik
-    onClose(); //method from Mui Modal
+    resetForm(); // method from Formik
+    onClose(); // method from Mui Modal
   }
 
 
-  //To prevent closing when you click backdrop
+  // to prevent closing the modal when a user clicks the backdrop
   //--underscore is shorthand for unused parameters
   const handleBackdropClose = (_: any, reason: any) => {
     if (reason && reason == "backdropClick")
